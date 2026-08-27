@@ -168,6 +168,12 @@ itself. Server field errors map straight on:
 const fieldErrors = Object.fromEntries((result.error.details ?? []).map((d) => [d.field, d.message]));
 ```
 
+**Tool navigation** is data-driven from `src/lib/tools.js`. `TOOLS` feeds the navbar dropdown, the
+footer and the homepage sections; each entry has a `ready` flag, and anything `false` renders as a
+non-clickable "Soon" item rather than a dead link. When a module ships, flip `ready` to `true` and
+give it a `to` — do not hand-write nav links anywhere else. Every `PRIMARY_TOOLS` key must have a
+matching `<section id="...">` on the homepage or its anchor goes nowhere.
+
 **Toasts** are Redux-driven — never render one locally:
 
 ```js

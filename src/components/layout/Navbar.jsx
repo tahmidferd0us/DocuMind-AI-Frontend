@@ -1,30 +1,84 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'motion/react';
-import { LogOut, Menu, Sparkles, X } from 'lucide-react';
+import { ChevronDown, LayoutGrid, LogOut, Menu, X } from 'lucide-react';
 import { cn } from '@lib/cn';
 import { APP_NAME } from '@lib/constants';
+import { PRIMARY_TOOLS, TOOLS } from '@lib/tools';
 import { Button, IconButton } from '@components/ui';
 import { useAuth } from '@features/auth/useAuth';
 import { useToast } from '@features/toast/useToast';
 import { PATHS } from '@routes/paths';
 
-const NAV_LINKS = [
-  { label: 'Home', to: PATHS.home },
-  { label: 'How it works', to: `${PATHS.home}#how-it-works` },
-  { label: 'Dashboard', to: PATHS.dashboard, authOnly: true },
-];
+const Wordmark = () => (
+  <span className="flex items-center gap-2 font-semibold tracking-tight text-ink">
+    <span className="grid size-8 shrink-0 grid-cols-2 gap-0.5 rounded-md p-1.5">
+      <span className="rounded-[2px] bg-brand-600" />
+      <span className="rounded-[2px] bg-emerald-500" />
+      <span className="rounded-[2px] bg-amber-400" />
+      <span className="rounded-[2px] bg-red-500" />
+    </span>
+    <span className="text-base sm:text-lg">{APP_NAME}</span>
+  </span>
+);
+
+const ToolsMenu = ({ onNavigate }) => (
+  <div className="grid gap-1 sm:w-[30rem] sm:grid-cols-2">
+    {TOOLS.map((tool) => {
+      const content = (
+        <>
+          <span className={cn('mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md', tool.ready ? 'bg-brand-50 text-brand-600' : 'bg-slate-100 text-slate-400')}>
+            <tool.icon className="size-4" />
+          </span>
+          <span className="min-w-0">
+            <span className="flex items-center gap-2 text-sm font-medium text-ink">
+              {tool.name}
+              {tool.ready ? null : <span className="rounded-full bg-slate-100 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-500">Soon</span>}
+            </span>
+            <span className="mt-0.5 block text-xs text-slate-500">{tool.tagline}</span>
+          </span>
+        </>
+      );
+
+      return tool.ready ? (
+        <Link key={tool.key} to={tool.to} onClick={onNavigate} className="flex gap-3 rounded-lg p-2.5 transition-colors hover:bg-surface-muted">
+          {content}
+        </Link>
+      ) : (
+        <span key={tool.key} aria-disabled className="flex cursor-not-allowed gap-3 rounded-lg p-2.5 opacity-70">
+          {content}
+        </span>
+      );
+    })}
+  </div>
+);
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isToolsOpen, setIsToolsOpen] = useState(false);
+  const toolsRef = useRef(null);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const toast = useToast();
   const { isAuthenticated, user, logout, isLoggingOut } = useAuth();
 
-  useEffect(() => setIsOpen(false), [pathname]);
+  useEffect(() => {
+    setIsMobileOpen(false);
+    setIsToolsOpen(false);
+  }, [pathname]);
 
-  const visibleLinks = NAV_LINKS.filter((link) => !link.authOnly || isAuthenticated);
+  useEffect(() => {
+    const onPointerDown = (event) => {
+      if (toolsRef.current && !toolsRef.current.contains(event.target)) setIsToolsOpen(false);
+    };
+    const onEscape = (event) => event.key === 'Escape' && setIsToolsOpen(false);
+    document.addEventListener('pointerdown', onPointerDown);
+    document.addEventListener('keydown', onEscape);
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown);
+      document.removeEventListener('keydown', onEscape);
+    };
+  }, []);
 
   const handleLogout = async () => {
     await logout();
@@ -33,85 +87,124 @@ const Navbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-white/85 backdrop-blur-md">
-      <div className="container-page flex h-16 items-center justify-between gap-4">
-        <Link to={PATHS.home} className="flex items-center gap-2 font-semibold tracking-tight text-slate-900">
-          <span className="flex size-8 items-center justify-center rounded-lg bg-brand-600 text-white">
-            <Sparkles className="size-4" />
-          </span>
-          <span className="text-base sm:text-lg">{APP_NAME}</span>
+    <header className="sticky top-0 z-40 border-b border-line bg-white">
+      <div className="container-page flex h-16 items-center gap-3">
+        <Link to={PATHS.home} aria-label={`${APP_NAME} home`}>
+          <Wordmark />
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
-          {visibleLinks.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              end={link.to === PATHS.home}
-              className={({ isActive }) =>
-                cn('rounded-lg px-3 py-2 text-sm font-medium transition-colors', isActive ? 'text-brand-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900')
-              }
+        <div ref={toolsRef} className="relative hidden md:block">
+          <button
+            type="button"
+            onClick={() => setIsToolsOpen((open) => !open)}
+            aria-expanded={isToolsOpen}
+            aria-haspopup="true"
+            className="flex items-center gap-2 rounded-lg border border-line px-3 py-2 text-sm font-medium text-ink transition-colors hover:bg-surface-muted"
+          >
+            <LayoutGrid className="size-4" />
+            Tools
+            <ChevronDown className={cn('size-4 transition-transform', isToolsOpen && 'rotate-180')} />
+          </button>
+
+          <AnimatePresence>
+            {isToolsOpen ? (
+              <motion.div
+                key="tools-menu"
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.15 }}
+                className="absolute left-0 top-full z-50 mt-2 rounded-xl border border-line bg-white p-2 shadow-xl"
+              >
+                <ToolsMenu onNavigate={() => setIsToolsOpen(false)} />
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
+        </div>
+
+        <nav className="hidden items-center gap-0.5 lg:flex">
+          {PRIMARY_TOOLS.map((tool) => (
+            <a
+              key={tool.key}
+              href={`${PATHS.home}#${tool.key}`}
+              className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-surface-muted hover:text-ink"
             >
-              {link.label}
-            </NavLink>
+              {tool.name}
+            </a>
           ))}
+          {isAuthenticated ? (
+            <NavLink
+              to={PATHS.dashboard}
+              className={({ isActive }) => cn('rounded-lg px-3 py-2 text-sm font-medium transition-colors', isActive ? 'text-brand-700' : 'text-slate-600 hover:bg-surface-muted hover:text-ink')}
+            >
+              Workspace
+            </NavLink>
+          ) : null}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="ml-auto hidden items-center gap-3 md:flex">
           {isAuthenticated ? (
             <>
-              <span className="max-w-[14rem] truncate text-sm text-slate-600">{user?.fullName ?? user?.email}</span>
+              <span className="max-w-[12rem] truncate text-sm text-slate-600">{user?.fullName ?? user?.email}</span>
               <Button variant="outline" size="sm" onClick={handleLogout} isLoading={isLoggingOut} leftIcon={<LogOut className="size-4" />}>
                 Sign out
               </Button>
             </>
           ) : (
-            <Button size="sm" onClick={() => navigate(PATHS.login)}>
-              Sign in
-            </Button>
+            <>
+              <Link to={PATHS.login} className="rounded-lg border border-line px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-surface-muted">
+                Log in
+              </Link>
+              <Button size="sm" onClick={() => navigate(PATHS.login)}>
+                Get started
+              </Button>
+            </>
           )}
         </div>
 
-        <IconButton label={isOpen ? 'Close menu' : 'Open menu'} onClick={() => setIsOpen((value) => !value)} className="md:hidden">
-          {isOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+        <IconButton label={isMobileOpen ? 'Close menu' : 'Open menu'} onClick={() => setIsMobileOpen((open) => !open)} className="ml-auto md:hidden">
+          {isMobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
         </IconButton>
       </div>
 
       <AnimatePresence>
-        {isOpen ? (
+        {isMobileOpen ? (
           <motion.div
+            key="mobile-menu"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden border-t border-line bg-white md:hidden"
           >
-            <nav className="container-page flex flex-col gap-1 py-4">
-              {visibleLinks.map((link) => (
-                <NavLink
-                  key={link.to}
-                  to={link.to}
-                  end={link.to === PATHS.home}
-                  className={({ isActive }) =>
-                    cn('rounded-lg px-3 py-2.5 text-sm font-medium transition-colors', isActive ? 'bg-brand-50 text-brand-700' : 'text-slate-600 hover:bg-slate-100')
-                  }
-                >
-                  {link.label}
-                </NavLink>
-              ))}
+            <div className="container-page flex flex-col gap-4 py-4">
+              <ToolsMenu onNavigate={() => setIsMobileOpen(false)} />
 
-              <div className="mt-3 border-t border-line pt-3">
+              <div className="flex flex-col gap-2 border-t border-line pt-4">
                 {isAuthenticated ? (
-                  <Button variant="outline" fullWidth onClick={handleLogout} isLoading={isLoggingOut} leftIcon={<LogOut className="size-4" />}>
-                    Sign out
-                  </Button>
+                  <>
+                    <Link to={PATHS.dashboard} className="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-surface-muted">
+                      Workspace
+                    </Link>
+                    <Button variant="outline" fullWidth onClick={handleLogout} isLoading={isLoggingOut} leftIcon={<LogOut className="size-4" />}>
+                      Sign out
+                    </Button>
+                  </>
                 ) : (
-                  <Button fullWidth onClick={() => navigate(PATHS.login)}>
-                    Sign in
-                  </Button>
+                  <>
+                    <Link
+                      to={PATHS.login}
+                      className="flex h-11 items-center justify-center rounded-lg border border-line text-sm font-medium text-ink transition-colors hover:bg-surface-muted"
+                    >
+                      Log in
+                    </Link>
+                    <Button fullWidth onClick={() => navigate(PATHS.login)}>
+                      Get started
+                    </Button>
+                  </>
                 )}
               </div>
-            </nav>
+            </div>
           </motion.div>
         ) : null}
       </AnimatePresence>
