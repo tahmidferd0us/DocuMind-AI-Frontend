@@ -113,3 +113,10 @@ export const ExportIllustration = () => (
     </text>
   </svg>
 );
+
+export const ILLUSTRATIONS = {
+  summary: SummaryIllustration,
+  ask: AskIllustration,
+  entities: EntitiesIllustration,
+  export: ExportIllustration,
+};

@@ -29,9 +29,10 @@ src/
 ├── app/store.js           store built FROM the feature registry
 ├── features/
 │   ├── registry.js        FEATURE REGISTRY — reducers and routes both derive from this
-│   ├── auth/  dashboard/  home/  toast/
+│   ├── auth/  dashboard/  home/  toast/  tools/  upload/
 ├── components/
 │   ├── ui/                reusable, feature-agnostic primitives (+ index.js barrel)
+│   ├── illustrations/     shared inline SVGs used by home and tools
 │   └── layout/            Navbar, Footer, PublicLayout, AuthLayout
 ├── routes/                AppRouter, guards, paths, 404, error page
 ├── lib/                   api, httpClient, axiosBaseQuery, storage, cn, format, constants
@@ -168,11 +169,24 @@ itself. Server field errors map straight on:
 const fieldErrors = Object.fromEntries((result.error.details ?? []).map((d) => [d.field, d.message]));
 ```
 
-**Tool navigation** is data-driven from `src/lib/tools.js`. `TOOLS` feeds the navbar dropdown, the
-footer and the homepage sections; each entry has a `ready` flag, and anything `false` renders as a
-non-clickable "Soon" item rather than a dead link. When a module ships, flip `ready` to `true` and
-give it a `to` — do not hand-write nav links anywhere else. Every `PRIMARY_TOOLS` key must have a
-matching `<section id="...">` on the homepage or its anchor goes nowhere.
+**Tool pages are generated, not hand-written.** `src/lib/tools.js` is the single source of truth:
+each entry carries its `path`, copy, `benefits`, `points`, `illustration` key and a `ready` flag.
+From that one array come the navbar dropdown, the navbar links, the footer list, the homepage
+`ToolGrid`, and **one real route per tool** (`/summarize`, `/ask`, `/entities`, `/export`,
+`/upload`, `/analytics`).
+
+`features/tools/index.js` maps `TOOLS` into route objects via `createToolPage(key)`, so every tool
+renders through the same `ToolPage` component. To add a tool: add one entry to `TOOLS` and a path to
+`PATHS`. Do not create a page component per tool, and do not hand-write nav links anywhere.
+
+`ready: false` puts a "Soon" badge in the nav and an amber "Not built yet" banner on the page — the
+page still exists and still accepts an upload. When a module ships, flip the flag.
+
+**Upload is split across two layers on purpose.** `components/ui/UploadDropzone.jsx` is purely
+presentational (takes `onFiles`, no feature imports, so the one-way import rule holds), and
+`features/upload/useDocumentIntake.js` owns the auth-aware behaviour — validate, then route to login
+or the workspace. Hero and every tool page use both. Put upload behaviour in the hook, never in the
+component.
 
 **Toasts** are Redux-driven — never render one locally:
 

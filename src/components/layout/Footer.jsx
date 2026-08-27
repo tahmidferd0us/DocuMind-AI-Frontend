@@ -33,10 +33,10 @@ const Footer = () => (
           <ul className="mt-3 flex flex-col gap-2">
             {TOOLS.map((tool) => (
               <li key={tool.key}>
-                <a href={`${PATHS.home}#${tool.key}`} className="text-sm text-slate-500 transition-colors hover:text-brand-700">
+                <Link to={tool.path} className="text-sm text-slate-500 transition-colors hover:text-brand-700">
                   {tool.name}
                   {tool.ready ? null : <span className="ml-1.5 text-xs text-slate-400">soon</span>}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

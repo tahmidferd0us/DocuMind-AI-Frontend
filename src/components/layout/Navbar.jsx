@@ -40,14 +40,10 @@ const ToolsMenu = ({ onNavigate }) => (
         </>
       );
 
-      return tool.ready ? (
-        <Link key={tool.key} to={tool.to} onClick={onNavigate} className="flex gap-3 rounded-lg p-2.5 transition-colors hover:bg-surface-muted">
+      return (
+        <Link key={tool.key} to={tool.path} onClick={onNavigate} className="flex gap-3 rounded-lg p-2.5 transition-colors hover:bg-surface-muted">
           {content}
         </Link>
-      ) : (
-        <span key={tool.key} aria-disabled className="flex cursor-not-allowed gap-3 rounded-lg p-2.5 opacity-70">
-          {content}
-        </span>
       );
     })}
   </div>
@@ -124,13 +120,15 @@ const Navbar = () => {
 
         <nav className="hidden items-center gap-0.5 lg:flex">
           {PRIMARY_TOOLS.map((tool) => (
-            <a
+            <NavLink
               key={tool.key}
-              href={`${PATHS.home}#${tool.key}`}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-surface-muted hover:text-ink"
+              to={tool.path}
+              className={({ isActive }) =>
+                cn('rounded-lg px-3 py-2 text-sm font-medium transition-colors', isActive ? 'text-brand-700' : 'text-slate-600 hover:bg-surface-muted hover:text-ink')
+              }
             >
               {tool.name}
-            </a>
+            </NavLink>
           ))}
           {isAuthenticated ? (
             <NavLink

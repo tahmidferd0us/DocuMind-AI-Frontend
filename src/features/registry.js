@@ -2,8 +2,9 @@ import authModule from './auth';
 import dashboardModule from './dashboard';
 import homeModule from './home';
 import toastModule from './toast';
+import toolsModule from './tools';
 
-export const featureModules = [homeModule, authModule, dashboardModule, toastModule];
+export const featureModules = [homeModule, toolsModule, authModule, dashboardModule, toastModule];
 
 export const featureReducers = Object.fromEntries(featureModules.filter((module) => module.reducer).map((module) => [module.name, module.reducer]));
 
