@@ -5,14 +5,13 @@
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
     "checkJs": false,
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@app/*": ["src/app/*"],
-      "@components/*": ["src/components/*"],
-      "@features/*": ["src/features/*"],
-      "@lib/*": ["src/lib/*"],
-      "@routes/*": ["src/routes/*"]
+      "@/*": ["./src/*"],
+      "@app/*": ["./src/app/*"],
+      "@components/*": ["./src/components/*"],
+      "@features/*": ["./src/features/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@routes/*": ["./src/routes/*"]
     }
   },
   "include": ["src/**/*"],
