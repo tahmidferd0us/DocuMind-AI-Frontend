@@ -54,7 +54,7 @@ export const TOOLS = [
     tagline: 'Keywords and named entities',
     icon: Tags,
     illustration: 'entities',
-    ready: false,
+    ready: true,
     headline: 'The names, places and terms that matter',
     blurb:
       'Key phrases and named entities are extracted automatically, so you can see at a glance what a document is really about before reading a word of it.',
@@ -82,7 +82,7 @@ export const TOOLS = [
     tagline: 'PDF and DOCX reports',
     icon: FileDown,
     illustration: 'export',
-    ready: false,
+    ready: true,
     headline: 'Take the whole analysis with you',
     blurb:
       'Summaries, extracted entities and your full question-and-answer history export together into a single formatted report you can submit or share.',

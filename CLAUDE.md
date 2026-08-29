@@ -29,8 +29,8 @@ src/
 ├── app/store.js           store built FROM the feature registry
 ├── features/
 │   ├── registry.js        FEATURE REGISTRY — reducers and routes both derive from this
-│   ├── auth/  dashboard/  documents/  home/  qa/
-│   ├── summaries/  toast/  tools/  upload/
+│   ├── auth/  dashboard/  documents/  entities/  exports/
+│   ├── home/  qa/  summaries/  toast/  tools/  upload/
 ├── components/
 │   ├── ui/                reusable, feature-agnostic primitives (+ index.js barrel)
 │   ├── illustrations/     shared inline SVGs used by home and tools
@@ -215,8 +215,11 @@ export default { name: 'qa', documentStages: [{ path: 'ask', Component: Document
 
 `features/registry.js` collects every `documentStages` entry and injects them as children of the
 route flagged `withDocumentStages: true` (declared once, in `features/documents/index.js`). So
-`documents` never imports `summaries` or `qa`, and adding a stage stays a one-line change in the
-owning feature. Add its tab to `DOCUMENT_STAGES` in `routes/paths.js` and flip `ready` when it works.
+`documents` never imports `summaries`, `qa`, `entities` or `exports`, and adding a stage stays a
+one-line change in the owning feature. Add its tab to `DOCUMENT_STAGES` in `routes/paths.js` and
+flip `ready` when it works.
+
+Live stages: **Overview, Summary, Ask, Entities, Export**. Only `analytics` is still `ready: false`.
 
 **Navigation rule:** signed-in users see only **My documents** in the navbar — the inline tool links
 are hidden for them. Otherwise the navbar's "Ask" (marketing page) and the workspace tab "Ask"

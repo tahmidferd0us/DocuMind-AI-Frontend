@@ -18,6 +18,6 @@ export const DOCUMENT_STAGES = [
   { key: 'overview', label: 'Overview', segment: '', ready: true },
   { key: 'summary', label: 'Summary', segment: 'summary', ready: true },
   { key: 'ask', label: 'Ask', segment: 'ask', ready: true },
-  { key: 'entities', label: 'Entities', segment: 'entities', ready: false },
-  { key: 'export', label: 'Export', segment: 'export', ready: false },
+  { key: 'entities', label: 'Entities', segment: 'entities', ready: true },
+  { key: 'export', label: 'Export', segment: 'export', ready: true },
 ];
