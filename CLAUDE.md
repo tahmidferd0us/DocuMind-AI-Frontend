@@ -179,6 +179,11 @@ From that one array come the navbar dropdown, the navbar links, the footer list,
 renders through the same `ToolPage` component. To add a tool: add one entry to `TOOLS` and a path to
 `PATHS`. Do not create a page component per tool, and do not hand-write nav links anywhere.
 
+**When a tool becomes real, it takes over its own route.** Set `ownRoute: true` on the entry —
+`features/tools/index.js` filters those out — and let the owning feature declare the route instead
+(see `features/summaries/index.js`, which claims `PATHS.summarize` as a `protected` route). The tool
+stays in `TOOLS` so nav, footer and the homepage grid keep listing it.
+
 `ready: false` puts a "Soon" badge in the nav and an amber "Not built yet" banner on the page — the
 page still exists and still accepts an upload. When a module ships, flip the flag.
 

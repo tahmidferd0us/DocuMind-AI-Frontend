@@ -26,7 +26,8 @@ export const TOOLS = [
     tagline: 'Extractive and abstractive',
     icon: ScrollText,
     illustration: 'summary',
-    ready: false,
+    ready: true,
+    ownRoute: true,
     headline: 'Two summaries, so you can check the machine',
     blurb:
       'DocuMind produces an extractive summary built from the document’s own highest-ranked sentences, and an abstractive one written fresh. Reading them side by side makes it obvious when the model has drifted from the source.',
