@@ -5,7 +5,7 @@ import { ACCEPTED_TYPES, MAX_UPLOAD_BYTES } from '@lib/tools';
 import { useAuth } from '@features/auth/useAuth';
 import { useToast } from '@features/toast/useToast';
 import { useUploadDocumentMutation } from '@features/documents/documentsApi';
-import { PATHS } from '@routes/paths';
+import { PATHS, documentPath } from '@routes/paths';
 
 export const useDocumentIntake = () => {
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ export const useDocumentIntake = () => {
       if (result.error) return toast.error(result.error.message);
 
       toast.success(`${result.data.filename} is ready — ${result.data.wordCount} words across ${result.data.pageCount} page(s).`);
-      return navigate(PATHS.dashboard);
+      return navigate(documentPath(result.data.id));
     },
     [isAuthenticated, navigate, toast, uploadDocument],
   );

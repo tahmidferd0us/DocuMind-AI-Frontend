@@ -1,15 +1,22 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { ArrowRight, CheckCircle2, Clock } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Clock, FileText } from 'lucide-react';
 import { ACCEPTED_TYPES, MAX_UPLOAD_BYTES, TOOLS, getTool } from '@lib/tools';
 import { ILLUSTRATIONS } from '@components/illustrations/ToolIllustrations';
 import { UploadDropzone } from '@components/ui';
+import { useAuth } from '@features/auth/useAuth';
+import { useListDocumentsQuery } from '@features/documents/documentsApi';
 import { useDocumentIntake } from '@features/upload/useDocumentIntake';
-import { PATHS } from '@routes/paths';
+import { DOCUMENT_STAGES, PATHS, documentPath } from '@routes/paths';
+
+const stageFor = (toolKey) => (DOCUMENT_STAGES.find((stage) => stage.key === toolKey && stage.ready)?.segment ?? '');
 
 const ToolPage = ({ toolKey }) => {
   const tool = getTool(toolKey);
   const { onFiles, isUploading } = useDocumentIntake();
+  const { isAuthenticated } = useAuth();
+  const { data: documentPage } = useListDocumentsQuery({ page: 1, limit: 5 }, { skip: !isAuthenticated });
+  const recent = (documentPage?.items ?? []).filter((item) => item.status === 'READY').slice(0, 4);
   const Illustration = ILLUSTRATIONS[tool.illustration];
   const related = TOOLS.filter((entry) => entry.key !== tool.key).slice(0, 3);
 
@@ -43,6 +50,26 @@ const ToolPage = ({ toolKey }) => {
           >
             <UploadDropzone onFiles={onFiles} accept={ACCEPTED_TYPES} maxSize={MAX_UPLOAD_BYTES} disabled={isUploading} label={isUploading ? 'Uploading…' : 'Choose files'} />
           </motion.div>
+
+          {recent.length ? (
+            <div className="mx-auto mt-8 max-w-4xl rounded-xl border border-line bg-white p-4 sm:p-5">
+              <p className="text-sm font-medium text-ink">Or continue with a document you already uploaded</p>
+              <ul className="mt-3 flex flex-col gap-1.5">
+                {recent.map((item) => (
+                  <li key={item.id}>
+                    <Link
+                      to={documentPath(item.id, stageFor(tool.key))}
+                      className="group flex items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-surface-muted"
+                    >
+                      <FileText className="size-4 shrink-0 text-brand-600" />
+                      <span className="min-w-0 flex-1 truncate text-sm text-slate-700">{item.filename}</span>
+                      <ArrowRight className="size-4 shrink-0 text-brand-600 transition-transform group-hover:translate-x-0.5" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
 
           <div className="mx-auto mt-8 grid max-w-5xl gap-6 md:grid-cols-2 md:gap-10 lg:gap-16">
             <p className="text-sm leading-relaxed text-slate-600 sm:text-base">{tool.blurb}</p>

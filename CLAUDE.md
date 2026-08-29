@@ -29,7 +29,8 @@ src/
 ├── app/store.js           store built FROM the feature registry
 ├── features/
 │   ├── registry.js        FEATURE REGISTRY — reducers and routes both derive from this
-│   ├── auth/  dashboard/  home/  toast/  tools/  upload/
+│   ├── auth/  dashboard/  documents/  home/  qa/
+│   ├── summaries/  toast/  tools/  upload/
 ├── components/
 │   ├── ui/                reusable, feature-agnostic primitives (+ index.js barrel)
 │   ├── illustrations/     shared inline SVGs used by home and tools
@@ -179,13 +180,50 @@ From that one array come the navbar dropdown, the navbar links, the footer list,
 renders through the same `ToolPage` component. To add a tool: add one entry to `TOOLS` and a path to
 `PATHS`. Do not create a page component per tool, and do not hand-write nav links anywhere.
 
-**When a tool becomes real, it takes over its own route.** Set `ownRoute: true` on the entry —
-`features/tools/index.js` filters those out — and let the owning feature declare the route instead
-(see `features/summaries/index.js`, which claims `PATHS.summarize` as a `protected` route). The tool
-stays in `TOOLS` so nav, footer and the homepage grid keep listing it.
-
 `ready: false` puts a "Soon" badge in the nav and an amber "Not built yet" banner on the page — the
 page still exists and still accepts an upload. When a module ships, flip the flag.
+
+---
+
+## 6a. The document workspace — where the real work happens
+
+The tool pages at `/summarize`, `/ask`, … are **public entry points**: they explain the stage, take
+an upload, and (when signed in) list your recent documents as shortcuts. They do not process
+anything.
+
+All actual work happens inside one document, under `/documents/:documentId`:
+
+```
+/dashboard                      library — upload + table of your documents
+/documents/:id                  workspace shell: header, stage tabs, Outlet
+/documents/:id                  ↳ Overview  (stats, next steps, extracted text)
+/documents/:id/summary          ↳ Summary
+/documents/:id/ask              ↳ Ask
+```
+
+**The document id lives in the URL, so no page has a document picker.** `DocumentWorkspace` fetches
+the document once, guards on `status !== 'READY'`, and passes it down through
+`<Outlet context={{ document }} />`. Stage pages read it with `useOutletContext()` — never refetch
+the document, and never add a selector.
+
+**Stages are contributed by their own feature, not by `documents`.** A feature exports
+`documentStages` instead of `routes`:
+
+```js
+export default { name: 'qa', documentStages: [{ path: 'ask', Component: DocumentAskPage }] };
+```
+
+`features/registry.js` collects every `documentStages` entry and injects them as children of the
+route flagged `withDocumentStages: true` (declared once, in `features/documents/index.js`). So
+`documents` never imports `summaries` or `qa`, and adding a stage stays a one-line change in the
+owning feature. Add its tab to `DOCUMENT_STAGES` in `routes/paths.js` and flip `ready` when it works.
+
+**Navigation rule:** signed-in users see only **My documents** in the navbar — the inline tool links
+are hidden for them. Otherwise the navbar's "Ask" (marketing page) and the workspace tab "Ask"
+(this document's stage) sit on screen together with the same label and different destinations, which
+is genuinely confusing mid-workflow. Keep them mutually exclusive.
+
+Upload always ends at `documentPath(id)` — the new document's workspace — never back at the list.
 
 **Upload is split across two layers on purpose.** `components/ui/UploadDropzone.jsx` is purely
 presentational (takes `onFiles`, no feature imports, so the one-way import rule holds), and

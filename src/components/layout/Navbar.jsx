@@ -118,26 +118,27 @@ const Navbar = () => {
           </AnimatePresence>
         </div>
 
-        <nav className="hidden items-center gap-0.5 lg:flex">
-          {PRIMARY_TOOLS.map((tool) => (
-            <NavLink
-              key={tool.key}
-              to={tool.path}
-              className={({ isActive }) =>
-                cn('rounded-lg px-3 py-2 text-sm font-medium transition-colors', isActive ? 'text-brand-700' : 'text-slate-600 hover:bg-surface-muted hover:text-ink')
-              }
-            >
-              {tool.name}
-            </NavLink>
-          ))}
+        <nav aria-label="Primary" className="hidden items-center gap-0.5 lg:flex">
           {isAuthenticated ? (
             <NavLink
               to={PATHS.dashboard}
               className={({ isActive }) => cn('rounded-lg px-3 py-2 text-sm font-medium transition-colors', isActive ? 'text-brand-700' : 'text-slate-600 hover:bg-surface-muted hover:text-ink')}
             >
-              Workspace
+              My documents
             </NavLink>
-          ) : null}
+          ) : (
+            PRIMARY_TOOLS.map((tool) => (
+              <NavLink
+                key={tool.key}
+                to={tool.path}
+                className={({ isActive }) =>
+                  cn('rounded-lg px-3 py-2 text-sm font-medium transition-colors', isActive ? 'text-brand-700' : 'text-slate-600 hover:bg-surface-muted hover:text-ink')
+                }
+              >
+                {tool.name}
+              </NavLink>
+            ))
+          )}
         </nav>
 
         <div className="ml-auto hidden items-center gap-3 md:flex">
@@ -182,7 +183,7 @@ const Navbar = () => {
                 {isAuthenticated ? (
                   <>
                     <Link to={PATHS.dashboard} className="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-surface-muted">
-                      Workspace
+                      My documents
                     </Link>
                     <Button variant="outline" fullWidth onClick={handleLogout} isLoading={isLoggingOut} leftIcon={<LogOut className="size-4" />}>
                       Sign out

@@ -1,4 +1,3 @@
-import { PATHS } from '@routes/paths';
-import AskPage from './pages/AskPage';
+import DocumentAskPage from './pages/DocumentAskPage';
 
-export default { name: 'qa', routes: [{ path: PATHS.ask, Component: AskPage, layout: 'protected' }] };
+export default { name: 'qa', documentStages: [{ path: 'ask', Component: DocumentAskPage }] };

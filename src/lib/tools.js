@@ -27,7 +27,6 @@ export const TOOLS = [
     icon: ScrollText,
     illustration: 'summary',
     ready: true,
-    ownRoute: true,
     headline: 'Two summaries, so you can check the machine',
     blurb:
       'DocuMind produces an extractive summary built from the document’s own highest-ranked sentences, and an abstractive one written fresh. Reading them side by side makes it obvious when the model has drifted from the source.',
@@ -42,7 +41,6 @@ export const TOOLS = [
     icon: MessagesSquare,
     illustration: 'ask',
     ready: true,
-    ownRoute: true,
     headline: 'Answers grounded in your document',
     blurb:
       'Questions are answered with retrieval-augmented generation: the document is chunked and embedded, the passages most relevant to your question are pulled back, and the answer is written only from those passages.',

@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FileText, Inbox } from 'lucide-react';
 import { Badge, Button, Card, CardBody, CardHeader, ConfirmModal, Table, UploadDropzone } from '@components/ui';
 import { formatBytes, formatDate } from '@lib/format';
 import { DEFAULT_PAGE_SIZE } from '@lib/constants';
 import { ACCEPTED_TYPES, MAX_UPLOAD_BYTES } from '@lib/tools';
+import { documentPath } from '@routes/paths';
 import { useAuth } from '@features/auth/useAuth';
 import { useToast } from '@features/toast/useToast';
 import { useDocumentIntake } from '@features/upload/useDocumentIntake';
@@ -12,6 +14,7 @@ import { useDeleteDocumentMutation, useListDocumentsQuery } from '@features/docu
 const STATUS_TONES = { READY: 'success', PROCESSING: 'warning', FAILED: 'danger' };
 
 const DashboardPage = () => {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const toast = useToast();
   const { onFiles, isUploading } = useDocumentIntake();
@@ -55,7 +58,14 @@ const DashboardPage = () => {
       header: '',
       align: 'right',
       render: (row) => (
-        <Button variant="danger" size="sm" onClick={() => setPendingDelete(row)}>
+        <Button
+          variant="danger"
+          size="sm"
+          onClick={(event) => {
+            event.stopPropagation();
+            setPendingDelete(row);
+          }}
+        >
           Delete
         </Button>
       ),
@@ -73,7 +83,7 @@ const DashboardPage = () => {
     <div className="container-page flex flex-col gap-6 py-8 sm:py-12">
       <div>
         <h1 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">Workspace</h1>
-        <p className="mt-1 text-sm text-slate-500">Signed in as {user?.email}. Uploaded documents are parsed and stored against your account.</p>
+        <p className="mt-1 text-sm text-slate-500">Signed in as {user?.email}. Uploaded documents are parsed and stored against your account. Open one to summarise it or ask questions.</p>
       </div>
 
       <Card>
@@ -95,6 +105,7 @@ const DashboardPage = () => {
           columns={columns}
           data={documents}
           isLoading={isFetching}
+          onRowClick={(row) => row.status === 'READY' && navigate(documentPath(row.id))}
           emptyIcon={<Inbox className="size-6" />}
           emptyTitle="No documents yet"
           emptyDescription="Upload a PDF, Word or text file to get started."

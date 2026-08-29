@@ -1,4 +1,3 @@
-import { PATHS } from '@routes/paths';
-import SummarizePage from './pages/SummarizePage';
+import DocumentSummaryPage from './pages/DocumentSummaryPage';
 
-export default { name: 'summaries', routes: [{ path: PATHS.summarize, Component: SummarizePage, layout: 'protected' }] };
+export default { name: 'summaries', documentStages: [{ path: 'summary', Component: DocumentSummaryPage }] };
