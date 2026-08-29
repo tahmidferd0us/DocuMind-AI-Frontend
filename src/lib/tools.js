@@ -41,7 +41,8 @@ export const TOOLS = [
     tagline: 'Grounded question answering',
     icon: MessagesSquare,
     illustration: 'ask',
-    ready: false,
+    ready: true,
+    ownRoute: true,
     headline: 'Answers grounded in your document',
     blurb:
       'Questions are answered with retrieval-augmented generation: the document is chunked and embedded, the passages most relevant to your question are pulled back, and the answer is written only from those passages.',
