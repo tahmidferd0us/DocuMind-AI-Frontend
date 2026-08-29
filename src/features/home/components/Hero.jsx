@@ -11,7 +11,7 @@ const BENEFITS = [
 ];
 
 const Hero = () => {
-  const onFiles = useDocumentIntake();
+  const { onFiles, isUploading } = useDocumentIntake();
 
   return (
     <section className="border-b border-line">
@@ -26,7 +26,7 @@ const Hero = () => {
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           className="mx-auto mt-6 max-w-4xl sm:mt-8"
         >
-          <UploadDropzone onFiles={onFiles} accept={ACCEPTED_TYPES} maxSize={MAX_UPLOAD_BYTES} />
+          <UploadDropzone onFiles={onFiles} accept={ACCEPTED_TYPES} maxSize={MAX_UPLOAD_BYTES} disabled={isUploading} label={isUploading ? 'Uploading…' : 'Choose files'} />
         </motion.div>
 
         <div className="mx-auto mt-8 grid max-w-5xl gap-6 md:grid-cols-2 md:gap-10 lg:gap-16">

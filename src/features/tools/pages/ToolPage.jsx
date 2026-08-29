@@ -9,7 +9,7 @@ import { PATHS } from '@routes/paths';
 
 const ToolPage = ({ toolKey }) => {
   const tool = getTool(toolKey);
-  const onFiles = useDocumentIntake();
+  const { onFiles, isUploading } = useDocumentIntake();
   const Illustration = ILLUSTRATIONS[tool.illustration];
   const related = TOOLS.filter((entry) => entry.key !== tool.key).slice(0, 3);
 
@@ -41,7 +41,7 @@ const ToolPage = ({ toolKey }) => {
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             className="mx-auto mt-8 max-w-4xl"
           >
-            <UploadDropzone onFiles={onFiles} accept={ACCEPTED_TYPES} maxSize={MAX_UPLOAD_BYTES} />
+            <UploadDropzone onFiles={onFiles} accept={ACCEPTED_TYPES} maxSize={MAX_UPLOAD_BYTES} disabled={isUploading} label={isUploading ? 'Uploading…' : 'Choose files'} />
           </motion.div>
 
           <div className="mx-auto mt-8 grid max-w-5xl gap-6 md:grid-cols-2 md:gap-10 lg:gap-16">
