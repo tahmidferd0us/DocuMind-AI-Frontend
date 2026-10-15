@@ -14,6 +14,7 @@ const router = createBrowserRouter([
     children: [
       ...routesForLayout('public'),
       { element: <ProtectedRoute />, children: routesForLayout('protected') },
+      { element: <ProtectedRoute roles={['ADMIN']} />, children: routesForLayout('admin') },
       { path: '*', Component: NotFoundPage },
     ],
   },

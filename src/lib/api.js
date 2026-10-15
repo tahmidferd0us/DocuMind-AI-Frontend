@@ -4,7 +4,7 @@ import { axiosBaseQuery } from './axiosBaseQuery';
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: axiosBaseQuery(),
-  tagTypes: ['Auth', 'Document', 'Summary', 'Conversation', 'Entity', 'Export'],
+  tagTypes: ['Auth', 'Document', 'Summary', 'Conversation', 'Entity', 'Export', 'AdminAnalytics', 'AdminUsers', 'AdminDocuments'],
   refetchOnReconnect: true,
   endpoints: () => ({}),
 });

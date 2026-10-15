@@ -2,6 +2,10 @@ export const PATHS = {
   home: '/',
   login: '/login',
   dashboard: '/dashboard',
+  admin: '/admin',
+  adminAnalytics: '/admin/analytics',
+  adminUsers: '/admin/users',
+  adminDocuments: '/admin/documents',
   profile: '/profile',
   profileSecurity: '/profile/security',
   profilePreferences: '/profile/preferences',
@@ -21,6 +25,12 @@ export const PROFILE_SECTIONS = [
   { key: 'security', label: 'Security & Password', path: '/profile/security', segment: 'security' },
   { key: 'preferences', label: 'Preferences', path: '/profile/preferences', segment: 'preferences' },
   { key: 'activity', label: 'Activity & Usage', path: '/profile/activity', segment: 'activity' },
+];
+
+export const ADMIN_SECTIONS = [
+  { key: 'overview', label: 'Platform Analytics', path: '/admin', segment: '' },
+  { key: 'users', label: 'User Directory', path: '/admin/users', segment: 'users' },
+  { key: 'documents', label: 'Platform Documents', path: '/admin/documents', segment: 'documents' },
 ];
 
 

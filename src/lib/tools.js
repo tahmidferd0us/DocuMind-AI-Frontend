@@ -65,10 +65,10 @@ export const TOOLS = [
     key: 'analytics',
     name: 'Analytics',
     path: PATHS.analytics,
-    tagline: 'Reading metrics and topics',
+    tagline: 'Platform metrics and diagnostics',
     icon: BarChart3,
     illustration: 'entities',
-    ready: false,
+    ready: true,
     headline: 'Know the shape of a document before you read it',
     blurb:
       'Word count, estimated reading time and topic breakdown for every document you have processed, collected into one dashboard.',

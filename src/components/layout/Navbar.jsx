@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'motion/react';
-import { Activity, ChevronDown, FileText, LayoutGrid, Lock, LogOut, Menu, Sliders, User as UserIcon, X } from 'lucide-react';
+import { Activity, ChevronDown, FileText, LayoutGrid, Lock, LogOut, Menu, ShieldCheck, Sliders, User as UserIcon, X } from 'lucide-react';
 import { cn } from '@lib/cn';
 import { APP_NAME } from '@lib/constants';
 import { PRIMARY_TOOLS, TOOLS } from '@lib/tools';
@@ -153,6 +153,20 @@ const Navbar = () => {
               >
                 My documents
               </NavLink>
+              {user?.role === 'ADMIN' && (
+                <NavLink
+                  to={PATHS.admin}
+                  className={({ isActive }) =>
+                    cn(
+                      'inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
+                      isActive ? 'text-brand-700 bg-brand-50/60 font-semibold' : 'text-brand-600 hover:bg-brand-50/40'
+                    )
+                  }
+                >
+                  <ShieldCheck className="size-4 text-brand-600" />
+                  Admin Panel
+                </NavLink>
+              )}
               <NavLink
                 to={PATHS.profile}
                 className={({ isActive }) =>
@@ -221,6 +235,19 @@ const Navbar = () => {
                       </div>
                       <p className="truncate text-xs text-slate-500 mt-0.5">{user?.email}</p>
                     </div>
+
+                    {user?.role === 'ADMIN' && (
+                      <div className="border-b border-line py-1">
+                        <Link
+                          to={PATHS.admin}
+                          onClick={() => setIsProfileOpen(false)}
+                          className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold text-brand-700 bg-brand-50/70 transition-colors hover:bg-brand-50"
+                        >
+                          <ShieldCheck className="size-4 text-brand-600" />
+                          <span>Admin Dashboard &amp; Analytics</span>
+                        </Link>
+                      </div>
+                    )}
 
                     {/* Profile Subsections */}
                     <div className="py-1">
@@ -347,6 +374,16 @@ const Navbar = () => {
                         <FileText className="size-4 text-slate-500" />
                         My documents
                       </Link>
+                      {user?.role === 'ADMIN' && (
+                        <Link
+                          to={PATHS.admin}
+                          onClick={() => setIsMobileOpen(false)}
+                          className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-semibold text-brand-700 bg-brand-50/70 hover:bg-brand-50"
+                        >
+                          <ShieldCheck className="size-4 text-brand-600" />
+                          Admin Dashboard &amp; Analytics
+                        </Link>
+                      )}
                       <Link
                         to={PATHS.profile}
                         onClick={() => setIsMobileOpen(false)}
