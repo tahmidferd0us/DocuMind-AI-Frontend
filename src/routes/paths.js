@@ -2,6 +2,10 @@ export const PATHS = {
   home: '/',
   login: '/login',
   dashboard: '/dashboard',
+  profile: '/profile',
+  profileSecurity: '/profile/security',
+  profilePreferences: '/profile/preferences',
+  profileActivity: '/profile/activity',
   upload: '/upload',
   summarize: '/summarize',
   ask: '/ask',
@@ -11,6 +15,14 @@ export const PATHS = {
   document: '/documents/:documentId',
   notFound: '*',
 };
+
+export const PROFILE_SECTIONS = [
+  { key: 'general', label: 'General Profile', path: '/profile', segment: '' },
+  { key: 'security', label: 'Security & Password', path: '/profile/security', segment: 'security' },
+  { key: 'preferences', label: 'Preferences', path: '/profile/preferences', segment: 'preferences' },
+  { key: 'activity', label: 'Activity & Usage', path: '/profile/activity', segment: 'activity' },
+];
+
 
 export const documentPath = (documentId, stage = '') => `/documents/${documentId}${stage ? `/${stage}` : ''}`;
 

@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FileText, Inbox } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { FileText, Inbox, User } from 'lucide-react';
+
 import { Badge, Button, Card, CardBody, CardHeader, ConfirmModal, Table, UploadDropzone } from '@components/ui';
 import { formatBytes, formatDate } from '@lib/format';
 import { DEFAULT_PAGE_SIZE } from '@lib/constants';
@@ -81,10 +82,20 @@ const DashboardPage = () => {
 
   return (
     <div className="container-page flex flex-col gap-6 py-8 sm:py-12">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">Workspace</h1>
-        <p className="mt-1 text-sm text-slate-500">Signed in as {user?.email}. Uploaded documents are parsed and stored against your account. Open one to summarise it or ask questions.</p>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">Workspace</h1>
+          <p className="mt-1 text-sm text-slate-500">Signed in as {user?.email}. Uploaded documents are parsed and stored against your account. Open one to summarise it or ask questions.</p>
+        </div>
+        <Link
+          to={PATHS.profile}
+          className="inline-flex items-center gap-2 self-start rounded-lg border border-line bg-white px-3.5 py-2 text-xs font-medium text-slate-700 transition-colors hover:bg-surface-muted hover:text-ink sm:self-center"
+        >
+          <User className="size-3.5 text-slate-500" />
+          <span>Account Settings</span>
+        </Link>
       </div>
+
 
       <Card>
         <CardHeader title="Upload a document" description="PDF, DOCX or TXT. Text is extracted on upload." />

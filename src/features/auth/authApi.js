@@ -19,10 +19,15 @@ export const authApi = api.injectEndpoints({
       transformResponse: (response) => response.data,
       providesTags: ['Auth'],
     }),
+    updateProfile: builder.mutation({
+      query: (payload) => ({ url: '/auth/profile', method: 'PATCH', data: payload }),
+      invalidatesTags: ['Auth'],
+    }),
     changePassword: builder.mutation({
       query: (payload) => ({ url: '/auth/password', method: 'PATCH', data: payload }),
     }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useGetMeQuery, useLazyGetMeQuery, useChangePasswordMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useGetMeQuery, useLazyGetMeQuery, useUpdateProfileMutation, useChangePasswordMutation } = authApi;
+

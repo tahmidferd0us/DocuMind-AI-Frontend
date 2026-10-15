@@ -4,12 +4,14 @@ import documentsModule from './documents';
 import entitiesModule from './entities';
 import exportsModule from './exports';
 import homeModule from './home';
+import profileModule from './profile';
 import qaModule from './qa';
 import summariesModule from './summaries';
 import toastModule from './toast';
 import toolsModule from './tools';
 
-export const featureModules = [homeModule, toolsModule, authModule, dashboardModule, documentsModule, summariesModule, qaModule, entitiesModule, exportsModule, toastModule];
+export const featureModules = [homeModule, toolsModule, authModule, dashboardModule, profileModule, documentsModule, summariesModule, qaModule, entitiesModule, exportsModule, toastModule];
+
 
 export const featureReducers = Object.fromEntries(featureModules.filter((module) => module.reducer).map((module) => [module.name, module.reducer]));
 

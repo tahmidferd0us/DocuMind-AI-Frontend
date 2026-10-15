@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'motion/react';
-import { ChevronDown, LayoutGrid, LogOut, Menu, X } from 'lucide-react';
+import { Activity, ChevronDown, FileText, LayoutGrid, Lock, LogOut, Menu, Sliders, User as UserIcon, X } from 'lucide-react';
 import { cn } from '@lib/cn';
 import { APP_NAME } from '@lib/constants';
 import { PRIMARY_TOOLS, TOOLS } from '@lib/tools';
-import { Button, IconButton } from '@components/ui';
+import { Badge, Button, IconButton } from '@components/ui';
 import { useAuth } from '@features/auth/useAuth';
 import { useToast } from '@features/toast/useToast';
-import { PATHS } from '@routes/paths';
+import { PATHS, PROFILE_SECTIONS } from '@routes/paths';
 
 const Wordmark = () => (
   <span className="flex items-center gap-2 font-semibold tracking-tight text-ink">
@@ -21,6 +21,16 @@ const Wordmark = () => (
     <span className="text-base sm:text-lg">{APP_NAME}</span>
   </span>
 );
+
+const getInitials = (name, email) => {
+  if (name && name.trim()) {
+    const parts = name.trim().split(/\s+/);
+    if (parts.length >= 2) return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+    return name.slice(0, 2).toUpperCase();
+  }
+  if (email) return email.slice(0, 2).toUpperCase();
+  return 'U';
+};
 
 const ToolsMenu = ({ onNavigate }) => (
   <div className="grid gap-1 sm:w-[30rem] sm:grid-cols-2">
@@ -52,7 +62,9 @@ const ToolsMenu = ({ onNavigate }) => (
 const Navbar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isToolsOpen, setIsToolsOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const toolsRef = useRef(null);
+  const profileRef = useRef(null);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const toast = useToast();
@@ -61,13 +73,20 @@ const Navbar = () => {
   useEffect(() => {
     setIsMobileOpen(false);
     setIsToolsOpen(false);
+    setIsProfileOpen(false);
   }, [pathname]);
 
   useEffect(() => {
     const onPointerDown = (event) => {
       if (toolsRef.current && !toolsRef.current.contains(event.target)) setIsToolsOpen(false);
+      if (profileRef.current && !profileRef.current.contains(event.target)) setIsProfileOpen(false);
     };
-    const onEscape = (event) => event.key === 'Escape' && setIsToolsOpen(false);
+    const onEscape = (event) => {
+      if (event.key === 'Escape') {
+        setIsToolsOpen(false);
+        setIsProfileOpen(false);
+      }
+    };
     document.addEventListener('pointerdown', onPointerDown);
     document.addEventListener('keydown', onEscape);
     return () => {
@@ -82,6 +101,8 @@ const Navbar = () => {
     navigate(PATHS.login, { replace: true });
   };
 
+  const initials = getInitials(user?.fullName, user?.email);
+
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-white">
       <div className="container-page flex h-16 items-center gap-3">
@@ -92,7 +113,10 @@ const Navbar = () => {
         <div ref={toolsRef} className="relative hidden md:block">
           <button
             type="button"
-            onClick={() => setIsToolsOpen((open) => !open)}
+            onClick={() => {
+              setIsToolsOpen((open) => !open);
+              setIsProfileOpen(false);
+            }}
             aria-expanded={isToolsOpen}
             aria-haspopup="true"
             className="flex items-center gap-2 rounded-lg border border-line px-3 py-2 text-sm font-medium text-ink transition-colors hover:bg-surface-muted"
@@ -118,14 +142,26 @@ const Navbar = () => {
           </AnimatePresence>
         </div>
 
-        <nav aria-label="Primary" className="hidden items-center gap-0.5 lg:flex">
+        <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">
           {isAuthenticated ? (
-            <NavLink
-              to={PATHS.dashboard}
-              className={({ isActive }) => cn('rounded-lg px-3 py-2 text-sm font-medium transition-colors', isActive ? 'text-brand-700' : 'text-slate-600 hover:bg-surface-muted hover:text-ink')}
-            >
-              My documents
-            </NavLink>
+            <>
+              <NavLink
+                to={PATHS.dashboard}
+                className={({ isActive }) =>
+                  cn('rounded-lg px-3 py-2 text-sm font-medium transition-colors', isActive ? 'text-brand-700 bg-brand-50/60' : 'text-slate-600 hover:bg-surface-muted hover:text-ink')
+                }
+              >
+                My documents
+              </NavLink>
+              <NavLink
+                to={PATHS.profile}
+                className={({ isActive }) =>
+                  cn('rounded-lg px-3 py-2 text-sm font-medium transition-colors', isActive ? 'text-brand-700 bg-brand-50/60' : 'text-slate-600 hover:bg-surface-muted hover:text-ink')
+                }
+              >
+                Profile &amp; Settings
+              </NavLink>
+            </>
           ) : (
             PRIMARY_TOOLS.map((tool) => (
               <NavLink
@@ -143,12 +179,114 @@ const Navbar = () => {
 
         <div className="ml-auto hidden items-center gap-3 md:flex">
           {isAuthenticated ? (
-            <>
-              <span className="max-w-[12rem] truncate text-sm text-slate-600">{user?.fullName ?? user?.email}</span>
-              <Button variant="outline" size="sm" onClick={handleLogout} isLoading={isLoggingOut} leftIcon={<LogOut className="size-4" />}>
-                Sign out
-              </Button>
-            </>
+            <div ref={profileRef} className="relative">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsProfileOpen((open) => !open);
+                  setIsToolsOpen(false);
+                }}
+                aria-expanded={isProfileOpen}
+                aria-haspopup="true"
+                className="flex items-center gap-2.5 rounded-full border border-line bg-white py-1 pl-1 pr-3 text-left transition-colors hover:bg-surface-muted"
+              >
+                <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand-50 text-xs font-bold text-brand-700 ring-1 ring-brand-200">
+                  {initials}
+                </div>
+                <div className="max-w-[10rem] truncate text-xs font-medium text-slate-800">
+                  {user?.fullName || user?.email}
+                </div>
+                <ChevronDown className={cn('size-3.5 text-slate-400 transition-transform', isProfileOpen && 'rotate-180')} />
+              </button>
+
+              <AnimatePresence>
+                {isProfileOpen ? (
+                  <motion.div
+                    key="profile-dropdown"
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute right-0 top-full z-50 mt-2 w-64 rounded-xl border border-line bg-white p-2 shadow-xl"
+                  >
+                    {/* User summary in dropdown */}
+                    <div className="border-b border-line px-3 pb-3 pt-2">
+                      <div className="flex items-center justify-between">
+                        <p className="truncate text-sm font-semibold text-slate-900">
+                          {user?.fullName || 'User Profile'}
+                        </p>
+                        <Badge tone={user?.role === 'ADMIN' ? 'brand' : 'neutral'} className="text-[10px]">
+                          {user?.role ?? 'USER'}
+                        </Badge>
+                      </div>
+                      <p className="truncate text-xs text-slate-500 mt-0.5">{user?.email}</p>
+                    </div>
+
+                    {/* Profile Subsections */}
+                    <div className="py-1">
+                      <Link
+                        to={PATHS.profile}
+                        onClick={() => setIsProfileOpen(false)}
+                        className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 transition-colors hover:bg-surface-muted hover:text-ink"
+                      >
+                        <UserIcon className="size-4 text-slate-400" />
+                        <span>General Profile</span>
+                      </Link>
+                      <Link
+                        to={PATHS.profileSecurity}
+                        onClick={() => setIsProfileOpen(false)}
+                        className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 transition-colors hover:bg-surface-muted hover:text-ink"
+                      >
+                        <Lock className="size-4 text-slate-400" />
+                        <span>Security &amp; Password</span>
+                      </Link>
+                      <Link
+                        to={PATHS.profilePreferences}
+                        onClick={() => setIsProfileOpen(false)}
+                        className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 transition-colors hover:bg-surface-muted hover:text-ink"
+                      >
+                        <Sliders className="size-4 text-slate-400" />
+                        <span>Preferences</span>
+                      </Link>
+                      <Link
+                        to={PATHS.profileActivity}
+                        onClick={() => setIsProfileOpen(false)}
+                        className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 transition-colors hover:bg-surface-muted hover:text-ink"
+                      >
+                        <Activity className="size-4 text-slate-400" />
+                        <span>Activity &amp; Usage</span>
+                      </Link>
+                    </div>
+
+                    <div className="border-t border-line py-1">
+                      <Link
+                        to={PATHS.dashboard}
+                        onClick={() => setIsProfileOpen(false)}
+                        className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 transition-colors hover:bg-surface-muted hover:text-ink"
+                      >
+                        <FileText className="size-4 text-slate-400" />
+                        <span>My documents</span>
+                      </Link>
+                    </div>
+
+                    <div className="border-t border-line pt-1">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsProfileOpen(false);
+                          handleLogout();
+                        }}
+                        disabled={isLoggingOut}
+                        className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-red-600 transition-colors hover:bg-red-50"
+                      >
+                        <LogOut className="size-4" />
+                        <span>{isLoggingOut ? 'Signing out…' : 'Sign out'}</span>
+                      </button>
+                    </div>
+                  </motion.div>
+                ) : null}
+              </AnimatePresence>
+            </div>
           ) : (
             <>
               <Link to={PATHS.login} className="rounded-lg border border-line px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-surface-muted">
@@ -182,12 +320,72 @@ const Navbar = () => {
               <div className="flex flex-col gap-2 border-t border-line pt-4">
                 {isAuthenticated ? (
                   <>
-                    <Link to={PATHS.dashboard} className="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-surface-muted">
-                      My documents
-                    </Link>
-                    <Button variant="outline" fullWidth onClick={handleLogout} isLoading={isLoggingOut} leftIcon={<LogOut className="size-4" />}>
-                      Sign out
-                    </Button>
+                    {/* User info header for mobile */}
+                    <div className="flex items-center gap-3 rounded-lg bg-surface-muted p-3">
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-50 text-sm font-bold text-brand-700 ring-1 ring-brand-200">
+                        {initials}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center justify-between">
+                          <p className="truncate text-sm font-semibold text-slate-900">
+                            {user?.fullName || 'User Profile'}
+                          </p>
+                          <Badge tone={user?.role === 'ADMIN' ? 'brand' : 'neutral'} className="text-[10px]">
+                            {user?.role ?? 'USER'}
+                          </Badge>
+                        </div>
+                        <p className="truncate text-xs text-slate-500">{user?.email}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-0.5">
+                      <Link
+                        to={PATHS.dashboard}
+                        onClick={() => setIsMobileOpen(false)}
+                        className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-surface-muted"
+                      >
+                        <FileText className="size-4 text-slate-500" />
+                        My documents
+                      </Link>
+                      <Link
+                        to={PATHS.profile}
+                        onClick={() => setIsMobileOpen(false)}
+                        className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-surface-muted"
+                      >
+                        <UserIcon className="size-4 text-slate-500" />
+                        General Profile
+                      </Link>
+                      <Link
+                        to={PATHS.profileSecurity}
+                        onClick={() => setIsMobileOpen(false)}
+                        className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-surface-muted"
+                      >
+                        <Lock className="size-4 text-slate-500" />
+                        Security &amp; Password
+                      </Link>
+                      <Link
+                        to={PATHS.profilePreferences}
+                        onClick={() => setIsMobileOpen(false)}
+                        className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-surface-muted"
+                      >
+                        <Sliders className="size-4 text-slate-500" />
+                        Preferences
+                      </Link>
+                      <Link
+                        to={PATHS.profileActivity}
+                        onClick={() => setIsMobileOpen(false)}
+                        className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-surface-muted"
+                      >
+                        <Activity className="size-4 text-slate-500" />
+                        Activity &amp; Usage
+                      </Link>
+                    </div>
+
+                    <div className="border-t border-line pt-2">
+                      <Button variant="outline" fullWidth onClick={handleLogout} isLoading={isLoggingOut} leftIcon={<LogOut className="size-4" />}>
+                        Sign out
+                      </Button>
+                    </div>
                   </>
                 ) : (
                   <>
@@ -212,3 +410,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

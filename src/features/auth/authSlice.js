@@ -42,9 +42,13 @@ const authSlice = createSlice({
       .addMatcher(authApi.endpoints.getMe.matchRejected, (state, action) => {
         if (!action.meta.condition) clearCredentials(state);
       })
+      .addMatcher(authApi.endpoints.updateProfile.matchFulfilled, (state, action) => {
+        state.user = action.payload.data ?? action.payload;
+      })
       .addMatcher(authApi.endpoints.logout.matchFulfilled, clearCredentials)
       .addMatcher(authApi.endpoints.changePassword.matchFulfilled, clearCredentials);
   },
+
 });
 
 export const { setCredentials, sessionExpired, bootstrapFinished } = authSlice.actions;

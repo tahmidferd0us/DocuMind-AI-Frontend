@@ -55,8 +55,14 @@ const Footer = () => (
                 Workspace
               </Link>
             </li>
+            <li>
+              <Link to={PATHS.profile} className="text-sm text-slate-500 transition-colors hover:text-brand-700">
+                Profile &amp; Settings
+              </Link>
+            </li>
           </ul>
         </div>
+
 
         <div>
           <h3 className="text-xs font-semibold uppercase tracking-wide text-ink">Project</h3>
