@@ -1,4 +1,5 @@
 import adminModule from './admin';
+import analyticsModule from './analytics';
 import authModule from './auth';
 import dashboardModule from './dashboard';
 import documentsModule from './documents';
@@ -22,6 +23,7 @@ export const featureModules = [
   summariesModule,
   qaModule,
   entitiesModule,
+  analyticsModule,
   exportsModule,
   toastModule,
 ];

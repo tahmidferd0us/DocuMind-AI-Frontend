@@ -1,5 +1,5 @@
 import { Link, useOutletContext } from 'react-router-dom';
-import { ArrowRight, MessagesSquare, ScrollText } from 'lucide-react';
+import { ArrowRight, BarChart3, FileDown, MessagesSquare, ScrollText, Tags } from 'lucide-react';
 import { Card, CardBody, CardHeader, Spinner } from '@components/ui';
 import { documentPath } from '@routes/paths';
 import { useGetDocumentTextQuery } from '../documentsApi';
@@ -7,6 +7,9 @@ import { useGetDocumentTextQuery } from '../documentsApi';
 const NEXT_STEPS = [
   { segment: 'summary', icon: ScrollText, title: 'Summarize it', copy: 'Extractive and abstractive summaries, side by side.' },
   { segment: 'ask', icon: MessagesSquare, title: 'Ask about it', copy: 'Answers grounded in the document, with page citations.' },
+  { segment: 'entities', icon: Tags, title: 'Extract entities', copy: 'Named entities and key phrases via spaCy & KeyBERT.' },
+  { segment: 'analytics', icon: BarChart3, title: 'Document analytics', copy: 'Flesch readability score, reading pace, and lexical stats.' },
+  { segment: 'export', icon: FileDown, title: 'Export report', copy: 'Download a consolidated PDF or DOCX executive report.' },
 ];
 
 const Stat = ({ label, value }) => (

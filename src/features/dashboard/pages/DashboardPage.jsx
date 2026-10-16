@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FileText, Inbox, User } from 'lucide-react';
+import { FileText, Inbox, Search, User } from 'lucide-react';
 
-import { Badge, Button, Card, CardBody, CardHeader, ConfirmModal, Table, UploadDropzone } from '@components/ui';
+import { Badge, Button, Card, CardBody, CardHeader, ConfirmModal, Input, Select, Table, UploadDropzone } from '@components/ui';
 import { formatBytes, formatDate } from '@lib/format';
 import { DEFAULT_PAGE_SIZE } from '@lib/constants';
 import { ACCEPTED_TYPES, MAX_UPLOAD_BYTES } from '@lib/tools';
@@ -14,6 +14,13 @@ import { useDeleteDocumentMutation, useListDocumentsQuery } from '@features/docu
 
 const STATUS_TONES = { READY: 'success', PROCESSING: 'warning', FAILED: 'danger' };
 
+const STATUS_OPTIONS = [
+  { value: '', label: 'All Statuses' },
+  { value: 'READY', label: 'Ready' },
+  { value: 'PROCESSING', label: 'Processing' },
+  { value: 'FAILED', label: 'Failed' },
+];
+
 const DashboardPage = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -21,9 +28,16 @@ const DashboardPage = () => {
   const { onFiles, isUploading } = useDocumentIntake();
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
+  const [search, setSearch] = useState('');
+  const [status, setStatus] = useState('');
   const [pendingDelete, setPendingDelete] = useState(null);
 
-  const { data, isFetching } = useListDocumentsQuery({ page, limit: pageSize });
+  const { data, isFetching } = useListDocumentsQuery({
+    page,
+    limit: pageSize,
+    search: search.trim(),
+    status,
+  });
   const [deleteDocument, { isLoading: isDeleting }] = useDeleteDocumentMutation();
 
   const documents = data?.items ?? [];
@@ -112,6 +126,32 @@ const DashboardPage = () => {
 
       <Card>
         <CardHeader title="Your documents" description={meta ? `${meta.total} document(s) stored` : 'Loading…'} />
+        <div className="flex flex-col gap-3 border-t border-line p-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="relative flex-1 max-w-sm">
+            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
+            <input
+              type="text"
+              placeholder="Search documents by name…"
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
+              className="w-full rounded-lg border border-line bg-white py-2 pl-9 pr-3 text-sm text-ink placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+            />
+          </div>
+
+          <div className="w-full sm:w-48">
+            <Select
+              value={status}
+              onChange={(e) => {
+                setStatus(e.target.value);
+                setPage(1);
+              }}
+              options={STATUS_OPTIONS}
+            />
+          </div>
+        </div>
         <Table
           columns={columns}
           data={documents}

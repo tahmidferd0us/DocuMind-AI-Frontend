@@ -12,7 +12,15 @@ export const summariesApi = api.injectEndpoints({
       transformResponse: (response) => response.data,
       invalidatesTags: (result, error, { documentId }) => [{ type: 'Summary', id: documentId }],
     }),
+    evaluateSummary: builder.mutation({
+      query: ({ documentId, reference, candidateType }) => ({
+        url: `/summaries/${documentId}/evaluate`,
+        method: 'POST',
+        data: { reference, candidateType },
+      }),
+      transformResponse: (response) => response.data,
+    }),
   }),
 });
 
-export const { useGetSummaryQuery, useGenerateSummaryMutation } = summariesApi;
+export const { useGetSummaryQuery, useGenerateSummaryMutation, useEvaluateSummaryMutation } = summariesApi;

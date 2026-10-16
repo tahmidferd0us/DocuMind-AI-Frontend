@@ -14,7 +14,7 @@ const loadPreferences = () => {
 const defaultPreferences = {
   defaultSummaryMethod: 'extractive',
   defaultSentenceCount: 5,
-  defaultExportFormat: 'markdown',
+  defaultExportFormat: 'pdf',
   defaultQaStyle: 'grounded',
   emailNotifications: true,
   activityLogging: true,

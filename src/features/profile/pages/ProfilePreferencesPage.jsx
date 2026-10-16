@@ -32,9 +32,8 @@ const SENTENCE_OPTIONS = [
 ];
 
 const EXPORT_FORMATS = [
-  { value: 'markdown', label: 'Markdown (.md) — Best for documentation & notes' },
-  { value: 'txt', label: 'Plain Text (.txt) — Universal raw text format' },
-  { value: 'json', label: 'JSON (.json) — Machine readable structure' },
+  { value: 'pdf', label: 'PDF Document (.pdf) — Formatted executive analysis report' },
+  { value: 'docx', label: 'Word Document (.docx) — Editable Microsoft Word report' },
 ];
 
 const QA_STYLES = [

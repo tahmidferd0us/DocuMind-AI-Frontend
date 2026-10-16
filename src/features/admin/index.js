@@ -18,11 +18,5 @@ export default {
         { path: 'documents', Component: AdminDocumentsPage },
       ],
     },
-    {
-      path: PATHS.analytics,
-      Component: AdminLayout,
-      layout: 'admin',
-      children: [{ index: true, Component: AdminOverviewPage }],
-    },
   ],
 };

@@ -3,7 +3,15 @@ import { api } from '@lib/api';
 export const documentsApi = api.injectEndpoints({
   endpoints: (builder) => ({
     listDocuments: builder.query({
-      query: ({ page = 1, limit = 10 } = {}) => ({ url: '/documents', params: { page, limit } }),
+      query: ({ page = 1, limit = 10, search, status } = {}) => ({
+        url: '/documents',
+        params: {
+          page,
+          limit,
+          ...(search ? { search } : {}),
+          ...(status ? { status } : {}),
+        },
+      }),
       transformResponse: (response) => ({ items: response.data, meta: response.meta }),
       providesTags: ['Document'],
     }),

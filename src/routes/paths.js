@@ -41,5 +41,6 @@ export const DOCUMENT_STAGES = [
   { key: 'summary', label: 'Summary', segment: 'summary', ready: true },
   { key: 'ask', label: 'Ask', segment: 'ask', ready: true },
   { key: 'entities', label: 'Entities', segment: 'entities', ready: true },
+  { key: 'analytics', label: 'Analytics', segment: 'analytics', ready: true },
   { key: 'export', label: 'Export', segment: 'export', ready: true },
 ];
