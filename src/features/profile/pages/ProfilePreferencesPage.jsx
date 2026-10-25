@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Check, RotateCcw, Sliders, Sparkles } from 'lucide-react';
+import { Check, Moon, RotateCcw, Sparkles, Sun } from 'lucide-react';
 import { Button, Card, CardBody, CardHeader, Select } from '@components/ui';
 import { useToast } from '@features/toast/useToast';
+import { useTheme } from '@lib/theme';
 import {
   resetPreferences,
   selectUserPreferences,
@@ -45,12 +46,18 @@ const ProfilePreferencesPage = () => {
   const dispatch = useDispatch();
   const toast = useToast();
   const savedPreferences = useSelector(selectUserPreferences);
+  const { theme, setTheme } = useTheme();
 
-  const [prefs, setPrefs] = useState({ ...savedPreferences });
+  const [prefs, setPrefs] = useState({ ...savedPreferences, theme });
   const [isSaved, setIsSaved] = useState(false);
 
   const handleMethodChange = (method) => {
     setPrefs((prev) => ({ ...prev, defaultSummaryMethod: method }));
+  };
+
+  const handleThemeChange = (newTheme) => {
+    setTheme(newTheme);
+    setPrefs((prev) => ({ ...prev, theme: newTheme }));
   };
 
   const handleSave = (e) => {
@@ -64,9 +71,10 @@ const ProfilePreferencesPage = () => {
   const handleReset = () => {
     dispatch(resetPreferences());
     setPrefs({
+      theme,
       defaultSummaryMethod: 'extractive',
       defaultSentenceCount: 5,
-      defaultExportFormat: 'markdown',
+      defaultExportFormat: 'pdf',
       defaultQaStyle: 'grounded',
       emailNotifications: true,
       activityLogging: true,
@@ -76,6 +84,78 @@ const ProfilePreferencesPage = () => {
 
   return (
     <form onSubmit={handleSave} className="flex flex-col gap-6">
+      {/* Interface Appearance Defaults */}
+      <Card>
+        <CardHeader
+          title="Interface Appearance"
+          description="Choose between light and dark themes. Your choice is remembered across sessions and logins."
+        />
+        <CardBody className="flex flex-col gap-4">
+          <div>
+            <label className="text-sm font-semibold text-slate-900 dark:text-slate-100">Color Theme</label>
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+              Customize the look and feel of DocuMind AI to suit your lighting conditions.
+            </p>
+
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+              <button
+                type="button"
+                onClick={() => handleThemeChange('light')}
+                className={`flex items-start gap-3.5 rounded-xl border p-4 text-left transition-all ${
+                  theme === 'light'
+                    ? 'border-brand-600 bg-brand-50/50 ring-1 ring-brand-500 dark:border-brand-500 dark:bg-brand-950/40'
+                    : 'border-line bg-white hover:border-slate-300 dark:bg-slate-900 dark:border-slate-800 dark:hover:border-slate-700'
+                }`}
+              >
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-amber-50 text-amber-600 dark:bg-amber-950/60 dark:text-amber-400">
+                  <Sun className="size-5" />
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">Light Mode</span>
+                    {theme === 'light' && (
+                      <span className="rounded-full bg-brand-100 px-2 py-0.5 text-[10px] font-semibold text-brand-700 dark:bg-brand-900 dark:text-brand-300">
+                        Active
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                    Clean, high-clarity appearance recommended for well-lit rooms.
+                  </p>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleThemeChange('dark')}
+                className={`flex items-start gap-3.5 rounded-xl border p-4 text-left transition-all ${
+                  theme === 'dark'
+                    ? 'border-brand-600 bg-brand-50/50 ring-1 ring-brand-500 dark:border-brand-500 dark:bg-brand-950/40'
+                    : 'border-line bg-white hover:border-slate-300 dark:bg-slate-900 dark:border-slate-800 dark:hover:border-slate-700'
+                }`}
+              >
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400">
+                  <Moon className="size-5" />
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">Dark Mode</span>
+                    {theme === 'dark' && (
+                      <span className="rounded-full bg-brand-100 px-2 py-0.5 text-[10px] font-semibold text-brand-700 dark:bg-brand-900 dark:text-brand-300">
+                        Active
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                    Reduced glare and eye strain for night study and low-light environments.
+                  </p>
+                </div>
+              </button>
+            </div>
+          </div>
+        </CardBody>
+      </Card>
+
       {/* AI Processing Defaults */}
       <Card>
         <CardHeader
@@ -85,8 +165,8 @@ const ProfilePreferencesPage = () => {
         <CardBody className="flex flex-col gap-6">
           {/* Summary Method Choice */}
           <div>
-            <label className="text-sm font-semibold text-slate-900">Default Summarisation Method</label>
-            <p className="mt-0.5 text-xs text-slate-500">
+            <label className="text-sm font-semibold text-slate-900 dark:text-slate-100">Default Summarisation Method</label>
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
               Choose the primary summarisation algorithm used for initial document summaries.
             </p>
 
@@ -100,17 +180,17 @@ const ProfilePreferencesPage = () => {
                     onClick={() => handleMethodChange(method.id)}
                     className={`flex flex-col text-left rounded-xl border p-4 transition-all ${
                       selected
-                        ? 'border-brand-600 bg-brand-50/40 ring-1 ring-brand-500'
-                        : 'border-line bg-white hover:border-slate-300'
+                        ? 'border-brand-600 bg-brand-50/40 ring-1 ring-brand-500 dark:border-brand-500 dark:bg-brand-950/40'
+                        : 'border-line bg-white hover:border-slate-300 dark:bg-slate-900 dark:border-slate-800 dark:hover:border-slate-700'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-semibold text-slate-900">{method.title}</span>
-                      <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-600">
+                      <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">{method.title}</span>
+                      <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300">
                         {method.tag}
                       </span>
                     </div>
-                    <p className="mt-2 text-xs leading-relaxed text-slate-500">{method.description}</p>
+                    <p className="mt-2 text-xs leading-relaxed text-slate-500 dark:text-slate-400">{method.description}</p>
                   </button>
                 );
               })}
@@ -166,8 +246,8 @@ const ProfilePreferencesPage = () => {
                 className="mt-0.5 size-4 rounded border-line text-brand-600 focus:ring-brand-500"
               />
               <div>
-                <span className="text-sm font-medium text-slate-800">Processing Completion Alerts</span>
-                <p className="text-xs text-slate-500">
+                <span className="text-sm font-medium text-slate-800 dark:text-slate-200">Processing Completion Alerts</span>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
                   Receive browser notifications when large document processing completes.
                 </p>
               </div>
@@ -183,8 +263,8 @@ const ProfilePreferencesPage = () => {
                 className="mt-0.5 size-4 rounded border-line text-brand-600 focus:ring-brand-500"
               />
               <div>
-                <span className="text-sm font-medium text-slate-800">Workspace Activity Tracking</span>
-                <p className="text-xs text-slate-500">
+                <span className="text-sm font-medium text-slate-800 dark:text-slate-200">Workspace Activity Tracking</span>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
                   Track reading stats, word counts, and summary queries on your profile activity dashboard.
                 </p>
               </div>

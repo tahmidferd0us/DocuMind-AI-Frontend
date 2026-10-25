@@ -87,31 +87,31 @@ const DocumentAnalyticsPage = () => {
             </div>
 
             <div className="grid gap-4 sm:grid-cols-3">
-              <div className="rounded-xl border border-line bg-white p-4">
-                <div className="flex items-center gap-2 text-slate-500 text-xs font-semibold uppercase tracking-wider">
-                  <Sparkles className="size-4 text-brand-600" />
+              <div className="rounded-xl border border-line bg-white dark:bg-slate-900 dark:border-slate-800 p-4">
+                <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase tracking-wider">
+                  <Sparkles className="size-4 text-brand-600 dark:text-brand-400" />
                   Vocabulary Richness
                 </div>
                 <div className="mt-2 text-2xl font-bold text-ink">{vocabulary_richness_pct}%</div>
-                <p className="mt-1 text-xs text-slate-500">{unique_words.toLocaleString()} unique word roots</p>
+                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{unique_words.toLocaleString()} unique word roots</p>
               </div>
 
-              <div className="rounded-xl border border-line bg-white p-4">
-                <div className="flex items-center gap-2 text-slate-500 text-xs font-semibold uppercase tracking-wider">
-                  <FileText className="size-4 text-emerald-600" />
+              <div className="rounded-xl border border-line bg-white dark:bg-slate-900 dark:border-slate-800 p-4">
+                <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase tracking-wider">
+                  <FileText className="size-4 text-emerald-600 dark:text-emerald-400" />
                   Avg Words / Sentence
                 </div>
                 <div className="mt-2 text-2xl font-bold text-ink">{avg_words_per_sentence}</div>
-                <p className="mt-1 text-xs text-slate-500">Across {sentence_count.toLocaleString()} sentences</p>
+                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Across {sentence_count.toLocaleString()} sentences</p>
               </div>
 
-              <div className="rounded-xl border border-line bg-white p-4">
-                <div className="flex items-center gap-2 text-slate-500 text-xs font-semibold uppercase tracking-wider">
-                  <Hash className="size-4 text-amber-600" />
+              <div className="rounded-xl border border-line bg-white dark:bg-slate-900 dark:border-slate-800 p-4">
+                <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase tracking-wider">
+                  <Hash className="size-4 text-amber-600 dark:text-amber-400" />
                   Avg Chars / Word
                 </div>
                 <div className="mt-2 text-2xl font-bold text-ink">{avg_chars_per_word}</div>
-                <p className="mt-1 text-xs text-slate-500">Syllabic complexity indicator</p>
+                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Syllabic complexity indicator</p>
               </div>
             </div>
           </CardBody>

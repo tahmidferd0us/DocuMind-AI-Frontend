@@ -25,7 +25,7 @@ const DocumentEntitiesPage = () => {
       <Card>
         <CardHeader title="Extraction" description="Named entities via spaCy, key phrases via KeyBERT." />
         <div className="flex flex-col gap-3 border-t border-line p-4 sm:flex-row sm:items-center sm:justify-between sm:p-6">
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-500 dark:text-slate-400">
             {entitySet ? `${entitySet.totalFound} entities · ${entitySet.keywords.length} key phrases · updated ${formatDate(entitySet.updatedAt)}` : 'Nothing extracted yet.'}
           </p>
           <Button onClick={handleExtract} isLoading={isExtracting} leftIcon={<Tags className="size-4" />} fullWidth className="sm:w-auto">
@@ -46,19 +46,19 @@ const DocumentEntitiesPage = () => {
             <CardHeader title="Named entities" description={entitySet ? `${groups.length} groups` : 'Grouped by type'} />
             <CardBody>
               {!entitySet ? (
-                <p className="text-sm text-slate-400">Nothing extracted yet.</p>
+                <p className="text-sm text-slate-400 dark:text-slate-500">Nothing extracted yet.</p>
               ) : groups.length === 0 ? (
-                <p className="text-sm text-slate-400">No named entities found in this document.</p>
+                <p className="text-sm text-slate-400 dark:text-slate-500">No named entities found in this document.</p>
               ) : (
                 <ul className="flex flex-col gap-4">
                   {groups.map(([group, items]) => (
                     <li key={group}>
-                      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{group}</p>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{group}</p>
                       <div className="mt-2 flex flex-wrap gap-1.5">
                         {items.map((item) => (
                           <Badge key={`${group}-${item.name}`} tone="brand" className="max-w-full break-words">
                             {item.name}
-                            {item.count > 1 ? <span className="ml-1 text-brand-500">×{item.count}</span> : null}
+                            {item.count > 1 ? <span className="ml-1 text-brand-500 dark:text-brand-400">×{item.count}</span> : null}
                           </Badge>
                         ))}
                       </div>
@@ -73,16 +73,16 @@ const DocumentEntitiesPage = () => {
             <CardHeader title="Key phrases" description={entitySet ? `${entitySet.keywords.length} ranked` : 'Ranked by relevance'} />
             <CardBody>
               {!entitySet ? (
-                <p className="text-sm text-slate-400">Nothing extracted yet.</p>
+                <p className="text-sm text-slate-400 dark:text-slate-500">Nothing extracted yet.</p>
               ) : (
                 <ul className="flex flex-col gap-2">
                   {entitySet.keywords.map((keyword) => (
                     <li key={keyword.keyword} className="flex items-center gap-3">
-                      <span className="min-w-0 flex-1 truncate text-sm text-slate-700">{keyword.keyword}</span>
-                      <span className="hidden h-1.5 w-16 shrink-0 overflow-hidden rounded-full bg-slate-100 sm:block sm:w-24">
+                      <span className="min-w-0 flex-1 truncate text-sm text-slate-700 dark:text-slate-200">{keyword.keyword}</span>
+                      <span className="hidden h-1.5 w-16 shrink-0 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800 sm:block sm:w-24">
                         <span className="block h-full rounded-full bg-brand-500" style={{ width: `${Math.round(keyword.score * 100)}%` }} />
                       </span>
-                      <span className="w-9 shrink-0 text-right text-xs tabular-nums text-slate-500">{keyword.score.toFixed(2)}</span>
+                      <span className="w-9 shrink-0 text-right text-xs tabular-nums text-slate-500 dark:text-slate-400">{keyword.score.toFixed(2)}</span>
                     </li>
                   ))}
                 </ul>

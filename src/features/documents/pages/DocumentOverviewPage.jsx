@@ -13,8 +13,8 @@ const NEXT_STEPS = [
 ];
 
 const Stat = ({ label, value }) => (
-  <div className="rounded-lg border border-line bg-white p-4">
-    <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{label}</p>
+  <div className="rounded-lg border border-line bg-white dark:bg-slate-900 dark:border-slate-800 p-4">
+    <p className="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">{label}</p>
     <p className="mt-1 text-xl font-semibold text-ink">{value}</p>
   </div>
 );
@@ -39,17 +39,17 @@ const DocumentOverviewPage = () => {
           <Link
             key={step.segment}
             to={documentPath(document.id, step.segment)}
-            className="group flex items-start gap-4 rounded-xl border border-line bg-white p-5 transition-shadow hover:shadow-md"
+            className="group flex items-start gap-4 rounded-xl border border-line bg-white dark:bg-slate-900 dark:border-slate-800 p-5 transition-shadow hover:shadow-md"
           >
-            <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600 dark:bg-brand-950 dark:text-brand-300">
               <step.icon className="size-5" />
             </span>
             <span className="min-w-0 flex-1">
               <span className="flex items-center gap-1 text-sm font-semibold text-ink">
                 {step.title}
-                <ArrowRight className="size-4 text-brand-600 transition-transform group-hover:translate-x-0.5" />
+                <ArrowRight className="size-4 text-brand-600 dark:text-brand-400 transition-transform group-hover:translate-x-0.5" />
               </span>
-              <span className="mt-1 block text-sm text-slate-500">{step.copy}</span>
+              <span className="mt-1 block text-sm text-slate-500 dark:text-slate-400">{step.copy}</span>
             </span>
           </Link>
         ))}
@@ -63,7 +63,7 @@ const DocumentOverviewPage = () => {
               <Spinner size="lg" className="text-brand-600" />
             </div>
           ) : (
-            <pre className="max-h-96 overflow-auto whitespace-pre-wrap break-words rounded-lg bg-surface-muted p-4 text-xs leading-relaxed text-slate-700">
+            <pre className="max-h-96 overflow-auto whitespace-pre-wrap break-words rounded-lg bg-surface-muted p-4 text-xs leading-relaxed text-slate-700 dark:text-slate-200">
               {data?.text ?? 'No text available.'}
             </pre>
           )}

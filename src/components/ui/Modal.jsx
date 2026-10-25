@@ -60,7 +60,7 @@ const Modal = ({ isOpen, onClose, title, description, size = 'md', footer, close
           transition={{ duration: 0.16 }}
           className="fixed inset-0 z-50 flex items-end justify-center p-0 sm:items-center sm:p-4"
         >
-          <div onClick={closeOnBackdrop ? onClose : undefined} className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm" />
+          <div onClick={closeOnBackdrop ? onClose : undefined} className="absolute inset-0 bg-slate-900/60 dark:bg-black/70 backdrop-blur-sm" />
           <motion.div
             ref={panelRef}
             role="dialog"
@@ -70,13 +70,13 @@ const Modal = ({ isOpen, onClose, title, description, size = 'md', footer, close
             animate={{ y: 0, scale: 1 }}
             exit={{ y: 16, scale: 0.98 }}
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className={cn('relative flex max-h-[92vh] w-full flex-col rounded-t-2xl bg-white shadow-xl sm:rounded-2xl', SIZES[size], className)}
+            className={cn('relative flex max-h-[92vh] w-full flex-col rounded-t-2xl bg-white dark:bg-slate-900 dark:border dark:border-slate-800 shadow-xl sm:rounded-2xl', SIZES[size], className)}
           >
             {title ? (
               <div className="flex items-start justify-between gap-4 border-b border-line p-4 sm:p-6">
                 <div>
-                  <h2 className="text-base font-semibold text-slate-900 sm:text-lg">{title}</h2>
-                  {description ? <p className="mt-1 text-sm text-slate-500">{description}</p> : null}
+                  <h2 className="text-base font-semibold text-slate-900 dark:text-slate-100 sm:text-lg">{title}</h2>
+                  {description ? <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{description}</p> : null}
                 </div>
                 <IconButton label="Close dialog" onClick={onClose} size="sm">
                   <X className="size-4" />

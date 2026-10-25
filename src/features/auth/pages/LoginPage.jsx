@@ -63,12 +63,12 @@ const LoginPage = () => {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-      className="mx-auto w-full max-w-5xl overflow-hidden rounded-2xl border border-line bg-white shadow-sm lg:grid lg:grid-cols-[1fr_20rem]"
+      className="mx-auto w-full max-w-5xl overflow-hidden rounded-2xl border border-line bg-white dark:bg-slate-900 dark:border-slate-800 shadow-sm lg:grid lg:grid-cols-[1fr_20rem]"
     >
       <div className="px-6 py-10 sm:px-12 sm:py-14">
         <div className="mx-auto max-w-sm">
           <h1 className="text-center text-2xl font-bold tracking-tight text-ink sm:text-3xl">Log in to {APP_NAME}</h1>
-          <p className="mt-2 text-center text-sm text-slate-500">Sign in to keep working on your documents.</p>
+          <p className="mt-2 text-center text-sm text-slate-500 dark:text-slate-400">Sign in to keep working on your documents.</p>
 
           <form onSubmit={handleSubmit} noValidate className="mt-8 flex flex-col gap-4">
             <Input
@@ -104,7 +104,7 @@ const LoginPage = () => {
         </div>
       </div>
 
-      <aside className="bg-brand-600 px-6 py-10 text-white sm:px-8">
+      <aside className="bg-brand-600 dark:bg-brand-700 px-6 py-10 text-white sm:px-8">
         <p className="text-sm font-semibold uppercase tracking-wide text-white/70">What you get</p>
         <ul className="mt-5 flex flex-col gap-3">
           {PERKS.map((perk) => (

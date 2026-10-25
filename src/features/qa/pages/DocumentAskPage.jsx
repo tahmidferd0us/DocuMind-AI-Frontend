@@ -12,14 +12,14 @@ const SourceList = ({ sources }) => {
 
   return (
     <div className="mt-3 border-t border-line pt-3">
-      <p className="text-xs font-medium text-slate-500">
+      <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
         Grounded in page{pages.length > 1 ? 's' : ''} {pages.join(', ')}
       </p>
       <ul className="mt-2 flex flex-col gap-2">
         {sources.slice(0, 2).map((source, index) => (
           <li key={source.chunk_id ?? index} className="rounded-md bg-surface-muted px-3 py-2">
-            <p className="text-xs leading-relaxed text-slate-600">
-              <span className="font-medium text-slate-700">Page {source.page}:</span> {source.snippet}
+            <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+              <span className="font-medium text-slate-700 dark:text-slate-100">Page {source.page}:</span> {source.snippet}
             </p>
           </li>
         ))}
@@ -31,10 +31,10 @@ const SourceList = ({ sources }) => {
 const Exchange = ({ message }) => (
   <li className="flex flex-col gap-2">
     <div className="max-w-[85%] self-end rounded-xl rounded-br-sm bg-brand-600 px-4 py-2.5 text-sm text-white">{message.question}</div>
-    <div className="max-w-[92%] rounded-xl rounded-bl-sm border border-line bg-white px-4 py-3">
-      <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700">{message.answer}</p>
+    <div className="max-w-[92%] rounded-xl rounded-bl-sm border border-line bg-white dark:bg-slate-900 dark:border-slate-800 px-4 py-3">
+      <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700 dark:text-slate-200">{message.answer}</p>
       <SourceList sources={message.sources} />
-      <p className="mt-2 text-[11px] text-slate-400">
+      <p className="mt-2 text-[11px] text-slate-400 dark:text-slate-500">
         {message.model} · {formatDate(message.createdAt)}
       </p>
     </div>
@@ -94,36 +94,30 @@ const DocumentAskPage = () => {
               <Spinner size="lg" className="text-brand-600" />
             </div>
           ) : messages.length === 0 ? (
-            <p className="py-12 text-center text-sm text-slate-400">No questions asked about this document yet.</p>
+            <p className="py-12 text-center text-sm text-slate-400 dark:text-slate-500">No questions asked about this document yet.</p>
           ) : (
             <ul className="flex flex-col gap-6">
               {messages.map((message) => (
                 <Exchange key={message.id} message={message} />
               ))}
+              <div ref={endRef} />
             </ul>
           )}
-
-          {isAsking ? (
-            <div className="mt-6 flex items-center gap-2 text-sm text-slate-500">
-              <Spinner size="sm" className="text-brand-600" />
-              Retrieving passages and writing an answer…
-            </div>
-          ) : null}
-
-          <div ref={endRef} />
         </CardBody>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3 border-t border-line p-4 sm:flex-row sm:p-6">
-          <Input
-            value={question}
-            onChange={(event) => setQuestion(event.target.value)}
-            placeholder="e.g. What file types must the platform support?"
-            disabled={isAsking}
-            containerClassName="flex-1"
-          />
-          <Button type="submit" isLoading={isAsking} leftIcon={<SendHorizonal className="size-4" />} className="sm:self-start">
-            Ask
-          </Button>
+        <form onSubmit={handleSubmit} className="border-t border-line p-4 sm:p-6">
+          <div className="flex gap-2">
+            <Input
+              value={question}
+              onChange={(event) => setQuestion(event.target.value)}
+              placeholder="Ask anything about this document…"
+              disabled={isAsking}
+              className="flex-1"
+            />
+            <Button type="submit" isLoading={isAsking} disabled={!question.trim()} rightIcon={<SendHorizonal className="size-4" />}>
+              Ask
+            </Button>
+          </div>
         </form>
       </Card>
     </div>

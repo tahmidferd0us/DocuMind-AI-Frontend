@@ -1,6 +1,6 @@
 import { NavLink, Outlet, useParams } from 'react-router-dom';
 import { ArrowLeft, FileText } from 'lucide-react';
-import { Badge, Card, CardBody, EmptyState, Spinner } from '@components/ui';
+import { Badge, Card, EmptyState, Spinner } from '@components/ui';
 import { cn } from '@lib/cn';
 import { formatBytes, formatDate } from '@lib/format';
 import { DOCUMENT_STAGES, PATHS, documentPath } from '@routes/paths';
@@ -46,9 +46,9 @@ const DocumentWorkspace = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="border-b border-line bg-white">
+      <div className="border-b border-line bg-white dark:bg-slate-900">
         <div className="container-page pt-6 sm:pt-8">
-          <NavLink to={PATHS.dashboard} className="inline-flex items-center gap-1.5 text-sm text-slate-500 transition-colors hover:text-brand-700">
+          <NavLink to={PATHS.dashboard} className="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 transition-colors hover:text-brand-700 dark:hover:text-brand-300">
             <ArrowLeft className="size-4" />
             All documents
           </NavLink>
@@ -56,7 +56,7 @@ const DocumentWorkspace = () => {
           <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div className="min-w-0">
               <h1 className="truncate text-xl font-semibold tracking-tight text-ink sm:text-2xl">{document.filename}</h1>
-              <p className="mt-1 text-sm text-slate-500">
+              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                 {[
                   document.pageCount ? `${document.pageCount} page${document.pageCount > 1 ? 's' : ''}` : null,
                   document.wordCount ? `${document.wordCount.toLocaleString()} words` : null,
@@ -82,10 +82,10 @@ const DocumentWorkspace = () => {
                   cn(
                     'whitespace-nowrap border-b-2 px-3 py-2.5 text-sm font-medium transition-colors',
                     !stage.ready
-                      ? 'cursor-not-allowed border-transparent text-slate-300'
+                      ? 'cursor-not-allowed border-transparent text-slate-300 dark:text-slate-600'
                       : isActive
-                        ? 'border-brand-600 text-brand-700'
-                        : 'border-transparent text-slate-600 hover:border-line hover:text-ink',
+                        ? 'border-brand-600 text-brand-700 dark:text-brand-300 dark:border-brand-400'
+                        : 'border-transparent text-slate-600 dark:text-slate-400 hover:border-line hover:text-ink dark:hover:text-white',
                   )
                 }
               >
@@ -103,10 +103,8 @@ const DocumentWorkspace = () => {
         <div className="container-page py-12">
           <Card>
             <CardBody>
-              <p className="text-sm text-slate-600">
-                {document.status === 'FAILED'
-                  ? `This document could not be processed: ${document.errorMessage ?? 'unknown error'}`
-                  : 'This document is still being processed. Refresh in a moment.'}
+              <p className="text-center text-sm text-slate-500 dark:text-slate-400">
+                {document.status === 'PROCESSING' ? 'This document is still being processed.' : 'Processing failed for this document.'}
               </p>
             </CardBody>
           </Card>

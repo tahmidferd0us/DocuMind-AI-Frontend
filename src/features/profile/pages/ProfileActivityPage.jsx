@@ -101,32 +101,32 @@ const ProfileActivityPage = () => {
         />
         <CardBody>
           <div className="grid gap-3 sm:grid-cols-3">
-            <div className="rounded-lg border border-emerald-100 bg-emerald-50/50 p-4">
+            <div className="rounded-lg border border-emerald-100 bg-emerald-50/50 dark:border-emerald-900/40 dark:bg-emerald-950/30 p-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-emerald-900">Ready &amp; Summarised</span>
+                <span className="text-sm font-medium text-emerald-900 dark:text-emerald-200">Ready &amp; Summarised</span>
                 <Badge tone="success">{readyCount}</Badge>
               </div>
-              <p className="mt-1 text-xs text-emerald-700">
+              <p className="mt-1 text-xs text-emerald-700 dark:text-emerald-400">
                 Ready for Q&amp;A, summaries, entity extraction and exports.
               </p>
             </div>
 
-            <div className="rounded-lg border border-amber-100 bg-amber-50/50 p-4">
+            <div className="rounded-lg border border-amber-100 bg-amber-50/50 dark:border-amber-900/40 dark:bg-amber-950/30 p-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-amber-900">Processing</span>
+                <span className="text-sm font-medium text-amber-900 dark:text-amber-200">Processing</span>
                 <Badge tone="warning">{processingCount}</Badge>
               </div>
-              <p className="mt-1 text-xs text-amber-700">
+              <p className="mt-1 text-xs text-amber-700 dark:text-amber-400">
                 Currently extracting text or generating NLP representations.
               </p>
             </div>
 
-            <div className="rounded-lg border border-red-100 bg-red-50/50 p-4">
+            <div className="rounded-lg border border-red-100 bg-red-50/50 dark:border-red-900/40 dark:bg-red-950/30 p-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-red-900">Failed / Incomplete</span>
+                <span className="text-sm font-medium text-red-900 dark:text-red-200">Failed / Incomplete</span>
                 <Badge tone="danger">{failedCount}</Badge>
               </div>
-              <p className="mt-1 text-xs text-red-700">
+              <p className="mt-1 text-xs text-red-700 dark:text-red-400">
                 Files that encountered parse or unreadable formatting issues.
               </p>
             </div>

@@ -24,23 +24,23 @@ const AdminLayout = () => {
               <ShieldCheck className="size-3.5" />
               Super Admin Console
             </Badge>
-            <span className="flex items-center gap-1.5 text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+            <span className="flex items-center gap-1.5 text-xs font-medium text-emerald-600 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-md border border-emerald-200 dark:border-emerald-800/40">
               <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
               Live Platform
             </span>
           </div>
           <h1 className="mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl">Platform Administration</h1>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
             Real-time platform analytics, global user directories, document audits, and system infrastructure diagnostics.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           <div className="text-right hidden sm:block">
-            <p className="text-xs font-medium text-slate-900">{user?.fullName || 'Super Administrator'}</p>
-            <p className="text-[11px] text-slate-500">{user?.email}</p>
+            <p className="text-xs font-medium text-slate-900 dark:text-slate-100">{user?.fullName || 'Super Administrator'}</p>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">{user?.email}</p>
           </div>
-          <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-600 text-sm font-bold text-white shadow-sm ring-2 ring-brand-100">
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-600 text-sm font-bold text-white shadow-sm ring-2 ring-brand-100 dark:ring-brand-900">
             <ShieldCheck className="size-5" />
           </div>
         </div>
@@ -60,8 +60,8 @@ const AdminLayout = () => {
                   cn(
                     'flex shrink-0 items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors',
                     isActive
-                      ? 'bg-brand-50 text-brand-700 font-semibold shadow-2xs'
-                      : 'text-slate-600 hover:bg-surface-muted hover:text-ink',
+                      ? 'bg-brand-50 text-brand-700 font-semibold shadow-2xs dark:bg-brand-950/70 dark:text-brand-300'
+                      : 'text-slate-600 hover:bg-surface-muted hover:text-ink dark:text-slate-300 dark:hover:text-white',
                   )
                 }
               >
@@ -73,7 +73,7 @@ const AdminLayout = () => {
         </nav>
       </Card>
 
-      {/* Main Outlet */}
+      {/* Child Admin Page Outlet */}
       <main className="min-w-0">
         <Outlet />
       </main>

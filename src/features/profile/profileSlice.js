@@ -12,6 +12,7 @@ const loadPreferences = () => {
 };
 
 const defaultPreferences = {
+  theme: 'light',
   defaultSummaryMethod: 'extractive',
   defaultSentenceCount: 5,
   defaultExportFormat: 'pdf',
@@ -37,9 +38,10 @@ const profileSlice = createSlice({
       }
     },
     resetPreferences: (state) => {
-      state.preferences = defaultPreferences;
+      const currentTheme = state.preferences?.theme ?? 'light';
+      state.preferences = { ...defaultPreferences, theme: currentTheme };
       try {
-        localStorage.removeItem(STORAGE_KEY);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state.preferences));
       } catch {
         // ignore storage errors
       }

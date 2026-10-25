@@ -17,17 +17,17 @@ const Pagination = ({ page = 1, pageSize = 10, total = 0, onPageChange, onPageSi
   return (
     <div className={cn('flex flex-col gap-3 border-t border-line px-4 py-3 sm:flex-row sm:items-center sm:justify-between', className)}>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-        <p className="text-xs text-slate-500 sm:text-sm">
-          Showing <span className="font-medium text-slate-700">{from}</span>–<span className="font-medium text-slate-700">{to}</span> of{' '}
-          <span className="font-medium text-slate-700">{total}</span>
+        <p className="text-xs text-slate-500 dark:text-slate-400 sm:text-sm">
+          Showing <span className="font-medium text-slate-700 dark:text-slate-200">{from}</span>–<span className="font-medium text-slate-700 dark:text-slate-200">{to}</span> of{' '}
+          <span className="font-medium text-slate-700 dark:text-slate-200">{total}</span>
         </p>
         {onPageSizeChange ? (
-          <label className="flex items-center gap-2 text-xs text-slate-500 sm:text-sm">
+          <label className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 sm:text-sm">
             Rows
             <select
               value={pageSize}
               onChange={(event) => onPageSizeChange(Number(event.target.value))}
-              className="rounded-md border border-line bg-white px-2 py-1 text-xs text-slate-700 focus:border-brand-500 focus:ring-2 focus:ring-brand-100 sm:text-sm"
+              className="rounded-md border border-line bg-white dark:bg-slate-900 dark:border-slate-750 px-2 py-1 text-xs text-slate-700 dark:text-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-100 sm:text-sm"
             >
               {PAGE_SIZE_OPTIONS.map((option) => (
                 <option key={option} value={option}>
@@ -45,7 +45,7 @@ const Pagination = ({ page = 1, pageSize = 10, total = 0, onPageChange, onPageSi
           onClick={() => onPageChange?.(page - 1)}
           disabled={page <= 1}
           aria-label="Previous page"
-          className="flex size-9 items-center justify-center rounded-md border border-line text-slate-600 transition-colors hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+          className="flex size-9 items-center justify-center rounded-md border border-line text-slate-600 dark:text-slate-300 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <ChevronLeft className="size-4" />
         </button>
@@ -59,19 +59,21 @@ const Pagination = ({ page = 1, pageSize = 10, total = 0, onPageChange, onPageSi
               aria-current={entry === page ? 'page' : undefined}
               className={cn(
                 'hidden size-9 items-center justify-center rounded-md border text-sm transition-colors sm:flex',
-                entry === page ? 'border-brand-600 bg-brand-600 font-medium text-white' : 'border-line text-slate-600 hover:bg-slate-50',
+                entry === page
+                  ? 'border-brand-600 bg-brand-600 font-medium text-white'
+                  : 'border-line text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800',
               )}
             >
               {entry}
             </button>
           ) : (
-            <span key={entry} className="hidden size-9 items-center justify-center text-sm text-slate-400 sm:flex">
+            <span key={entry} className="hidden size-9 items-center justify-center text-sm text-slate-400 dark:text-slate-500 sm:flex">
               …
             </span>
           ),
         )}
 
-        <span className="px-2 text-sm text-slate-600 sm:hidden">
+        <span className="px-2 text-sm text-slate-600 dark:text-slate-300 sm:hidden">
           {page} / {totalPages}
         </span>
 
@@ -80,7 +82,7 @@ const Pagination = ({ page = 1, pageSize = 10, total = 0, onPageChange, onPageSi
           onClick={() => onPageChange?.(page + 1)}
           disabled={page >= totalPages}
           aria-label="Next page"
-          className="flex size-9 items-center justify-center rounded-md border border-line text-slate-600 transition-colors hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+          className="flex size-9 items-center justify-center rounded-md border border-line text-slate-600 dark:text-slate-300 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <ChevronRight className="size-4" />
         </button>

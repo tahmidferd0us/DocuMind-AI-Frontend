@@ -6,6 +6,33 @@
     <meta name="description" content="DocuMind AI turns long documents into summaries, key entities and grounded answers." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>DocuMind AI</title>
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('documind_theme');
+          if (!stored) {
+            var prefs = localStorage.getItem('documind_user_preferences');
+            if (prefs) {
+              var parsed = JSON.parse(prefs);
+              if (parsed && (parsed.theme === 'light' || parsed.theme === 'dark')) {
+                stored = parsed.theme;
+              }
+            }
+          }
+          var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var isDark = stored ? stored === 'dark' : prefersDark;
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.style.colorScheme = 'dark';
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.setAttribute('data-theme', 'light');
+            document.documentElement.style.colorScheme = 'light';
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body class="antialiased">
     <div id="root"></div>

@@ -8,13 +8,17 @@ import { useGetReportContentsQuery } from '../exportsApi';
 const Row = ({ included, label, detail }) => (
   <li className="flex items-start gap-3">
     <span
-      className={`mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full ${included ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-100 text-slate-400'}`}
+      className={`mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full ${
+        included
+          ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-950/70 dark:text-emerald-400'
+          : 'bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500'
+      }`}
     >
       {included ? <Check className="size-3" /> : <Minus className="size-3" />}
     </span>
     <span className="min-w-0">
-      <span className={`text-sm ${included ? 'text-slate-700' : 'text-slate-400'}`}>{label}</span>
-      {detail ? <span className="ml-1.5 text-xs text-slate-500">{detail}</span> : null}
+      <span className={`text-sm ${included ? 'text-slate-700 dark:text-slate-200' : 'text-slate-400 dark:text-slate-500'}`}>{label}</span>
+      {detail ? <span className="ml-1.5 text-xs text-slate-500 dark:text-slate-400">{detail}</span> : null}
     </span>
   </li>
 );

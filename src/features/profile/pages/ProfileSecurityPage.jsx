@@ -110,7 +110,7 @@ const ProfileSecurityPage = () => {
 
             {/* Password strength checklist */}
             <div className="rounded-lg border border-line bg-surface-muted/60 p-3.5">
-              <p className="text-xs font-semibold text-slate-700">Password Requirements:</p>
+              <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">Password Requirements:</p>
               <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
                 {PASSWORD_RULES.map((rule) => {
                   const passed = rule.test(form.newPassword);
@@ -118,10 +118,10 @@ const ProfileSecurityPage = () => {
                     <div
                       key={rule.label}
                       className={`flex items-center gap-2 text-xs transition-colors ${
-                        passed ? 'text-emerald-700 font-medium' : 'text-slate-500'
+                        passed ? 'text-emerald-700 dark:text-emerald-400 font-medium' : 'text-slate-500 dark:text-slate-400'
                       }`}
                     >
-                      <CheckCircle2 className={`size-3.5 shrink-0 ${passed ? 'text-emerald-500' : 'text-slate-300'}`} />
+                      <CheckCircle2 className={`size-3.5 shrink-0 ${passed ? 'text-emerald-500 dark:text-emerald-400' : 'text-slate-300 dark:text-slate-600'}`} />
                       <span>{rule.label}</span>
                     </div>
                   );

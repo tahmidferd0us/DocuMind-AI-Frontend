@@ -7,10 +7,10 @@ import { cn } from '@lib/cn';
 import { dismissToast, selectToasts } from './toastSlice';
 
 const TONES = {
-  success: { icon: CheckCircle2, className: 'border-emerald-200 bg-emerald-50', iconClass: 'text-emerald-600' },
-  error: { icon: XCircle, className: 'border-red-200 bg-red-50', iconClass: 'text-red-600' },
-  warning: { icon: AlertTriangle, className: 'border-amber-200 bg-amber-50', iconClass: 'text-amber-600' },
-  info: { icon: Info, className: 'border-brand-200 bg-brand-50', iconClass: 'text-brand-600' },
+  success: { icon: CheckCircle2, className: 'border-emerald-200 bg-emerald-50 dark:border-emerald-800/60 dark:bg-slate-900', iconClass: 'text-emerald-600 dark:text-emerald-400' },
+  error: { icon: XCircle, className: 'border-red-200 bg-red-50 dark:border-red-800/60 dark:bg-slate-900', iconClass: 'text-red-600 dark:text-red-400' },
+  warning: { icon: AlertTriangle, className: 'border-amber-200 bg-amber-50 dark:border-amber-800/60 dark:bg-slate-900', iconClass: 'text-amber-600 dark:text-amber-400' },
+  info: { icon: Info, className: 'border-brand-200 bg-brand-50 dark:border-brand-800/60 dark:bg-slate-900', iconClass: 'text-brand-600 dark:text-brand-400' },
 };
 
 const ToastItem = ({ toast, onDismiss }) => {
@@ -30,18 +30,18 @@ const ToastItem = ({ toast, onDismiss }) => {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, x: 24, scale: 0.96 }}
       transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-      className={cn('pointer-events-auto flex w-full items-start gap-3 rounded-xl border p-3 shadow-lg sm:w-96', tone.className)}
+      className={cn('pointer-events-auto flex w-full items-start gap-3 rounded-xl border p-3 shadow-lg dark:shadow-slate-950/60 sm:w-96', tone.className)}
     >
       <Icon className={cn('mt-0.5 size-5 shrink-0', tone.iconClass)} />
       <div className="min-w-0 flex-1">
-        {toast.title ? <p className="text-sm font-semibold text-slate-900">{toast.title}</p> : null}
-        {toast.message ? <p className="mt-0.5 break-words text-sm text-slate-600">{toast.message}</p> : null}
+        {toast.title ? <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{toast.title}</p> : null}
+        {toast.message ? <p className="mt-0.5 break-words text-sm text-slate-600 dark:text-slate-300">{toast.message}</p> : null}
       </div>
       <button
         type="button"
         onClick={() => onDismiss(toast.id)}
         aria-label="Dismiss notification"
-        className="rounded-md p-1 text-slate-400 transition-colors hover:bg-white/60 hover:text-slate-600"
+        className="rounded-md p-1 text-slate-400 transition-colors hover:bg-white/60 dark:hover:bg-slate-800 hover:text-slate-600 dark:hover:text-slate-200"
       >
         <X className="size-4" />
       </button>

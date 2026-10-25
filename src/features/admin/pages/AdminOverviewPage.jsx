@@ -302,25 +302,25 @@ const AdminOverviewPage = () => {
         <CardBody>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {/* Database Health */}
-            <div className="rounded-xl border border-line bg-white p-4">
+            <div className="rounded-xl border border-line bg-white dark:bg-slate-900 dark:border-slate-800 p-4">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-slate-500">PostgreSQL DB</span>
+                <span className="text-xs font-medium text-slate-500 dark:text-slate-400">PostgreSQL DB</span>
                 <span
                   className={`size-2 rounded-full ${
                     system?.services?.database === 'healthy' ? 'bg-emerald-500' : 'bg-rose-500'
                   }`}
                 />
               </div>
-              <div className="mt-2 text-base font-semibold text-slate-900 capitalize">
+              <div className="mt-2 text-base font-semibold text-slate-900 dark:text-slate-100 capitalize">
                 {system?.services?.database || 'healthy'}
               </div>
-              <p className="mt-1 text-[11px] text-slate-500">Supabase Connection Pool</p>
+              <p className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">Supabase Connection Pool</p>
             </div>
 
             {/* NLP Sidecar Service */}
-            <div className="rounded-xl border border-line bg-white p-4">
+            <div className="rounded-xl border border-line bg-white dark:bg-slate-900 dark:border-slate-800 p-4">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-slate-500">FastAPI NLP Sidecar</span>
+                <span className="text-xs font-medium text-slate-500 dark:text-slate-400">FastAPI NLP Sidecar</span>
                 <span
                   className={`size-2 rounded-full ${
                     system?.services?.nlpService?.status === 'online'
@@ -331,38 +331,38 @@ const AdminOverviewPage = () => {
                   }`}
                 />
               </div>
-              <div className="mt-2 text-base font-semibold text-slate-900 capitalize">
+              <div className="mt-2 text-base font-semibold text-slate-900 dark:text-slate-100 capitalize">
                 {system?.services?.nlpService?.status || 'offline'}
               </div>
-              <p className="mt-1 truncate text-[11px] text-slate-500">
+              <p className="mt-1 truncate text-[11px] text-slate-500 dark:text-slate-400">
                 {system?.services?.nlpService?.url || 'http://localhost:8000'}
               </p>
             </div>
 
             {/* Server Runtime & Uptime */}
-            <div className="rounded-xl border border-line bg-white p-4">
+            <div className="rounded-xl border border-line bg-white dark:bg-slate-900 dark:border-slate-800 p-4">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-slate-500">Node.js Runtime</span>
+                <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Node.js Runtime</span>
                 <Server className="size-3.5 text-slate-400" />
               </div>
-              <div className="mt-2 text-base font-semibold text-slate-900">
+              <div className="mt-2 text-base font-semibold text-slate-900 dark:text-slate-100">
                 {system?.nodeVersion || 'v20.x'}
               </div>
-              <p className="mt-1 text-[11px] text-slate-500">
+              <p className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
                 Uptime: {formatUptime(system?.uptimeSeconds)} &middot; {system?.nodeEnv || 'dev'}
               </p>
             </div>
 
             {/* Memory Usage */}
-            <div className="rounded-xl border border-line bg-white p-4">
+            <div className="rounded-xl border border-line bg-white dark:bg-slate-900 dark:border-slate-800 p-4">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-slate-500">Memory (RSS / Heap)</span>
+                <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Memory (RSS / Heap)</span>
                 <Cpu className="size-3.5 text-slate-400" />
               </div>
-              <div className="mt-2 text-base font-semibold text-slate-900">
+              <div className="mt-2 text-base font-semibold text-slate-900 dark:text-slate-100">
                 {formatBytes(system?.memory?.rssBytes || 0)}
               </div>
-              <p className="mt-1 text-[11px] text-slate-500">
+              <p className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
                 Heap Used: {formatBytes(system?.memory?.heapUsedBytes || 0)}
               </p>
             </div>
@@ -442,12 +442,12 @@ const AdminOverviewPage = () => {
                 {recentActivity.recentUsers.map((u) => (
                   <div key={u.id} className="flex items-center justify-between p-3.5 transition-colors hover:bg-surface-muted/40">
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-700">
+                      <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                         {(u.fullName || u.email || 'U').slice(0, 2).toUpperCase()}
                       </div>
                       <div className="min-w-0">
-                        <p className="truncate text-xs font-semibold text-slate-900">{u.fullName || 'User'}</p>
-                        <p className="truncate text-[11px] text-slate-500">{u.email}</p>
+                        <p className="truncate text-xs font-semibold text-slate-900 dark:text-slate-100">{u.fullName || 'User'}</p>
+                        <p className="truncate text-[11px] text-slate-500 dark:text-slate-400">{u.email}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">

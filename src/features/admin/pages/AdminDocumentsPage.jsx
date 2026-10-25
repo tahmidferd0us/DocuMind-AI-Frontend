@@ -166,7 +166,7 @@ const AdminDocumentsPage = () => {
                 setSearch(e.target.value);
                 setPage(1);
               }}
-              className="w-full rounded-lg border border-line bg-white py-2 pl-9 pr-3 text-xs placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className="w-full rounded-lg border border-line bg-white dark:bg-slate-900 dark:border-slate-800 py-2 pl-9 pr-3 text-xs text-ink placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
             />
           </div>
 
@@ -177,7 +177,7 @@ const AdminDocumentsPage = () => {
                 setStatus(e.target.value);
                 setPage(1);
               }}
-              className="rounded-lg border border-line bg-white px-3 py-2 text-xs text-slate-700 focus:border-brand-500 focus:outline-none"
+              className="rounded-lg border border-line bg-white dark:bg-slate-900 dark:border-slate-800 px-3 py-2 text-xs text-slate-700 dark:text-slate-200 focus:border-brand-500 focus:outline-none"
             >
               {STATUS_OPTIONS.map((opt) => (
                 <option key={opt.value} value={opt.value}>

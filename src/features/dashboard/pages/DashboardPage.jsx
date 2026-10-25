@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FileText, Inbox, Search, User } from 'lucide-react';
 
-import { Badge, Button, Card, CardBody, CardHeader, ConfirmModal, Input, Select, Table, UploadDropzone } from '@components/ui';
+import { Badge, Button, Card, CardBody, CardHeader, ConfirmModal, Select, Table, UploadDropzone } from '@components/ui';
 import { formatBytes, formatDate } from '@lib/format';
 import { DEFAULT_PAGE_SIZE } from '@lib/constants';
 import { ACCEPTED_TYPES, MAX_UPLOAD_BYTES } from '@lib/tools';
-import { documentPath } from '@routes/paths';
+import { PATHS, documentPath } from '@routes/paths';
 import { useAuth } from '@features/auth/useAuth';
 import { useToast } from '@features/toast/useToast';
 import { useDocumentIntake } from '@features/upload/useDocumentIntake';
@@ -48,8 +48,8 @@ const DashboardPage = () => {
       key: 'filename',
       header: 'Document',
       render: (row) => (
-        <span className="flex items-center gap-2 font-medium text-slate-800">
-          <FileText className="size-4 shrink-0 text-brand-600" />
+        <span className="flex items-center gap-2 font-medium text-slate-800 dark:text-slate-200">
+          <FileText className="size-4 shrink-0 text-brand-600 dark:text-brand-400" />
           <span className="truncate">{row.filename}</span>
         </span>
       ),
@@ -63,7 +63,7 @@ const DashboardPage = () => {
       render: (row) => (
         <span className="flex flex-col gap-1">
           <Badge tone={STATUS_TONES[row.status]}>{row.status}</Badge>
-          {row.errorMessage ? <span className="max-w-[16rem] truncate text-xs text-red-600">{row.errorMessage}</span> : null}
+          {row.errorMessage ? <span className="max-w-[16rem] truncate text-xs text-red-600 dark:text-red-400">{row.errorMessage}</span> : null}
         </span>
       ),
     },
@@ -99,17 +99,16 @@ const DashboardPage = () => {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">Workspace</h1>
-          <p className="mt-1 text-sm text-slate-500">Signed in as {user?.email}. Uploaded documents are parsed and stored against your account. Open one to summarise it or ask questions.</p>
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Signed in as {user?.email}. Uploaded documents are parsed and stored against your account. Open one to summarise it or ask questions.</p>
         </div>
         <Link
           to={PATHS.profile}
-          className="inline-flex items-center gap-2 self-start rounded-lg border border-line bg-white px-3.5 py-2 text-xs font-medium text-slate-700 transition-colors hover:bg-surface-muted hover:text-ink sm:self-center"
+          className="inline-flex items-center gap-2 self-start rounded-lg border border-line bg-white dark:bg-slate-900 dark:border-slate-800 px-3.5 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors hover:bg-surface-muted hover:text-ink sm:self-center"
         >
-          <User className="size-3.5 text-slate-500" />
+          <User className="size-3.5 text-slate-500 dark:text-slate-400" />
           <span>Account Settings</span>
         </Link>
       </div>
-
 
       <Card>
         <CardHeader title="Upload a document" description="PDF, DOCX or TXT. Text is extracted on upload." />
@@ -128,7 +127,7 @@ const DashboardPage = () => {
         <CardHeader title="Your documents" description={meta ? `${meta.total} document(s) stored` : 'Loading…'} />
         <div className="flex flex-col gap-3 border-t border-line p-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
             <input
               type="text"
               placeholder="Search documents by name…"
@@ -137,7 +136,7 @@ const DashboardPage = () => {
                 setSearch(e.target.value);
                 setPage(1);
               }}
-              className="w-full rounded-lg border border-line bg-white py-2 pl-9 pr-3 text-sm text-ink placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className="w-full rounded-lg border border-line bg-white dark:bg-slate-900 dark:border-slate-750 py-2 pl-9 pr-3 text-sm text-ink placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
             />
           </div>
 

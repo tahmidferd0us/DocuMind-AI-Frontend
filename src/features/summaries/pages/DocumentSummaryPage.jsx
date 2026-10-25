@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { AlertTriangle, Award, Check, ChevronDown, Copy, Gauge, Scale, Sparkles } from 'lucide-react';
+import { AlertTriangle, Copy, Gauge, Scale, Sparkles } from 'lucide-react';
 import { Badge, Button, Card, CardBody, CardHeader, NumberInput, Select, Spinner, Textarea } from '@components/ui';
 import { formatDate } from '@lib/format';
 import { selectUserPreferences } from '@features/profile/profileSlice';
@@ -30,7 +30,7 @@ const SummaryPanel = ({ title, caption, body, isEmpty, onCopy }) => (
     <div className="flex items-center justify-between border-b border-line px-5 py-4">
       <div>
         <h3 className="text-base font-semibold text-ink">{title}</h3>
-        <p className="text-xs text-slate-500">{caption}</p>
+        <p className="text-xs text-slate-500 dark:text-slate-400">{caption}</p>
       </div>
       {!isEmpty && (
         <Button
@@ -46,9 +46,9 @@ const SummaryPanel = ({ title, caption, body, isEmpty, onCopy }) => (
     </div>
     <CardBody className="flex-1">
       {isEmpty ? (
-        <p className="text-sm text-slate-400">Nothing generated yet.</p>
+        <p className="text-sm text-slate-400 dark:text-slate-500">Nothing generated yet.</p>
       ) : (
-        <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700">{body}</p>
+        <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700 dark:text-slate-200">{body}</p>
       )}
     </CardBody>
   </Card>
@@ -117,7 +117,7 @@ const DocumentSummaryPage = () => {
           <Select label="Abstractive length" value={options.length} onChange={(event) => setOption('length')(event.target.value)} placeholder="" options={LENGTHS} />
         </CardBody>
         <div className="flex flex-col gap-3 border-t border-line p-4 sm:flex-row sm:items-center sm:justify-between sm:p-6">
-          <p className="text-xs text-slate-500">{summary ? `Last generated ${formatDate(summary.updatedAt)}` : 'No summary yet.'}</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400">{summary ? `Last generated ${formatDate(summary.updatedAt)}` : 'No summary yet.'}</p>
           <Button onClick={handleGenerate} isLoading={isGenerating} leftIcon={<Sparkles className="size-4" />} fullWidth className="sm:w-auto">
             {summary ? 'Regenerate' : 'Generate summary'}
           </Button>
@@ -125,9 +125,9 @@ const DocumentSummaryPage = () => {
       </Card>
 
       {summary?.abstractiveFailed ? (
-        <div className="flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4">
-          <AlertTriangle className="mt-0.5 size-5 shrink-0 text-amber-600" />
-          <p className="text-sm leading-relaxed text-amber-900">
+        <div className="flex items-start gap-3 rounded-xl border border-amber-200 dark:border-amber-900/50 bg-amber-50 dark:bg-amber-950/40 p-4">
+          <AlertTriangle className="mt-0.5 size-5 shrink-0 text-amber-600 dark:text-amber-400" />
+          <p className="text-sm leading-relaxed text-amber-900 dark:text-amber-200">
             The extractive summary succeeded, but the language model call failed. Check <code>GEMINI_API_KEY</code> and <code>GEMINI_MODEL</code> in the
             NLP service.
           </p>
@@ -165,10 +165,10 @@ const DocumentSummaryPage = () => {
           <div className="flex items-center justify-between border-b border-line px-5 py-4">
             <div>
               <h3 className="text-base font-semibold text-ink flex items-center gap-2">
-                <Scale className="size-4 text-brand-600" />
+                <Scale className="size-4 text-brand-600 dark:text-brand-400" />
                 Summary Evaluation Suite (ROUGE &amp; BLEU)
               </h3>
-              <p className="text-xs text-slate-500">Benchmark generated summaries against a reference ground-truth text.</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Benchmark generated summaries against a reference ground-truth text.</p>
             </div>
             <Button
               variant="outline"
@@ -193,7 +193,7 @@ const DocumentSummaryPage = () => {
                     ]}
                   />
                   <div className="flex items-end">
-                    <p className="text-xs text-slate-500 pb-2">
+                    <p className="text-xs text-slate-500 dark:text-slate-400 pb-2">
                       Comparing against standard research metrics (ROUGE-1, ROUGE-2, ROUGE-L, and BLEU-4).
                     </p>
                   </div>
@@ -217,59 +217,59 @@ const DocumentSummaryPage = () => {
 
               {evaluationResults && (
                 <div className="mt-4 flex flex-col gap-4 border-t border-line pt-4">
-                  <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                  <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                     Evaluation Results
                   </h4>
 
                   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                    <div className="rounded-xl border border-line bg-white p-4">
-                      <div className="flex items-center justify-between text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                    <div className="rounded-xl border border-line bg-white dark:bg-slate-900 dark:border-slate-800 p-4">
+                      <div className="flex items-center justify-between text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                         <span>ROUGE-1</span>
                         <Badge tone="brand">Unigrams</Badge>
                       </div>
                       <div className="mt-2 text-2xl font-bold text-ink">
                         {evaluationResults.rouge1?.fmeasure ?? 0}%
                       </div>
-                      <p className="mt-1 text-xs text-slate-500">
+                      <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
                         P: {evaluationResults.rouge1?.precision}% · R: {evaluationResults.rouge1?.recall}%
                       </p>
                     </div>
 
-                    <div className="rounded-xl border border-line bg-white p-4">
-                      <div className="flex items-center justify-between text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                    <div className="rounded-xl border border-line bg-white dark:bg-slate-900 dark:border-slate-800 p-4">
+                      <div className="flex items-center justify-between text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                         <span>ROUGE-2</span>
                         <Badge tone="brand">Bigrams</Badge>
                       </div>
                       <div className="mt-2 text-2xl font-bold text-ink">
                         {evaluationResults.rouge2?.fmeasure ?? 0}%
                       </div>
-                      <p className="mt-1 text-xs text-slate-500">
+                      <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
                         P: {evaluationResults.rouge2?.precision}% · R: {evaluationResults.rouge2?.recall}%
                       </p>
                     </div>
 
-                    <div className="rounded-xl border border-line bg-white p-4">
-                      <div className="flex items-center justify-between text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                    <div className="rounded-xl border border-line bg-white dark:bg-slate-900 dark:border-slate-800 p-4">
+                      <div className="flex items-center justify-between text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                         <span>ROUGE-L</span>
                         <Badge tone="brand">LCS</Badge>
                       </div>
                       <div className="mt-2 text-2xl font-bold text-ink">
                         {evaluationResults.rougeL?.fmeasure ?? 0}%
                       </div>
-                      <p className="mt-1 text-xs text-slate-500">
+                      <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
                         Longest Common Subsequence
                       </p>
                     </div>
 
-                    <div className="rounded-xl border border-line bg-white p-4">
-                      <div className="flex items-center justify-between text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                    <div className="rounded-xl border border-line bg-white dark:bg-slate-900 dark:border-slate-800 p-4">
+                      <div className="flex items-center justify-between text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                         <span>BLEU</span>
                         <Badge tone="neutral">Precision</Badge>
                       </div>
                       <div className="mt-2 text-2xl font-bold text-ink">
                         {evaluationResults.bleu?.score ?? 0}
                       </div>
-                      <p className="mt-1 text-xs text-slate-500">
+                      <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
                         Bilingual Evaluation Understudy
                       </p>
                     </div>

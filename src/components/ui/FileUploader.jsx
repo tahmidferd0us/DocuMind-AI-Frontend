@@ -76,15 +76,15 @@ const FileUploader = ({
         onDrop={handleDrop}
         className={cn(
           'flex cursor-pointer flex-col items-center justify-center gap-2 rounded-card border-2 border-dashed px-4 py-8 text-center transition-colors sm:py-10',
-          isDragging ? 'border-brand-500 bg-brand-50' : 'border-line bg-surface-muted hover:border-brand-300 hover:bg-brand-50/40',
+          isDragging ? 'border-brand-500 bg-brand-50 dark:bg-brand-950/40' : 'border-line bg-surface-muted hover:border-brand-300 dark:hover:border-brand-500 hover:bg-brand-50/40 dark:hover:bg-brand-950/20',
           disabled && 'cursor-not-allowed opacity-60',
         )}
       >
-        <UploadCloud className={cn('size-8', isDragging ? 'text-brand-600' : 'text-slate-400')} />
-        <p className="text-sm font-medium text-slate-700">
-          <span className="text-brand-600">Click to upload</span> or drag and drop
+        <UploadCloud className={cn('size-8', isDragging ? 'text-brand-600 dark:text-brand-400' : 'text-slate-400')} />
+        <p className="text-sm font-medium text-slate-700 dark:text-slate-200">
+          <span className="text-brand-600 dark:text-brand-400">Click to upload</span> or drag and drop
         </p>
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-slate-500 dark:text-slate-400">
           {accept.join(', ')} · max {formatBytes(maxSize)}
         </p>
         <input
@@ -105,14 +105,14 @@ const FileUploader = ({
       {value.length > 0 ? (
         <ul className="mt-3 flex flex-col gap-2">
           {value.map((file, index) => (
-            <li key={`${file.name}-${index}`} className="flex items-center gap-3 rounded-lg border border-line bg-white px-3 py-2">
-              <FileText className="size-5 shrink-0 text-brand-600" />
+            <li key={`${file.name}-${index}`} className="flex items-center gap-3 rounded-lg border border-line bg-white dark:bg-slate-900 dark:border-slate-800 px-3 py-2">
+              <FileText className="size-5 shrink-0 text-brand-600 dark:text-brand-400" />
               <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-medium text-slate-700">{file.name}</p>
-                <p className="text-xs text-slate-500">{formatBytes(file.size)}</p>
+                <p className="truncate text-sm font-medium text-slate-700 dark:text-slate-200">{file.name}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">{formatBytes(file.size)}</p>
                 {typeof progress === 'number' ? (
-                  <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
-                    <div className="h-full rounded-full bg-brand-600 transition-all duration-300" style={{ width: `${Math.min(100, Math.max(0, progress))}%` }} />
+                  <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
+                    <div className="h-full rounded-full bg-brand-600 dark:bg-brand-500 transition-all duration-300" style={{ width: `${Math.min(100, Math.max(0, progress))}%` }} />
                   </div>
                 ) : null}
               </div>
@@ -127,7 +127,7 @@ const FileUploader = ({
       {localErrors.length > 1 ? (
         <ul className="mt-2 flex flex-col gap-1">
           {localErrors.slice(1).map((message) => (
-            <li key={message} className="text-xs font-medium text-red-600">
+            <li key={message} className="text-xs font-medium text-red-600 dark:text-red-400">
               {message}
             </li>
           ))}

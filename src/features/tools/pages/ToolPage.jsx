@@ -25,7 +25,7 @@ const ToolPage = ({ toolKey }) => {
       <section className="border-b border-line">
         <div className="container-page py-8 sm:py-12 lg:py-16">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-700">
+            <span className="inline-flex items-center gap-2 rounded-full bg-brand-50 dark:bg-brand-950/70 dark:border dark:border-brand-800/40 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-700 dark:text-brand-300">
               <tool.icon className="size-3.5" />
               {tool.name}
             </span>
@@ -33,9 +33,9 @@ const ToolPage = ({ toolKey }) => {
           </div>
 
           {tool.ready ? null : (
-            <div className="mx-auto mt-6 flex max-w-3xl items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4">
-              <Clock className="mt-0.5 size-5 shrink-0 text-amber-600" />
-              <p className="text-sm leading-relaxed text-amber-900">
+            <div className="mx-auto mt-6 flex max-w-3xl items-start gap-3 rounded-xl border border-amber-200 dark:border-amber-900/50 bg-amber-50 dark:bg-amber-950/40 p-4">
+              <Clock className="mt-0.5 size-5 shrink-0 text-amber-600 dark:text-amber-400" />
+              <p className="text-sm leading-relaxed text-amber-900 dark:text-amber-200">
                 <span className="font-semibold">Not built yet.</span> {tool.name} is planned for this project but the processing module does not
                 exist. You can still upload a document now — it will be waiting in your workspace when this ships.
               </p>
@@ -52,7 +52,7 @@ const ToolPage = ({ toolKey }) => {
           </motion.div>
 
           {recent.length ? (
-            <div className="mx-auto mt-8 max-w-4xl rounded-xl border border-line bg-white p-4 sm:p-5">
+            <div className="mx-auto mt-8 max-w-4xl rounded-xl border border-line bg-white dark:bg-slate-900 dark:border-slate-800 p-4 sm:p-5">
               <p className="text-sm font-medium text-ink">Or continue with a document you already uploaded</p>
               <ul className="mt-3 flex flex-col gap-1.5">
                 {recent.map((item) => (
@@ -61,9 +61,9 @@ const ToolPage = ({ toolKey }) => {
                       to={documentPath(item.id, stageFor(tool.key))}
                       className="group flex items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-surface-muted"
                     >
-                      <FileText className="size-4 shrink-0 text-brand-600" />
-                      <span className="min-w-0 flex-1 truncate text-sm text-slate-700">{item.filename}</span>
-                      <ArrowRight className="size-4 shrink-0 text-brand-600 transition-transform group-hover:translate-x-0.5" />
+                      <FileText className="size-4 shrink-0 text-brand-600 dark:text-brand-400" />
+                      <span className="min-w-0 flex-1 truncate text-sm text-slate-700 dark:text-slate-200">{item.filename}</span>
+                      <ArrowRight className="size-4 shrink-0 text-brand-600 dark:text-brand-400 transition-transform group-hover:translate-x-0.5" />
                     </Link>
                   </li>
                 ))}
@@ -72,10 +72,10 @@ const ToolPage = ({ toolKey }) => {
           ) : null}
 
           <div className="mx-auto mt-8 grid max-w-5xl gap-6 md:grid-cols-2 md:gap-10 lg:gap-16">
-            <p className="text-sm leading-relaxed text-slate-600 sm:text-base">{tool.blurb}</p>
+            <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400 sm:text-base">{tool.blurb}</p>
             <ul className="flex flex-col gap-3">
               {tool.benefits.map((benefit) => (
-                <li key={benefit} className="flex gap-3 text-sm leading-relaxed text-slate-700">
+                <li key={benefit} className="flex gap-3 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
                   <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-emerald-500" />
                   {benefit}
                 </li>
@@ -92,61 +92,53 @@ const ToolPage = ({ toolKey }) => {
               <h2 className="text-xl font-bold tracking-tight text-ink sm:text-2xl">How {tool.name.toLowerCase()} works</h2>
               <ul className="mt-5 flex flex-col gap-3">
                 {tool.points.map((point) => (
-                  <li key={point} className="flex gap-3 text-sm leading-relaxed text-slate-700">
-                    <span className="mt-2 size-1.5 shrink-0 rounded-full bg-brand-600" />
+                  <li key={point} className="flex gap-3 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+                    <span className="mt-2 size-1.5 shrink-0 rounded-full bg-brand-600 dark:bg-brand-400" />
                     {point}
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="flex justify-center">{Illustration ? <Illustration /> : null}</div>
+
+            <div className="flex justify-center">{Illustration ? <Illustration className="h-64 w-full max-w-md text-brand-600 dark:text-brand-400" /> : null}</div>
           </div>
         </div>
       </section>
 
-      <section>
+      <section className="border-b border-line">
         <div className="container-page py-12 sm:py-16">
-          <h2 className="text-center text-xl font-bold tracking-tight text-ink sm:text-2xl">Other tools</h2>
-          <div className="mx-auto mt-8 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {related.map((entry) => (
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h2 className="text-lg font-bold tracking-tight text-ink sm:text-xl">Related stages</h2>
+              <p className="text-sm text-slate-500 dark:text-slate-400">Other capabilities built into DocuMind AI.</p>
+            </div>
+            <Link to={PATHS.home} className="inline-flex items-center gap-1 text-sm font-medium text-brand-600 dark:text-brand-400 hover:text-brand-700">
+              View full pipeline
+              <ArrowRight className="size-4" />
+            </Link>
+          </div>
+
+          <div className="mt-6 grid gap-4 sm:grid-cols-3">
+            {related.map((item) => (
               <Link
-                key={entry.key}
-                to={entry.path}
-                className="group flex flex-col rounded-xl border border-line bg-white p-5 transition-shadow hover:shadow-md"
+                key={item.key}
+                to={item.path}
+                className="group flex flex-col rounded-xl border border-line bg-white dark:bg-slate-900 dark:border-slate-800 p-5 transition-shadow hover:shadow-md"
               >
-                <span className="flex size-10 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
-                  <entry.icon className="size-5" />
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand-50 dark:bg-brand-950 dark:text-brand-300 text-brand-600">
+                  <item.icon className="size-4.5" />
                 </span>
-                <span className="mt-4 flex items-center gap-2 text-sm font-semibold text-ink">
-                  {entry.name}
-                  {entry.ready ? null : (
-                    <span className="rounded-full bg-slate-100 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-500">Soon</span>
-                  )}
-                </span>
-                <span className="mt-1 text-sm text-slate-500">{entry.tagline}</span>
-                <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-brand-600">
-                  Open
-                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-                </span>
+                <span className="mt-3 text-base font-semibold text-ink">{item.name}</span>
+                <span className="mt-1 text-xs text-slate-500 dark:text-slate-400">{item.tagline}</span>
               </Link>
             ))}
           </div>
-
-          <p className="mt-8 text-center text-sm text-slate-500">
-            <Link to={PATHS.home} className="font-medium text-brand-600 underline-offset-4 hover:underline">
-              Back to all tools
-            </Link>
-          </p>
         </div>
       </section>
     </>
   );
 };
 
-export const createToolPage = (toolKey) => {
-  const Page = () => <ToolPage toolKey={toolKey} />;
-  Page.displayName = `ToolPage(${toolKey})`;
-  return Page;
-};
+export const createToolPage = (toolKey) => () => <ToolPage toolKey={toolKey} />;
 
 export default ToolPage;

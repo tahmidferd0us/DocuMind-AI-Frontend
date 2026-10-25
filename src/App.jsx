@@ -1,5 +1,6 @@
 import { Provider } from 'react-redux';
 import { store } from '@app/store';
+import { ThemeProvider } from '@lib/theme';
 import ToastViewport from '@features/toast/ToastViewport';
 import { useSessionBootstrap } from '@features/auth/useAuth';
 import AppRouter from '@routes/AppRouter';
@@ -17,7 +18,9 @@ const AppShell = () => {
 
 const App = () => (
   <Provider store={store}>
-    <AppShell />
+    <ThemeProvider>
+      <AppShell />
+    </ThemeProvider>
   </Provider>
 );
 
