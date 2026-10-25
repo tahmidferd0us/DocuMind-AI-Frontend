@@ -34,6 +34,7 @@
   --color-brand-700: oklch(0.42 0.22 264);
   --color-brand-800: oklch(0.36 0.18 264);
   --color-brand-900: oklch(0.3 0.14 264);
+  --color-brand-950: oklch(0.20 0.08 264);
 
   --color-surface: var(--surface);
   --color-surface-muted: var(--surface-muted);

@@ -25,7 +25,7 @@ const NumberInput = forwardRef(
             onClick={() => nudge(-1)}
             disabled={disabled || (min !== undefined && numericValue <= min)}
             aria-label="Decrease value"
-            className="absolute left-1 flex size-8 items-center justify-center rounded-md text-slate-500 transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
+            className="absolute left-1 flex size-8 items-center justify-center rounded-md text-slate-500 dark:text-slate-300 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 dark:hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
           >
             <Minus className="size-4" />
           </button>
@@ -56,7 +56,7 @@ const NumberInput = forwardRef(
             onClick={() => nudge(1)}
             disabled={disabled || (max !== undefined && numericValue >= max)}
             aria-label="Increase value"
-            className="absolute right-1 flex size-8 items-center justify-center rounded-md text-slate-500 transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
+            className="absolute right-1 flex size-8 items-center justify-center rounded-md text-slate-500 dark:text-slate-300 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 dark:hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
           >
             <Plus className="size-4" />
           </button>

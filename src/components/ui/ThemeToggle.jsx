@@ -17,7 +17,7 @@ export const ThemeToggle = ({ className, showLabel = false, size = 'md' }) => {
       aria-label={label}
       title={label}
       className={cn(
-        'group relative inline-flex items-center justify-center rounded-lg border border-line bg-white/80 dark:bg-slate-850 text-slate-700 dark:text-slate-200 transition-colors hover:bg-surface-muted dark:hover:bg-slate-800 dark:border-slate-750 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500',
+        'group relative inline-flex items-center justify-center rounded-lg border border-line bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 transition-colors hover:bg-surface-muted dark:hover:bg-slate-700 dark:border-slate-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500',
         showLabel ? 'h-9 sm:h-10 px-3 gap-2' : sizeClasses,
         className,
       )}

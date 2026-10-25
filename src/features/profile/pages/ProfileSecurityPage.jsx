@@ -161,19 +161,19 @@ const ProfileSecurityPage = () => {
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between rounded-lg border border-line bg-surface-muted/40 p-4">
               <div className="flex items-center gap-3">
-                <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-white border border-line text-slate-600 shadow-xs">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-white dark:bg-slate-800 border border-line dark:border-slate-700 text-slate-600 dark:text-slate-300 shadow-xs">
                   <Laptop className="size-5" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-semibold text-slate-900">Current Web Session</span>
+                    <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">Current Web Session</span>
                     <Badge tone="success">Active Now</Badge>
                   </div>
-                  <p className="text-xs text-slate-500 mt-0.5">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                     Authenticated as {user?.email} · JWT Session Token
                   </p>
                   {user?.lastLoginAt && (
-                    <p className="text-xs text-slate-400 mt-0.5">
+                    <p className="text-xs text-slate-400 dark:text-slate-400 mt-0.5">
                       Last logged in: {formatDate(user.lastLoginAt)}
                     </p>
                   )}
@@ -181,11 +181,11 @@ const ProfileSecurityPage = () => {
               </div>
             </div>
 
-            <div className="flex items-start gap-3 rounded-lg border border-line bg-brand-50/50 p-4 text-xs text-brand-900">
-              <ShieldCheck className="size-5 shrink-0 text-brand-600 mt-0.5" />
+            <div className="flex items-start gap-3 rounded-lg border border-line bg-brand-50/50 dark:bg-brand-950/40 dark:border-brand-800/40 p-4 text-xs text-brand-900 dark:text-brand-200">
+              <ShieldCheck className="size-5 shrink-0 text-brand-600 dark:text-brand-400 mt-0.5" />
               <div className="space-y-1">
-                <p className="font-semibold text-brand-950">Security Safeguards Active</p>
-                <p className="text-slate-600">
+                <p className="font-semibold text-brand-950 dark:text-brand-200">Security Safeguards Active</p>
+                <p className="text-slate-600 dark:text-slate-300">
                   Your sessions are protected via cryptographically signed JWT access tokens and secure, HttpOnly refresh cookies with automatic rotation.
                 </p>
               </div>

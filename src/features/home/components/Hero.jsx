@@ -30,14 +30,14 @@ const Hero = () => {
         </motion.div>
 
         <div className="mx-auto mt-8 grid max-w-5xl gap-6 md:grid-cols-2 md:gap-10 lg:gap-16">
-          <p className="text-sm leading-relaxed text-slate-600 sm:text-base">
+          <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300 sm:text-base">
             Upload a document and DocuMind AI extracts the text, writes a summary you can check against the source, pulls out the entities
             that matter, and answers your questions using only what the document actually says.
           </p>
 
           <ul className="flex flex-col gap-3">
             {BENEFITS.map((benefit) => (
-              <li key={benefit} className="flex gap-3 text-sm leading-relaxed text-slate-700">
+              <li key={benefit} className="flex gap-3 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
                 <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-emerald-500" />
                 {benefit}
               </li>

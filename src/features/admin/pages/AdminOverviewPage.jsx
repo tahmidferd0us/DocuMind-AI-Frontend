@@ -77,8 +77,8 @@ const AdminOverviewPage = () => {
       {/* Top Action Bar with Refresh */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-slate-900">Platform Overview & Metrics</h2>
-          <p className="text-xs text-slate-500">Live consolidated indicators across users, documents, and compute nodes.</p>
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Platform Overview & Metrics</h2>
+          <p className="text-xs text-slate-500 dark:text-slate-400">Live consolidated indicators across users, documents, and compute nodes.</p>
         </div>
         <Button
           variant="outline"
@@ -96,15 +96,15 @@ const AdminOverviewPage = () => {
         {/* Users KPI */}
         <Card className="p-5 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Platform Users</span>
-            <div className="flex size-9 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Platform Users</span>
+            <div className="flex size-9 items-center justify-center rounded-lg bg-brand-50 text-brand-600 dark:bg-brand-900/50 dark:text-brand-300">
               <Users className="size-4.5" />
             </div>
           </div>
           <div className="mt-3 flex items-baseline justify-between">
             <div>
-              <span className="text-2xl font-bold tracking-tight text-slate-900">{users?.total ?? 0}</span>
-              <p className="mt-0.5 text-xs text-slate-500">
+              <span className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">{users?.total ?? 0}</span>
+              <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
                 {users?.active ?? 0} active &middot; {users?.admins ?? 1} admin
               </p>
             </div>
@@ -119,14 +119,14 @@ const AdminOverviewPage = () => {
         {/* Documents KPI */}
         <Card className="p-5 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Processed Documents</span>
-            <div className="flex size-9 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Processed Documents</span>
+            <div className="flex size-9 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400">
               <FileText className="size-4.5" />
             </div>
           </div>
           <div className="mt-3">
-            <span className="text-2xl font-bold tracking-tight text-slate-900">{documents?.total ?? 0}</span>
-            <p className="mt-0.5 text-xs text-slate-500">
+            <span className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">{documents?.total ?? 0}</span>
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
               {(documents?.totalPages || 0).toLocaleString()} pages &middot; {(documents?.totalWords || 0).toLocaleString()} words
             </p>
           </div>
@@ -135,16 +135,16 @@ const AdminOverviewPage = () => {
         {/* Storage Volume KPI */}
         <Card className="p-5 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Platform Storage</span>
-            <div className="flex size-9 items-center justify-center rounded-lg bg-purple-50 text-purple-600">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Platform Storage</span>
+            <div className="flex size-9 items-center justify-center rounded-lg bg-purple-50 text-purple-600 dark:bg-purple-950/60 dark:text-purple-400">
               <Database className="size-4.5" />
             </div>
           </div>
           <div className="mt-3">
-            <span className="text-2xl font-bold tracking-tight text-slate-900">
+            <span className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
               {formatBytes(documents?.totalSizeBytes || 0)}
             </span>
-            <p className="mt-0.5 text-xs text-slate-500">
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
               Avg {totalDocs ? formatBytes(Math.round((documents?.totalSizeBytes || 0) / totalDocs)) : '0 B'} / doc
             </p>
           </div>
@@ -153,16 +153,16 @@ const AdminOverviewPage = () => {
         {/* AI Ingested Insights KPI */}
         <Card className="p-5 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">AI Intelligence</span>
-            <div className="flex size-9 items-center justify-center rounded-lg bg-amber-50 text-amber-600">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">AI Intelligence</span>
+            <div className="flex size-9 items-center justify-center rounded-lg bg-amber-50 text-amber-600 dark:bg-amber-950/60 dark:text-amber-400">
               <Sparkles className="size-4.5" />
             </div>
           </div>
           <div className="mt-3">
-            <span className="text-2xl font-bold tracking-tight text-slate-900">
+            <span className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
               {(ai?.totalSummaries || 0) + (ai?.totalQaMessages || 0) + (ai?.totalEntitySets || 0)}
             </span>
-            <p className="mt-0.5 text-xs text-slate-500">
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
               {ai?.totalSummaries || 0} summaries &middot; {ai?.totalQaMessages || 0} Q&A
             </p>
           </div>
@@ -180,7 +180,7 @@ const AdminOverviewPage = () => {
           <CardBody className="flex flex-col gap-5">
             {/* Visual Multi-segment Progress Bar */}
             <div className="flex flex-col gap-2">
-              <div className="h-3 w-full overflow-hidden rounded-full bg-slate-100 flex">
+              <div className="h-3 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800 flex">
                 <div
                   style={{ width: `${readyPct}%` }}
                   className="bg-emerald-500 transition-all duration-500"
@@ -198,39 +198,39 @@ const AdminOverviewPage = () => {
                 />
               </div>
 
-              <div className="flex items-center justify-between text-xs text-slate-500">
+              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                 <span>{totalDocs} Total Ingested</span>
-                <span className="font-medium text-emerald-600">{readyPct}% Success Rate</span>
+                <span className="font-medium text-emerald-600 dark:text-emerald-400">{readyPct}% Success Rate</span>
               </div>
             </div>
 
             {/* Status Breakdown Grid */}
             <div className="grid grid-cols-3 gap-3">
               <div className="rounded-xl border border-line bg-surface-muted/50 p-3 text-center">
-                <div className="flex items-center justify-center gap-1.5 text-xs font-medium text-emerald-700">
-                  <CheckCircle2 className="size-3.5 text-emerald-500" />
+                <div className="flex items-center justify-center gap-1.5 text-xs font-medium text-emerald-700 dark:text-emerald-300">
+                  <CheckCircle2 className="size-3.5 text-emerald-500 dark:text-emerald-400" />
                   <span>Ready</span>
                 </div>
-                <div className="mt-1 text-xl font-bold text-slate-900">{readyCount}</div>
-                <div className="text-[11px] text-slate-500">{readyPct}% of library</div>
+                <div className="mt-1 text-xl font-bold text-slate-900 dark:text-slate-100">{readyCount}</div>
+                <div className="text-[11px] text-slate-500 dark:text-slate-400">{readyPct}% of library</div>
               </div>
 
               <div className="rounded-xl border border-line bg-surface-muted/50 p-3 text-center">
-                <div className="flex items-center justify-center gap-1.5 text-xs font-medium text-amber-700">
-                  <Activity className="size-3.5 text-amber-500" />
+                <div className="flex items-center justify-center gap-1.5 text-xs font-medium text-amber-700 dark:text-amber-300">
+                  <Activity className="size-3.5 text-amber-500 dark:text-amber-400" />
                   <span>Processing</span>
                 </div>
-                <div className="mt-1 text-xl font-bold text-slate-900">{processingCount}</div>
-                <div className="text-[11px] text-slate-500">{procPct}% queue</div>
+                <div className="mt-1 text-xl font-bold text-slate-900 dark:text-slate-100">{processingCount}</div>
+                <div className="text-[11px] text-slate-500 dark:text-slate-400">{procPct}% queue</div>
               </div>
 
               <div className="rounded-xl border border-line bg-surface-muted/50 p-3 text-center">
-                <div className="flex items-center justify-center gap-1.5 text-xs font-medium text-rose-700">
-                  <XCircle className="size-3.5 text-rose-500" />
+                <div className="flex items-center justify-center gap-1.5 text-xs font-medium text-rose-700 dark:text-rose-300">
+                  <XCircle className="size-3.5 text-rose-500 dark:text-rose-400" />
                   <span>Failed</span>
                 </div>
-                <div className="mt-1 text-xl font-bold text-slate-900">{failedCount}</div>
-                <div className="text-[11px] text-slate-500">{failPct}% error rate</div>
+                <div className="mt-1 text-xl font-bold text-slate-900 dark:text-slate-100">{failedCount}</div>
+                <div className="text-[11px] text-slate-500 dark:text-slate-400">{failPct}% error rate</div>
               </div>
             </div>
           </CardBody>
@@ -245,22 +245,22 @@ const AdminOverviewPage = () => {
           <CardBody className="flex flex-col gap-4">
             {/* Formats distribution */}
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Ingested File Types</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">Ingested File Types</p>
               <div className="space-y-2">
                 {documents?.byMimeType?.length > 0 ? (
                   documents.byMimeType.map((item) => {
                     const pct = totalDocs > 0 ? Math.round((item.count / totalDocs) * 100) : 0;
                     return (
                       <div key={item.mimeType} className="flex items-center justify-between text-xs">
-                        <span className="font-medium text-slate-700 flex items-center gap-2">
-                          <FileText className="size-3.5 text-brand-500" />
+                        <span className="font-medium text-slate-700 dark:text-slate-200 flex items-center gap-2">
+                          <FileText className="size-3.5 text-brand-500 dark:text-brand-400" />
                           {getMimeLabel(item.mimeType)}
                         </span>
                         <div className="flex items-center gap-3">
-                          <div className="w-24 bg-slate-100 rounded-full h-1.5 overflow-hidden">
-                            <div className="bg-brand-600 h-1.5 rounded-full" style={{ width: `${pct}%` }} />
+                          <div className="w-24 bg-slate-100 dark:bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                            <div className="bg-brand-600 dark:bg-brand-500 h-1.5 rounded-full" style={{ width: `${pct}%` }} />
                           </div>
-                          <span className="w-10 text-right font-semibold text-slate-900">{item.count}</span>
+                          <span className="w-10 text-right font-semibold text-slate-900 dark:text-slate-100">{item.count}</span>
                         </div>
                       </div>
                     );
@@ -273,19 +273,19 @@ const AdminOverviewPage = () => {
 
             {/* AI Capabilities stats */}
             <div className="border-t border-line pt-3 mt-1">
-              <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">AI Insights Breakdown</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">AI Insights Breakdown</p>
               <div className="grid grid-cols-3 gap-2">
                 <div className="rounded-lg bg-surface-muted p-2.5">
-                  <span className="text-[11px] text-slate-500 block">Summaries</span>
-                  <span className="text-sm font-bold text-slate-900">{ai?.totalSummaries ?? 0}</span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 block">Summaries</span>
+                  <span className="text-sm font-bold text-slate-900 dark:text-slate-100">{ai?.totalSummaries ?? 0}</span>
                 </div>
                 <div className="rounded-lg bg-surface-muted p-2.5">
-                  <span className="text-[11px] text-slate-500 block">Q&A Queries</span>
-                  <span className="text-sm font-bold text-slate-900">{ai?.totalQaMessages ?? 0}</span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 block">Q&A Queries</span>
+                  <span className="text-sm font-bold text-slate-900 dark:text-slate-100">{ai?.totalQaMessages ?? 0}</span>
                 </div>
                 <div className="rounded-lg bg-surface-muted p-2.5">
-                  <span className="text-[11px] text-slate-500 block">NER Entity Sets</span>
-                  <span className="text-sm font-bold text-slate-900">{ai?.totalEntitySets ?? 0}</span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 block">NER Entity Sets</span>
+                  <span className="text-sm font-bold text-slate-900 dark:text-slate-100">{ai?.totalEntitySets ?? 0}</span>
                 </div>
               </div>
             </div>
@@ -392,17 +392,17 @@ const AdminOverviewPage = () => {
                 {recentActivity.recentDocuments.map((doc) => (
                   <div key={doc.id} className="flex items-center justify-between p-3.5 transition-colors hover:bg-surface-muted/40">
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
+                      <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600 dark:bg-brand-900/50 dark:text-brand-300">
                         <FileText className="size-4" />
                       </div>
                       <div className="min-w-0">
                         <Link
                           to={documentPath(doc.id)}
-                          className="truncate text-xs font-semibold text-slate-900 hover:text-brand-600 block"
+                          className="truncate text-xs font-semibold text-slate-900 dark:text-slate-100 hover:text-brand-600 dark:hover:text-brand-400 block"
                         >
                           {doc.filename}
                         </Link>
-                        <p className="truncate text-[11px] text-slate-500">
+                        <p className="truncate text-[11px] text-slate-500 dark:text-slate-400">
                           by {doc.user?.email || 'Unknown'} &middot; {formatBytes(doc.sizeBytes)}
                         </p>
                       </div>

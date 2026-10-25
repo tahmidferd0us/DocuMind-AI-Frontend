@@ -27,7 +27,7 @@ const Pagination = ({ page = 1, pageSize = 10, total = 0, onPageChange, onPageSi
             <select
               value={pageSize}
               onChange={(event) => onPageSizeChange(Number(event.target.value))}
-              className="rounded-md border border-line bg-white dark:bg-slate-900 dark:border-slate-750 px-2 py-1 text-xs text-slate-700 dark:text-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-100 sm:text-sm"
+              className="rounded-md border border-line bg-white dark:bg-slate-900 dark:border-slate-700 px-2 py-1 text-xs text-slate-700 dark:text-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-100 sm:text-sm"
             >
               {PAGE_SIZE_OPTIONS.map((option) => (
                 <option key={option} value={option}>

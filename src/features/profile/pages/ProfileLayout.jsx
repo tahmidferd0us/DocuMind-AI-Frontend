@@ -46,7 +46,7 @@ const ProfileLayout = () => {
 
       {/* User Header Summary Card */}
       <Card className="overflow-hidden border border-line bg-white dark:bg-slate-900 shadow-sm">
-        <div className="bg-gradient-to-r from-brand-50/60 via-slate-50 to-white dark:from-slate-900 dark:via-slate-850 dark:to-slate-900 p-6 sm:p-8">
+        <div className="bg-gradient-to-r from-brand-50/60 via-slate-50 to-white dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 p-6 sm:p-8">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-4">
               <div className="flex size-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-600 to-brand-800 text-xl font-bold text-white shadow-md ring-4 ring-white dark:ring-slate-800">
@@ -97,7 +97,7 @@ const ProfileLayout = () => {
                       cn(
                         'flex shrink-0 items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-colors',
                         isActive
-                          ? 'bg-brand-50 text-brand-700 font-semibold dark:bg-brand-950/70 dark:text-brand-300'
+                          ? 'bg-brand-50 text-brand-700 font-semibold dark:bg-brand-900/50 dark:text-brand-200 dark:ring-1 dark:ring-brand-700/60'
                           : 'text-slate-600 hover:bg-surface-muted hover:text-ink dark:text-slate-300 dark:hover:text-white',
                       )
                     }

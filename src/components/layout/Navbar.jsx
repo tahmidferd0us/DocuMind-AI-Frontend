@@ -41,7 +41,7 @@ const ToolsMenu = ({ onNavigate }) => (
             className={cn(
               'mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md',
               tool.ready
-                ? 'bg-brand-50 text-brand-600 dark:bg-brand-950 dark:text-brand-300'
+                ? 'bg-brand-50 text-brand-600 dark:bg-brand-900/50 dark:text-brand-300'
                 : 'bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500',
             )}
           >
@@ -120,7 +120,7 @@ const Navbar = () => {
   const initials = getInitials(user?.fullName, user?.email);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur-md dark:bg-slate-900/95">
+    <header className="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur-md dark:bg-slate-900/95 dark:border-slate-800">
       <div className="container-page flex h-16 items-center gap-3">
         <Link to={PATHS.home} aria-label={`${APP_NAME} home`}>
           <Wordmark />
@@ -135,11 +135,11 @@ const Navbar = () => {
             }}
             aria-expanded={isToolsOpen}
             aria-haspopup="true"
-            className="flex items-center gap-2 rounded-lg border border-line px-3 py-2 text-sm font-medium text-ink transition-colors hover:bg-surface-muted"
+            className="flex items-center gap-2 rounded-lg border border-line bg-white dark:bg-slate-800 dark:border-slate-700 px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 transition-colors hover:bg-surface-muted dark:hover:bg-slate-700"
           >
-            <LayoutGrid className="size-4" />
+            <LayoutGrid className="size-4 text-slate-500 dark:text-slate-400" />
             Tools
-            <ChevronDown className={cn('size-4 transition-transform', isToolsOpen && 'rotate-180')} />
+            <ChevronDown className={cn('size-4 text-slate-400 transition-transform', isToolsOpen && 'rotate-180')} />
           </button>
 
           <AnimatePresence>
@@ -167,8 +167,8 @@ const Navbar = () => {
                   cn(
                     'rounded-lg px-3 py-2 text-sm font-medium transition-colors',
                     isActive
-                      ? 'text-brand-700 bg-brand-50/60 dark:text-brand-300 dark:bg-brand-950/60'
-                      : 'text-slate-600 hover:bg-surface-muted hover:text-ink dark:text-slate-300 dark:hover:text-white',
+                      ? 'bg-brand-50 text-brand-700 dark:bg-slate-800 dark:text-white dark:ring-1 dark:ring-slate-700'
+                      : 'text-slate-600 hover:bg-surface-muted hover:text-ink dark:text-slate-300 dark:hover:bg-slate-800/60 dark:hover:text-white',
                   )
                 }
               >
@@ -181,8 +181,8 @@ const Navbar = () => {
                     cn(
                       'inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
                       isActive
-                        ? 'text-brand-700 bg-brand-50/60 font-semibold dark:text-brand-300 dark:bg-brand-950/60'
-                        : 'text-brand-600 hover:bg-brand-50/40 dark:text-brand-400 dark:hover:bg-brand-950/40',
+                        ? 'bg-brand-50 text-brand-700 font-semibold dark:bg-slate-800 dark:text-brand-300 dark:ring-1 dark:ring-slate-700'
+                        : 'text-brand-600 hover:bg-brand-50/40 dark:text-brand-400 dark:hover:bg-slate-800/60',
                     )
                   }
                 >
@@ -196,8 +196,8 @@ const Navbar = () => {
                   cn(
                     'rounded-lg px-3 py-2 text-sm font-medium transition-colors',
                     isActive
-                      ? 'text-brand-700 bg-brand-50/60 dark:text-brand-300 dark:bg-brand-950/60'
-                      : 'text-slate-600 hover:bg-surface-muted hover:text-ink dark:text-slate-300 dark:hover:text-white',
+                      ? 'bg-brand-50 text-brand-700 dark:bg-slate-800 dark:text-white dark:ring-1 dark:ring-slate-700'
+                      : 'text-slate-600 hover:bg-surface-muted hover:text-ink dark:text-slate-300 dark:hover:bg-slate-800/60 dark:hover:text-white',
                   )
                 }
               >
@@ -213,8 +213,8 @@ const Navbar = () => {
                   cn(
                     'rounded-lg px-3 py-2 text-sm font-medium transition-colors',
                     isActive
-                      ? 'text-brand-700 dark:text-brand-300'
-                      : 'text-slate-600 hover:bg-surface-muted hover:text-ink dark:text-slate-300 dark:hover:text-white',
+                      ? 'bg-brand-50 text-brand-700 dark:bg-slate-800 dark:text-white dark:ring-1 dark:ring-slate-700'
+                      : 'text-slate-600 hover:bg-surface-muted hover:text-ink dark:text-slate-300 dark:hover:bg-slate-800/60 dark:hover:text-white',
                   )
                 }
               >
@@ -238,15 +238,15 @@ const Navbar = () => {
                 }}
                 aria-expanded={isProfileOpen}
                 aria-haspopup="true"
-                className="flex items-center gap-2.5 rounded-full border border-line bg-white py-1 pl-1 pr-3 text-left transition-colors hover:bg-surface-muted dark:bg-slate-850 dark:border-slate-750"
+                className="flex items-center gap-2.5 rounded-full border border-line bg-white dark:bg-slate-800 dark:border-slate-700 py-1 pl-1 pr-3 text-left transition-colors hover:bg-surface-muted dark:hover:bg-slate-700"
               >
-                <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand-50 text-xs font-bold text-brand-700 ring-1 ring-brand-200 dark:bg-brand-950 dark:text-brand-300 dark:ring-brand-800">
+                <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand-50 text-xs font-bold text-brand-700 ring-1 ring-brand-200 dark:bg-brand-900/80 dark:text-brand-200 dark:ring-brand-700/60">
                   {initials}
                 </div>
-                <div className="max-w-[10rem] truncate text-xs font-medium text-slate-800 dark:text-slate-200">
+                <div className="max-w-[10rem] truncate text-xs font-medium text-slate-800 dark:text-slate-100">
                   {user?.fullName || user?.email}
                 </div>
-                <ChevronDown className={cn('size-3.5 text-slate-400 transition-transform', isProfileOpen && 'rotate-180')} />
+                <ChevronDown className={cn('size-3.5 text-slate-400 dark:text-slate-400 transition-transform', isProfileOpen && 'rotate-180')} />
               </button>
 
               <AnimatePresence>
@@ -277,7 +277,7 @@ const Navbar = () => {
                         <Link
                           to={PATHS.admin}
                           onClick={() => setIsProfileOpen(false)}
-                          className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold text-brand-700 bg-brand-50/70 transition-colors hover:bg-brand-50 dark:text-brand-300 dark:bg-brand-950/60 dark:hover:bg-brand-950"
+                          className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold text-brand-700 bg-brand-50/70 transition-colors hover:bg-brand-50 dark:text-brand-300 dark:bg-brand-900/40 dark:hover:bg-brand-900/60"
                         >
                           <ShieldCheck className="size-4 text-brand-600 dark:text-brand-400" />
                           <span>Admin Dashboard &amp; Analytics</span>
@@ -352,7 +352,7 @@ const Navbar = () => {
             </div>
           ) : (
             <>
-              <Link to={PATHS.login} className="rounded-lg border border-line px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-surface-muted">
+              <Link to={PATHS.login} className="rounded-lg border border-line bg-white dark:bg-slate-800 dark:border-slate-700 px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 transition-colors hover:bg-surface-muted dark:hover:bg-slate-700">
                 Log in
               </Link>
               <Button size="sm" onClick={() => navigate(PATHS.login)}>
@@ -388,8 +388,8 @@ const Navbar = () => {
                 {isAuthenticated ? (
                   <>
                     {/* User info header for mobile */}
-                    <div className="flex items-center gap-3 rounded-lg bg-surface-muted p-3">
-                      <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-50 text-sm font-bold text-brand-700 ring-1 ring-brand-200 dark:bg-brand-950 dark:text-brand-300 dark:ring-brand-800">
+                    <div className="flex items-center gap-3 rounded-lg bg-surface-muted dark:bg-slate-800/80 p-3">
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-50 text-sm font-bold text-brand-700 ring-1 ring-brand-200 dark:bg-brand-900/80 dark:text-brand-200 dark:ring-brand-700/60">
                         {initials}
                       </div>
                       <div className="min-w-0 flex-1">
@@ -418,7 +418,7 @@ const Navbar = () => {
                         <Link
                           to={PATHS.admin}
                           onClick={() => setIsMobileOpen(false)}
-                          className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-semibold text-brand-700 bg-brand-50/70 hover:bg-brand-50 dark:text-brand-300 dark:bg-brand-950/60 dark:hover:bg-brand-950"
+                          className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-semibold text-brand-700 bg-brand-50/70 hover:bg-brand-50 dark:text-brand-300 dark:bg-brand-900/40 dark:hover:bg-brand-900/60"
                         >
                           <ShieldCheck className="size-4 text-brand-600 dark:text-brand-400" />
                           Admin Dashboard &amp; Analytics
@@ -458,7 +458,7 @@ const Navbar = () => {
                       </Link>
                     </div>
 
-                    <div className="flex items-center justify-between rounded-lg border border-line bg-surface-muted/60 p-2.5">
+                    <div className="flex items-center justify-between rounded-lg border border-line bg-surface-muted/60 p-2.5 dark:border-slate-800">
                       <span className="text-xs font-medium text-slate-700 dark:text-slate-300">Theme</span>
                       <ThemeToggle showLabel size="sm" />
                     </div>
@@ -471,14 +471,14 @@ const Navbar = () => {
                   </>
                 ) : (
                   <>
-                    <div className="flex items-center justify-between rounded-lg border border-line bg-surface-muted/60 p-2.5">
+                    <div className="flex items-center justify-between rounded-lg border border-line bg-surface-muted/60 p-2.5 dark:border-slate-800">
                       <span className="text-xs font-medium text-slate-700 dark:text-slate-300">Theme</span>
                       <ThemeToggle showLabel size="sm" />
                     </div>
 
                     <Link
                       to={PATHS.login}
-                      className="flex h-11 items-center justify-center rounded-lg border border-line text-sm font-medium text-ink transition-colors hover:bg-surface-muted"
+                      className="flex h-11 items-center justify-center rounded-lg border border-line bg-white dark:bg-slate-800 dark:border-slate-700 text-sm font-medium text-slate-700 dark:text-slate-200 transition-colors hover:bg-surface-muted dark:hover:bg-slate-700"
                     >
                       Log in
                     </Link>

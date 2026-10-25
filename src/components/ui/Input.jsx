@@ -8,8 +8,8 @@ export const inputBaseClass =
 
 export const inputStateClass = (hasError) =>
   hasError
-    ? 'border-red-400 dark:border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-100 dark:focus:ring-red-950'
-    : 'border-line dark:border-slate-700 focus:border-brand-500 focus:ring-2 focus:ring-brand-100 dark:focus:ring-brand-950';
+    ? 'border-red-400 dark:border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-100 dark:focus:ring-red-500/30'
+    : 'border-line dark:border-slate-700 focus:border-brand-500 focus:ring-2 focus:ring-brand-100 dark:focus:ring-brand-500/30';
 
 const Input = forwardRef(
   ({ id, label, hint, error, required, type = 'text', leftIcon, className, containerClassName, ...props }, ref) => {

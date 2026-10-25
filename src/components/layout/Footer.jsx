@@ -27,7 +27,7 @@ const Footer = () => {
             <Link to={PATHS.home}>
               <Wordmark />
             </Link>
-            <p className="mt-3 max-w-xs text-sm leading-relaxed text-slate-500">
+            <p className="mt-3 max-w-xs text-sm leading-relaxed text-slate-500 dark:text-slate-400">
               Upload a document, get a grounded summary, the entities that matter, and answers you can trace back to the source.
             </p>
           </div>
@@ -37,9 +37,9 @@ const Footer = () => {
             <ul className="mt-3 flex flex-col gap-2">
               {TOOLS.map((tool) => (
                 <li key={tool.key}>
-                  <Link to={tool.path} className="text-sm text-slate-500 transition-colors hover:text-brand-700">
+                  <Link to={tool.path} className="text-sm text-slate-500 dark:text-slate-400 transition-colors hover:text-brand-700 dark:hover:text-brand-300">
                     {tool.name}
-                    {tool.ready ? null : <span className="ml-1.5 text-xs text-slate-400">soon</span>}
+                    {tool.ready ? null : <span className="ml-1.5 text-xs text-slate-400 dark:text-slate-500">soon</span>}
                   </Link>
                 </li>
               ))}
@@ -51,24 +51,24 @@ const Footer = () => {
             <ul className="mt-3 flex flex-col gap-2">
               {!isAuthenticated ? (
                 <li>
-                  <Link to={PATHS.login} className="text-sm text-slate-500 transition-colors hover:text-brand-700">
+                  <Link to={PATHS.login} className="text-sm text-slate-500 dark:text-slate-400 transition-colors hover:text-brand-700 dark:hover:text-brand-300">
                     Log in
                   </Link>
                 </li>
               ) : null}
               <li>
-                <Link to={PATHS.dashboard} className="text-sm text-slate-500 transition-colors hover:text-brand-700">
+                <Link to={PATHS.dashboard} className="text-sm text-slate-500 dark:text-slate-400 transition-colors hover:text-brand-700 dark:hover:text-brand-300">
                   Workspace
                 </Link>
               </li>
               <li>
-                <Link to={PATHS.profile} className="text-sm text-slate-500 transition-colors hover:text-brand-700">
+                <Link to={PATHS.profile} className="text-sm text-slate-500 dark:text-slate-400 transition-colors hover:text-brand-700 dark:hover:text-brand-300">
                   Profile &amp; Settings
                 </Link>
               </li>
               {user?.role === 'ADMIN' ? (
                 <li>
-                  <Link to={PATHS.admin} className="text-sm font-medium text-brand-600 transition-colors hover:text-brand-700">
+                  <Link to={PATHS.admin} className="text-sm font-medium text-brand-600 dark:text-brand-400 transition-colors hover:text-brand-700 dark:hover:text-brand-300">
                     Admin Console
                   </Link>
                 </li>
@@ -79,7 +79,7 @@ const Footer = () => {
 
         <div>
           <h3 className="text-xs font-semibold uppercase tracking-wide text-ink">Project</h3>
-          <ul className="mt-3 flex flex-col gap-2 text-sm text-slate-500">
+          <ul className="mt-3 flex flex-col gap-2 text-sm text-slate-500 dark:text-slate-400">
             <li>King&apos;s Own Institute</li>
             <li>Smart NLP Platform</li>
             <li>Document Summarisation &amp; Q&amp;A</li>
@@ -87,7 +87,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="mt-10 flex flex-col gap-2 border-t border-line pt-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mt-10 flex flex-col gap-2 border-t border-line pt-6 text-sm text-slate-500 dark:text-slate-400 sm:flex-row sm:items-center sm:justify-between">
         <p>
           © {new Date().getFullYear()} {APP_NAME}. Built for KOI.
         </p>

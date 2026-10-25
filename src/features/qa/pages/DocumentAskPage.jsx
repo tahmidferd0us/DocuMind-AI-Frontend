@@ -34,7 +34,7 @@ const Exchange = ({ message }) => (
     <div className="max-w-[92%] rounded-xl rounded-bl-sm border border-line bg-white dark:bg-slate-900 dark:border-slate-800 px-4 py-3">
       <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700 dark:text-slate-200">{message.answer}</p>
       <SourceList sources={message.sources} />
-      <p className="mt-2 text-[11px] text-slate-400 dark:text-slate-500">
+      <p className="mt-2 text-[11px] text-slate-400 dark:text-slate-400">
         {message.model} · {formatDate(message.createdAt)}
       </p>
     </div>
@@ -94,7 +94,7 @@ const DocumentAskPage = () => {
               <Spinner size="lg" className="text-brand-600" />
             </div>
           ) : messages.length === 0 ? (
-            <p className="py-12 text-center text-sm text-slate-400 dark:text-slate-500">No questions asked about this document yet.</p>
+            <p className="py-12 text-center text-sm text-slate-400 dark:text-slate-400">No questions asked about this document yet.</p>
           ) : (
             <ul className="flex flex-col gap-6">
               {messages.map((message) => (

@@ -60,7 +60,7 @@ const AdminLayout = () => {
                   cn(
                     'flex shrink-0 items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors',
                     isActive
-                      ? 'bg-brand-50 text-brand-700 font-semibold shadow-2xs dark:bg-brand-950/70 dark:text-brand-300'
+                      ? 'bg-brand-50 text-brand-700 font-semibold shadow-2xs dark:bg-brand-900/50 dark:text-brand-200 dark:ring-1 dark:ring-brand-700/60'
                       : 'text-slate-600 hover:bg-surface-muted hover:text-ink dark:text-slate-300 dark:hover:text-white',
                   )
                 }

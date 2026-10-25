@@ -11,13 +11,13 @@ const Row = ({ included, label, detail }) => (
       className={`mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full ${
         included
           ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-950/70 dark:text-emerald-400'
-          : 'bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500'
+          : 'bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-400'
       }`}
     >
       {included ? <Check className="size-3" /> : <Minus className="size-3" />}
     </span>
     <span className="min-w-0">
-      <span className={`text-sm ${included ? 'text-slate-700 dark:text-slate-200' : 'text-slate-400 dark:text-slate-500'}`}>{label}</span>
+      <span className={`text-sm ${included ? 'text-slate-700 dark:text-slate-200' : 'text-slate-400 dark:text-slate-400'}`}>{label}</span>
       {detail ? <span className="ml-1.5 text-xs text-slate-500 dark:text-slate-400">{detail}</span> : null}
     </span>
   </li>
@@ -72,7 +72,7 @@ const DocumentExportPage = () => {
         </div>
       </Card>
 
-      <p className="text-xs text-slate-400">
+      <p className="text-xs text-slate-500 dark:text-slate-400">
         Reports are generated on demand from <code>{API_BASE_URL}/exports/{document.id}</code> and are not stored on the server.
       </p>
     </div>

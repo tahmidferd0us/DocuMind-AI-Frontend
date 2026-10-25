@@ -136,7 +136,7 @@ const DashboardPage = () => {
                 setSearch(e.target.value);
                 setPage(1);
               }}
-              className="w-full rounded-lg border border-line bg-white dark:bg-slate-900 dark:border-slate-750 py-2 pl-9 pr-3 text-sm text-ink placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className="w-full rounded-lg border border-line bg-white dark:bg-slate-900 dark:border-slate-700 py-2 pl-9 pr-3 text-sm text-ink placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
             />
           </div>
 

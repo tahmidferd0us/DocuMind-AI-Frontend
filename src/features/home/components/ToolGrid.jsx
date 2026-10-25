@@ -26,7 +26,7 @@ const ToolGrid = () => (
               to={tool.path}
               className="group flex h-full flex-col rounded-xl border border-line bg-white dark:bg-slate-900 dark:border-slate-800 p-5 transition-shadow hover:shadow-md"
             >
-              <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600 dark:bg-brand-950 dark:text-brand-300">
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600 dark:bg-brand-900/50 dark:text-brand-200 dark:border dark:border-brand-700/50">
                 <tool.icon className="size-5" />
               </span>
 

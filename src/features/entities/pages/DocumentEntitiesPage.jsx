@@ -46,9 +46,9 @@ const DocumentEntitiesPage = () => {
             <CardHeader title="Named entities" description={entitySet ? `${groups.length} groups` : 'Grouped by type'} />
             <CardBody>
               {!entitySet ? (
-                <p className="text-sm text-slate-400 dark:text-slate-500">Nothing extracted yet.</p>
+                <p className="text-sm text-slate-400 dark:text-slate-400">Nothing extracted yet.</p>
               ) : groups.length === 0 ? (
-                <p className="text-sm text-slate-400 dark:text-slate-500">No named entities found in this document.</p>
+                <p className="text-sm text-slate-400 dark:text-slate-400">No named entities found in this document.</p>
               ) : (
                 <ul className="flex flex-col gap-4">
                   {groups.map(([group, items]) => (
@@ -73,7 +73,7 @@ const DocumentEntitiesPage = () => {
             <CardHeader title="Key phrases" description={entitySet ? `${entitySet.keywords.length} ranked` : 'Ranked by relevance'} />
             <CardBody>
               {!entitySet ? (
-                <p className="text-sm text-slate-400 dark:text-slate-500">Nothing extracted yet.</p>
+                <p className="text-sm text-slate-400 dark:text-slate-400">Nothing extracted yet.</p>
               ) : (
                 <ul className="flex flex-col gap-2">
                   {entitySet.keywords.map((keyword) => (

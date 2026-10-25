@@ -25,7 +25,7 @@ const ToolPage = ({ toolKey }) => {
       <section className="border-b border-line">
         <div className="container-page py-8 sm:py-12 lg:py-16">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full bg-brand-50 dark:bg-brand-950/70 dark:border dark:border-brand-800/40 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-700 dark:text-brand-300">
+            <span className="inline-flex items-center gap-2 rounded-full bg-brand-50 dark:bg-brand-900/60 dark:border dark:border-brand-700/60 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-700 dark:text-brand-200">
               <tool.icon className="size-3.5" />
               {tool.name}
             </span>
@@ -125,7 +125,7 @@ const ToolPage = ({ toolKey }) => {
                 to={item.path}
                 className="group flex flex-col rounded-xl border border-line bg-white dark:bg-slate-900 dark:border-slate-800 p-5 transition-shadow hover:shadow-md"
               >
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand-50 dark:bg-brand-950 dark:text-brand-300 text-brand-600">
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand-50 dark:bg-brand-900/50 dark:text-brand-200 dark:border dark:border-brand-700/50 text-brand-600">
                   <item.icon className="size-4.5" />
                 </span>
                 <span className="mt-3 text-base font-semibold text-ink">{item.name}</span>

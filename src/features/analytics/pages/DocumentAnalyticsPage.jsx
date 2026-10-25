@@ -19,7 +19,7 @@ const DocumentAnalyticsPage = () => {
       <div className="container-page py-16">
         <div className="flex flex-col items-center justify-center gap-3">
           <Spinner size="lg" className="text-brand-600" />
-          <p className="text-sm text-slate-500">Computing linguistic analytics and readability metrics…</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400">Computing linguistic analytics and readability metrics…</p>
         </div>
       </div>
     );
@@ -76,12 +76,12 @@ const DocumentAnalyticsPage = () => {
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="text-3xl font-bold tracking-tight text-ink">{readabilityScore}</span>
-                    <span className="text-sm text-slate-500">/ 100</span>
+                    <span className="text-sm text-slate-500 dark:text-slate-400">/ 100</span>
                     <Badge tone={scoreTone} className="ml-2 font-semibold">
                       {readabilityLevel}
                     </Badge>
                   </div>
-                  <p className="mt-0.5 text-xs text-slate-500">Target education level: <span className="font-medium text-slate-700">{readabilityGrade}</span></p>
+                  <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">Target education level: <span className="font-medium text-slate-700 dark:text-slate-200">{readabilityGrade}</span></p>
                 </div>
               </div>
             </div>
@@ -125,24 +125,24 @@ const DocumentAnalyticsPage = () => {
           />
           <CardBody className="flex flex-1 flex-col justify-around gap-4">
             <div className="flex items-center gap-4 rounded-xl border border-line p-4">
-              <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+              <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400">
                 <BookOpen className="size-6" />
               </div>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Silent Reading Time</p>
-                <p className="mt-0.5 text-2xl font-bold text-ink">{reading_time_min} <span className="text-sm font-normal text-slate-500">min</span></p>
-                <p className="text-[11px] text-slate-400">At standard reading rate of 220 WPM</p>
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Silent Reading Time</p>
+                <p className="mt-0.5 text-2xl font-bold text-ink">{reading_time_min} <span className="text-sm font-normal text-slate-500 dark:text-slate-400">min</span></p>
+                <p className="text-[11px] text-slate-400 dark:text-slate-400">At standard reading rate of 220 WPM</p>
               </div>
             </div>
 
             <div className="flex items-center gap-4 rounded-xl border border-line p-4">
-              <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+              <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400">
                 <Volume2 className="size-6" />
               </div>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Speaking / Presentation</p>
-                <p className="mt-0.5 text-2xl font-bold text-ink">{speaking_time_min} <span className="text-sm font-normal text-slate-500">min</span></p>
-                <p className="text-[11px] text-slate-400">At presentation pace of 140 WPM</p>
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Speaking / Presentation</p>
+                <p className="mt-0.5 text-2xl font-bold text-ink">{speaking_time_min} <span className="text-sm font-normal text-slate-500 dark:text-slate-400">min</span></p>
+                <p className="text-[11px] text-slate-400 dark:text-slate-400">At presentation pace of 140 WPM</p>
               </div>
             </div>
           </CardBody>
@@ -157,27 +157,27 @@ const DocumentAnalyticsPage = () => {
         />
         <CardBody className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-lg border border-line p-4">
-            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Words</p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Total Words</p>
             <p className="mt-1 text-2xl font-bold text-ink">{word_count.toLocaleString()}</p>
-            <p className="mt-0.5 text-xs text-slate-500">Normalized lexical tokens</p>
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">Normalized lexical tokens</p>
           </div>
 
           <div className="rounded-lg border border-line p-4">
-            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Characters</p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Characters</p>
             <p className="mt-1 text-2xl font-bold text-ink">{char_count.toLocaleString()}</p>
-            <p className="mt-0.5 text-xs text-slate-500">Including whitespace</p>
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">Including whitespace</p>
           </div>
 
           <div className="rounded-lg border border-line p-4">
-            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Sentences</p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Sentences</p>
             <p className="mt-1 text-2xl font-bold text-ink">{sentence_count.toLocaleString()}</p>
-            <p className="mt-0.5 text-xs text-slate-500">Parsed sentence boundaries</p>
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">Parsed sentence boundaries</p>
           </div>
 
           <div className="rounded-lg border border-line p-4">
-            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Paragraphs</p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Paragraphs</p>
             <p className="mt-1 text-2xl font-bold text-ink">{paragraph_count.toLocaleString()}</p>
-            <p className="mt-0.5 text-xs text-slate-500">Distinct structural blocks</p>
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">Distinct structural blocks</p>
           </div>
         </CardBody>
       </Card>

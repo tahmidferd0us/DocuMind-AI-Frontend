@@ -26,69 +26,69 @@ const ProfileActivityPage = () => {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Card className="p-5">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Documents
             </span>
-            <div className="flex size-8 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
+            <div className="flex size-8 items-center justify-center rounded-lg bg-brand-50 text-brand-600 dark:bg-brand-900/50 dark:text-brand-300">
               <FileText className="size-4" />
             </div>
           </div>
           <div className="mt-3">
-            <span className="text-2xl font-bold tracking-tight text-slate-900">
+            <span className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
               {isLoading ? '…' : totalDocs}
             </span>
-            <p className="mt-0.5 text-xs text-slate-500">Stored in workspace</p>
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">Stored in workspace</p>
           </div>
         </Card>
 
         <Card className="p-5">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Pages Parsed
             </span>
-            <div className="flex size-8 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600">
+            <div className="flex size-8 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400">
               <Layers className="size-4" />
             </div>
           </div>
           <div className="mt-3">
-            <span className="text-2xl font-bold tracking-tight text-slate-900">
+            <span className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
               {isLoading ? '…' : totalPages.toLocaleString()}
             </span>
-            <p className="mt-0.5 text-xs text-slate-500">Total document pages</p>
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">Total document pages</p>
           </div>
         </Card>
 
         <Card className="p-5">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Words Processed
             </span>
-            <div className="flex size-8 items-center justify-center rounded-lg bg-amber-50 text-amber-600">
+            <div className="flex size-8 items-center justify-center rounded-lg bg-amber-50 text-amber-600 dark:bg-amber-950/60 dark:text-amber-400">
               <BarChart3 className="size-4" />
             </div>
           </div>
           <div className="mt-3">
-            <span className="text-2xl font-bold tracking-tight text-slate-900">
+            <span className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
               {isLoading ? '…' : totalWords.toLocaleString()}
             </span>
-            <p className="mt-0.5 text-xs text-slate-500">NLP tokenized words</p>
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">NLP tokenized words</p>
           </div>
         </Card>
 
         <Card className="p-5">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Storage Used
             </span>
-            <div className="flex size-8 items-center justify-center rounded-lg bg-purple-50 text-purple-600">
+            <div className="flex size-8 items-center justify-center rounded-lg bg-purple-50 text-purple-600 dark:bg-purple-950/60 dark:text-purple-400">
               <Database className="size-4" />
             </div>
           </div>
           <div className="mt-3">
-            <span className="text-2xl font-bold tracking-tight text-slate-900">
+            <span className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
               {isLoading ? '…' : formatBytes(totalBytes)}
             </span>
-            <p className="mt-0.5 text-xs text-slate-500">Raw and processed files</p>
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">Raw and processed files</p>
           </div>
         </Card>
       </div>
@@ -178,12 +178,12 @@ const ProfileActivityPage = () => {
                   className="flex items-center justify-between gap-4 p-4 transition-colors hover:bg-surface-muted/60"
                 >
                   <div className="flex min-w-0 items-center gap-3">
-                    <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
+                    <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600 dark:bg-brand-900/50 dark:text-brand-300">
                       <FileText className="size-4" />
                     </div>
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-medium text-slate-800">{doc.filename}</p>
-                      <div className="mt-0.5 flex items-center gap-2 text-xs text-slate-500">
+                      <p className="truncate text-sm font-medium text-slate-800 dark:text-slate-200">{doc.filename}</p>
+                      <div className="mt-0.5 flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
                         <span>{formatBytes(doc.sizeBytes)}</span>
                         <span>·</span>
                         <span>{doc.wordCount ? `${doc.wordCount.toLocaleString()} words` : '0 words'}</span>
@@ -201,7 +201,7 @@ const ProfileActivityPage = () => {
                     {doc.status === 'READY' && (
                       <Link
                         to={documentPath(doc.id)}
-                        className="rounded-lg border border-line px-3 py-1.5 text-xs font-medium text-slate-700 transition-colors hover:bg-white hover:text-brand-700"
+                        className="rounded-lg border border-line dark:border-slate-700 px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors hover:bg-white dark:hover:bg-slate-800 hover:text-brand-700 dark:hover:text-brand-300"
                       >
                         Open
                       </Link>
