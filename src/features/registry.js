@@ -8,6 +8,7 @@ import exportsModule from './exports';
 import homeModule from './home';
 import profileModule from './profile';
 import qaModule from './qa';
+import subscriptionsModule from './subscriptions';
 import summariesModule from './summaries';
 import toastModule from './toast';
 import toolsModule from './tools';
@@ -25,9 +26,9 @@ export const featureModules = [
   entitiesModule,
   analyticsModule,
   exportsModule,
+  subscriptionsModule,
   toastModule,
 ];
-
 
 export const featureReducers = Object.fromEntries(featureModules.filter((module) => module.reducer).map((module) => [module.name, module.reducer]));
 

@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom';
-import { Activity, ArrowLeft, Lock, Sliders, User as UserIcon } from 'lucide-react';
+import { Activity, ArrowLeft, CreditCard, Lock, Sliders, User as UserIcon } from 'lucide-react';
 import { Badge, Card } from '@components/ui';
 import { cn } from '@lib/cn';
 import { formatDate } from '@lib/format';
@@ -11,6 +11,7 @@ const SECTION_ICONS = {
   security: Lock,
   preferences: Sliders,
   activity: Activity,
+  billing: CreditCard,
 };
 
 const getInitials = (name, email) => {

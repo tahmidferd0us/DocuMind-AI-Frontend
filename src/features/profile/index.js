@@ -1,5 +1,6 @@
 import { PATHS } from '@routes/paths';
 import ProfileActivityPage from './pages/ProfileActivityPage';
+import ProfileBillingPage from './pages/ProfileBillingPage';
 import ProfileGeneralPage from './pages/ProfileGeneralPage';
 import ProfileLayout from './pages/ProfileLayout';
 import ProfilePreferencesPage from './pages/ProfilePreferencesPage';
@@ -19,6 +20,7 @@ export default {
         { path: 'security', Component: ProfileSecurityPage },
         { path: 'preferences', Component: ProfilePreferencesPage },
         { path: 'activity', Component: ProfileActivityPage },
+        { path: 'billing', Component: ProfileBillingPage },
       ],
     },
   ],

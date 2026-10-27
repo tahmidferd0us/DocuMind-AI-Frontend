@@ -1,8 +1,11 @@
+import { useDispatch } from 'react-redux';
 import { useOutletContext } from 'react-router-dom';
-import { Check, Download, Minus } from 'lucide-react';
-import { Button, Card, CardBody, CardHeader, Spinner, useFileDownload } from '@components/ui';
+import { Check, Download, Minus, Sparkles } from 'lucide-react';
+import { Badge, Button, Card, CardBody, CardHeader, Spinner, useFileDownload } from '@components/ui';
 import { API_BASE_URL } from '@lib/constants';
 import { useToast } from '@features/toast/useToast';
+import { openUpgradeModal } from '@features/subscriptions/subscriptionsSlice';
+import { useGetSubscriptionQuery } from '@features/subscriptions/subscriptionsApi';
 import { useGetReportContentsQuery } from '../exportsApi';
 
 const Row = ({ included, label, detail }) => (
@@ -25,15 +28,41 @@ const Row = ({ included, label, detail }) => (
 
 const DocumentExportPage = () => {
   const { document } = useOutletContext();
+  const dispatch = useDispatch();
   const toast = useToast();
   const { data: contents, isFetching } = useGetReportContentsQuery(document.id);
+  const { data: subStatus } = useGetSubscriptionQuery();
   const { download, isDownloading } = useFileDownload();
 
+  const isFreeTier = !subStatus || subStatus.tier === 'FREE';
   const base = document.filename.replace(/\.[^.]+$/, '');
 
   const handleDownload = async (format) => {
+    if (format === 'docx' && isFreeTier) {
+      dispatch(
+        openUpgradeModal({
+          feature: 'docx_export',
+          reason: 'UPGRADE_REQUIRED',
+          message: 'DOCX exports are available on Pro and Enterprise tiers. Upgrade now to download formatted Word reports.',
+        }),
+      );
+      return;
+    }
+
     const ok = await download(`/exports/${document.id}/${format}`, { filename: `DocuMind_${base}.${format}` });
-    if (!ok) toast.error(`Could not generate the ${format.toUpperCase()} report.`);
+    if (!ok) {
+      // If blocked by 402 or entitlement check
+      if (format === 'docx') {
+        dispatch(
+          openUpgradeModal({
+            feature: 'docx_export',
+            reason: 'UPGRADE_REQUIRED',
+          }),
+        );
+      } else {
+        toast.error(`Could not generate the ${format.toUpperCase()} report.`);
+      }
+    }
   };
 
   return (
@@ -62,10 +91,22 @@ const DocumentExportPage = () => {
             </ul>
           )}
         </CardBody>
-        <div className="flex flex-col gap-3 border-t border-line p-4 sm:flex-row sm:justify-end sm:p-6">
-          <Button variant="outline" onClick={() => handleDownload('docx')} isLoading={isDownloading} leftIcon={<Download className="size-4" />}>
-            Download DOCX
-          </Button>
+        <div className="flex flex-col gap-3 border-t border-line p-4 sm:flex-row sm:items-center sm:justify-end sm:p-6">
+          <div className="relative inline-flex items-center">
+            <Button
+              variant="outline"
+              onClick={() => handleDownload('docx')}
+              isLoading={isDownloading}
+              leftIcon={<Download className="size-4" />}
+            >
+              Download DOCX
+              {isFreeTier && (
+                <Badge tone="brand" className="ml-2 text-[10px] px-1.5 py-0 font-bold uppercase tracking-wider">
+                  PRO
+                </Badge>
+              )}
+            </Button>
+          </div>
           <Button onClick={() => handleDownload('pdf')} isLoading={isDownloading} leftIcon={<Download className="size-4" />}>
             Download PDF
           </Button>

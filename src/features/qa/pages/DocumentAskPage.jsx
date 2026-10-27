@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useOutletContext } from 'react-router-dom';
 import { SendHorizonal, Trash2 } from 'lucide-react';
 import { Button, Card, CardBody, CardHeader, Input, Spinner } from '@components/ui';
 import { formatDate } from '@lib/format';
 import { useToast } from '@features/toast/useToast';
+import { openUpgradeModal } from '@features/subscriptions/subscriptionsSlice';
 import { useAskQuestionMutation, useClearConversationMutation, useGetConversationQuery } from '../qaApi';
 
 const SourceList = ({ sources }) => {
@@ -43,6 +45,7 @@ const Exchange = ({ message }) => (
 
 const DocumentAskPage = () => {
   const { document } = useOutletContext();
+  const dispatch = useDispatch();
   const toast = useToast();
   const endRef = useRef(null);
   const [question, setQuestion] = useState('');
@@ -64,7 +67,16 @@ const DocumentAskPage = () => {
     const result = await askQuestion({ documentId: document.id, question: trimmed });
     if (result.error) {
       setQuestion(trimmed);
-      toast.error(result.error.message);
+      if (result.error.status === 402 || result.error.code === 'QUOTA_EXCEEDED') {
+        dispatch(
+          openUpgradeModal({
+            reason: 'QUOTA_EXCEEDED',
+            message: result.error.message || 'You have reached your monthly Q&A question limit. Please upgrade to Pro for higher limits.',
+          }),
+        );
+      } else {
+        toast.error(result.error.message);
+      }
     }
     return undefined;
   };

@@ -10,6 +10,7 @@ export const PATHS = {
   profileSecurity: '/profile/security',
   profilePreferences: '/profile/preferences',
   profileActivity: '/profile/activity',
+  profileBilling: '/profile/billing',
   upload: '/upload',
   summarize: '/summarize',
   ask: '/ask',
@@ -25,6 +26,7 @@ export const PROFILE_SECTIONS = [
   { key: 'security', label: 'Security & Password', path: '/profile/security', segment: 'security' },
   { key: 'preferences', label: 'Preferences', path: '/profile/preferences', segment: 'preferences' },
   { key: 'activity', label: 'Activity & Usage', path: '/profile/activity', segment: 'activity' },
+  { key: 'billing', label: 'Subscription & Billing', path: '/profile/billing', segment: 'billing' },
 ];
 
 export const ADMIN_SECTIONS = [
