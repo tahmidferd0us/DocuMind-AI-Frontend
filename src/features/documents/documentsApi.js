@@ -37,6 +37,11 @@ export const documentsApi = api.injectEndpoints({
       query: (id) => ({ url: `/documents/${id}`, method: 'DELETE' }),
       invalidatesTags: ['Document'],
     }),
+    retryDocument: builder.mutation({
+      query: (id) => ({ url: `/documents/${id}/retry`, method: 'POST' }),
+      transformResponse: (response) => response.data,
+      invalidatesTags: (result, error, id) => [{ type: 'Document', id }, 'Document'],
+    }),
   }),
 });
 
@@ -46,4 +51,5 @@ export const {
   useGetDocumentTextQuery,
   useUploadDocumentMutation,
   useDeleteDocumentMutation,
+  useRetryDocumentMutation,
 } = documentsApi;

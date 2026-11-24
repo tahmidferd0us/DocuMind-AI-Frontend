@@ -42,7 +42,7 @@ export const useDocumentIntake = () => {
         return undefined;
       }
 
-      toast.info(`Extracting text from ${file.name}…`);
+      toast.info(`Uploading ${file.name}…`);
       const result = await uploadDocument(file);
 
       if (result.error) {
@@ -61,7 +61,7 @@ export const useDocumentIntake = () => {
         return toast.error(result.error.message);
       }
 
-      toast.success(`${result.data.filename} is ready — ${result.data.wordCount} words across ${result.data.pageCount} page(s).`);
+      toast.success(`${result.data.filename} uploaded. Processing has started.`);
       return navigate(documentPath(result.data.id));
     },
     [dispatch, isAuthenticated, navigate, subscription, toast, uploadDocument],

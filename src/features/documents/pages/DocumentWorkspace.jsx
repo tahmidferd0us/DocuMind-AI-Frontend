@@ -1,16 +1,34 @@
 import { NavLink, Outlet, useParams } from 'react-router-dom';
-import { ArrowLeft, FileText } from 'lucide-react';
-import { Badge, Card, EmptyState, Spinner } from '@components/ui';
+import { useEffect } from 'react';
+import { ArrowLeft, FileText, RotateCw } from 'lucide-react';
+import { Badge, Button, Card, CardBody, EmptyState, Spinner } from '@components/ui';
 import { cn } from '@lib/cn';
 import { formatBytes, formatDate } from '@lib/format';
 import { DOCUMENT_STAGES, PATHS, documentPath } from '@routes/paths';
-import { useGetDocumentQuery } from '../documentsApi';
+import { useToast } from '@features/toast/useToast';
+import { useGetDocumentQuery, useRetryDocumentMutation } from '../documentsApi';
 
 const STATUS_TONES = { READY: 'success', PROCESSING: 'warning', FAILED: 'danger' };
 
 const DocumentWorkspace = () => {
   const { documentId } = useParams();
-  const { data: document, isLoading, isError } = useGetDocumentQuery(documentId);
+  const { data: document, isLoading, isError, refetch } = useGetDocumentQuery(documentId);
+  const [retryDocument, { isLoading: isRetrying }] = useRetryDocumentMutation();
+  const toast = useToast();
+
+  const handleRetry = async () => {
+    try {
+      await retryDocument(document.id).unwrap();
+    } catch (error) {
+      toast.error(error?.data?.message || error?.message || 'Could not retry document processing');
+    }
+  };
+
+  useEffect(() => {
+    if (document?.status !== 'PROCESSING') return undefined;
+    const timer = setInterval(() => refetch(), 2000);
+    return () => clearInterval(timer);
+  }, [document?.status, refetch]);
 
   if (isLoading) {
     return (
@@ -102,10 +120,29 @@ const DocumentWorkspace = () => {
       ) : (
         <div className="container-page py-12">
           <Card>
-            <CardBody>
-              <p className="text-center text-sm text-slate-500 dark:text-slate-400">
-                {document.status === 'PROCESSING' ? 'This document is still being processed.' : 'Processing failed for this document.'}
-              </p>
+            <CardBody className="flex flex-col items-center gap-4 py-10 text-center">
+              {document.status === 'PROCESSING' ? (
+                <>
+                  <div className="w-full max-w-md">
+                    <div className="mb-2 flex items-center justify-between text-sm">
+                      <span className="font-medium text-ink">{document.processingStep || 'Processing document'}</span>
+                      <span className="text-slate-500 dark:text-slate-400">{document.progress ?? 0}%</span>
+                    </div>
+                    <div className="h-2 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800" role="progressbar" aria-label="Document processing progress" aria-valuemin={0} aria-valuemax={100} aria-valuenow={document.progress ?? 0}>
+                      <div className="h-full rounded-full bg-brand-600 transition-all" style={{ width: `${document.progress ?? 0}%` }} />
+                    </div>
+                    <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">Attempt {Math.max(document.attemptCount ?? 0, 1)} of 3. This page updates automatically.</p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="text-sm text-slate-600 dark:text-slate-300">{document.errorMessage || 'Processing failed. You can retry this document.'}</p>
+                  <Button disabled={isRetrying} onClick={handleRetry}>
+                    <RotateCw className="size-4" />
+                    {isRetrying ? 'Retrying…' : 'Retry processing'}
+                  </Button>
+                </>
+              )}
             </CardBody>
           </Card>
         </div>
