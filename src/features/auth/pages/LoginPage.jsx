@@ -101,6 +101,11 @@ const LoginPage = () => {
               Log in
             </Button>
           </form>
+          <p className="mt-5 text-center text-sm text-slate-500 dark:text-slate-400">
+            <a className="font-medium text-brand-600 hover:underline dark:text-brand-400" href="/forgot-password">Forgot your password?</a>
+            <span className="mx-2">·</span>
+            <a className="font-medium text-brand-600 hover:underline dark:text-brand-400" href="/verify-email">Resend verification email</a>
+          </p>
         </div>
       </div>
 

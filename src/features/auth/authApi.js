@@ -26,8 +26,12 @@ export const authApi = api.injectEndpoints({
     changePassword: builder.mutation({
       query: (payload) => ({ url: '/auth/password', method: 'PATCH', data: payload }),
     }),
+    forgotPassword: builder.mutation({ query: (payload) => ({ url: '/auth/forgot-password', method: 'POST', data: payload }) }),
+    resetPassword: builder.mutation({ query: (payload) => ({ url: '/auth/reset-password', method: 'POST', data: payload }) }),
+    verifyEmail: builder.mutation({ query: (payload) => ({ url: '/auth/verify-email', method: 'POST', data: payload }) }),
+    resendVerification: builder.mutation({ query: (payload) => ({ url: '/auth/resend-verification', method: 'POST', data: payload }) }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useGetMeQuery, useLazyGetMeQuery, useUpdateProfileMutation, useChangePasswordMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useGetMeQuery, useLazyGetMeQuery, useUpdateProfileMutation, useChangePasswordMutation, useForgotPasswordMutation, useResetPasswordMutation, useVerifyEmailMutation, useResendVerificationMutation } = authApi;
 
