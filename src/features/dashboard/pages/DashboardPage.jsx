@@ -124,7 +124,7 @@ const DashboardPage = () => {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">Workspace</h1>
-          <p className="mt-1 max-w-3xl text-sm leading-relaxed text-slate-600 dark:text-slate-300">Signed in as {user?.email}. Upload a text based PDF, DOCX or TXT. DocuMind extracts pages, creates optional summaries and entity results, then retrieves cited passages for Q&amp;A. Scanned PDFs without a text layer are not OCR processed; English is the primary supported language. Your account’s upload and monthly usage limits are in Billing. Deleting a document removes its original, extracted text, search index and derived results.</p>
+          <p className="mt-1 max-w-3xl text-sm leading-relaxed text-slate-600 dark:text-slate-300">Signed in as {user?.email}. Upload a PDF, DOCX or TXT. DocuMind extracts pages, creates optional summaries and entity results, then retrieves cited passages for Q&amp;A. Scanned PDF pages use local English OCR when Tesseract is configured; OCR can misread text, so compare marked passages with the source. Your account’s upload and monthly usage limits are in Billing. Deleting a document removes its original, extracted text, search index and derived results.</p>
         </div>
         <Link
           to={PATHS.profile}
@@ -136,7 +136,7 @@ const DashboardPage = () => {
       </div>
 
       <Card>
-        <CardHeader title="Upload a document" description="PDF, DOCX or TXT. Text is extracted on upload." />
+        <CardHeader title="Upload a document" description="PDF, DOCX or TXT. Scanned PDFs may take longer while English OCR runs." />
         <CardBody>
           <UploadDropzone
             onFiles={onFiles}

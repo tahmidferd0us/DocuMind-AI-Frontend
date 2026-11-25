@@ -1,6 +1,6 @@
 import { Link, useOutletContext } from 'react-router-dom';
 import { ArrowRight, BarChart3, FileDown, MessagesSquare, ScrollText, Tags } from 'lucide-react';
-import { Card, CardBody, CardHeader, Spinner } from '@components/ui';
+import { Badge, Card, CardBody, CardHeader, Spinner } from '@components/ui';
 import { documentPath } from '@routes/paths';
 import { useGetDocumentTextQuery } from '../documentsApi';
 
@@ -64,7 +64,7 @@ const DocumentOverviewPage = () => {
             </div>
           ) : (
             <div className="max-h-[36rem] overflow-auto rounded-lg bg-surface-muted p-4 text-xs leading-relaxed text-slate-700 dark:text-slate-200">
-              {data?.pages?.length ? data.pages.map((page) => <section key={page.page_number} id={`page-${page.page_number}`} tabIndex={-1} className="mb-5 scroll-mt-8 rounded-md focus:outline-2 focus:outline-brand-500"><h3 className="mb-2 text-sm font-semibold text-ink">Page {page.page_number}</h3><p className="whitespace-pre-wrap break-words">{page.cleaned_text}</p></section>) : <pre className="whitespace-pre-wrap break-words">{data?.text ?? 'No text available.'}</pre>}
+              {data?.pages?.length ? data.pages.map((page) => <section key={page.page_number} id={`page-${page.page_number}`} tabIndex={-1} className="mb-5 scroll-mt-8 rounded-md focus:outline-2 focus:outline-brand-500"><div className="mb-2 flex flex-wrap items-center gap-2"><h3 className="text-sm font-semibold text-ink">Page {page.page_number}</h3>{page.ocr_used && <Badge tone="warning">OCR text · {page.ocr_language || 'English'} · verify recognition</Badge>}</div><p className="whitespace-pre-wrap break-words">{page.cleaned_text}</p></section>) : <pre className="whitespace-pre-wrap break-words">{data?.text ?? 'No text available.'}</pre>}
             </div>
           )}
         </CardBody>

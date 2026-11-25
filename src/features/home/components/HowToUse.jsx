@@ -84,7 +84,7 @@ const HowToUse = () => (
 
         <div className="p-6 sm:p-10 lg:pl-0">
           <MockApp />
-          <p className="mt-3 text-xs leading-relaxed text-slate-600 dark:text-slate-300">Sample preview only; it does not analyze a real upload. Supported uploads: text based PDF, DOCX and TXT. Scanned PDFs need an OCR text layer; this project does not include OCR, so image-only scans may return no readable text. NLP is tuned primarily for English. Free accounts allow 5 documents, 10 MB per file and 30 Q&amp;A questions per month; plan limits are shown in Billing.</p>
+          <p className="mt-3 text-xs leading-relaxed text-slate-600 dark:text-slate-300">Sample preview only; it does not analyze a real upload. Supported uploads: PDF, DOCX and TXT. Scanned PDF pages are OCR processed when local Tesseract is configured; OCR currently uses English and may misread text, so check marked passages against the page image. NLP is tuned primarily for English. Free accounts allow 5 documents, 10 MB per file and 30 Q&amp;A questions per month; plan limits are shown in Billing.</p>
         </div>
       </motion.div>
     </div>
