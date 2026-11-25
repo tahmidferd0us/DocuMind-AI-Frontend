@@ -1,6 +1,7 @@
 import { Provider } from 'react-redux';
 import { store } from '@app/store';
 import { ThemeProvider } from '@lib/theme';
+import { MotionConfig } from 'motion/react';
 import ToastViewport from '@features/toast/ToastViewport';
 import { useSessionBootstrap } from '@features/auth/useAuth';
 import AppRouter from '@routes/AppRouter';
@@ -19,7 +20,9 @@ const AppShell = () => {
 const App = () => (
   <Provider store={store}>
     <ThemeProvider>
-      <AppShell />
+      <MotionConfig reducedMotion="user">
+        <AppShell />
+      </MotionConfig>
     </ThemeProvider>
   </Provider>
 );

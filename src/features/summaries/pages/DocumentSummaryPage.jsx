@@ -64,6 +64,7 @@ const DocumentSummaryPage = () => {
     method: 'lexrank',
     format: 'paragraph',
     length: 'standard',
+    focusTopic: '',
   });
 
   const { data: summary, isFetching } = useGetSummaryQuery(document.id);
@@ -110,11 +111,12 @@ const DocumentSummaryPage = () => {
     <div className="container-page flex flex-col gap-6 py-8">
       <Card>
         <CardHeader title="Options" description="How the summary should be built." />
-        <CardBody className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <CardBody className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           <NumberInput label="Extractive sentences" value={options.sentences} onChange={setOption('sentences')} min={1} max={20} />
           <Select label="Ranking method" value={options.method} onChange={(event) => setOption('method')(event.target.value)} placeholder="" options={METHODS} />
           <Select label="Abstractive format" value={options.format} onChange={(event) => setOption('format')(event.target.value)} placeholder="" options={FORMATS} />
           <Select label="Abstractive length" value={options.length} onChange={(event) => setOption('length')(event.target.value)} placeholder="" options={LENGTHS} />
+          <label className="flex flex-col gap-1.5 text-sm font-medium text-slate-700 dark:text-slate-200">Focus topic<input value={options.focusTopic} onChange={(event) => setOption('focusTopic')(event.target.value)} maxLength={120} placeholder="Optional" className="h-11 rounded-lg border border-line bg-white px-3 text-sm dark:border-slate-700 dark:bg-slate-900" /><span className="text-xs font-normal text-slate-500 dark:text-slate-400">Ask the language model to emphasize a topic.</span></label>
         </CardBody>
         <div className="flex flex-col gap-3 border-t border-line p-4 sm:flex-row sm:items-center sm:justify-between sm:p-6">
           <p className="text-xs text-slate-500 dark:text-slate-400">{summary ? `Last generated ${formatDate(summary.updatedAt)}` : 'No summary yet.'}</p>

@@ -33,6 +33,11 @@ elsewhere (then change `VITE_API_PROXY_TARGET`).
 
 Sign in with an account created through the backend's `/auth/register` endpoint.
 
+The public home page includes a sample workflow preview. Upload support is text-based PDF, DOCX and
+TXT. Scanned PDFs without an embedded text layer are not OCR processed and may fail extraction;
+analysis is primarily tuned for English. Account-specific document, upload, and monthly Q&A limits
+are shown under Billing. Deleting a document also deletes its extracted text and derived analysis.
+
 ## Scripts
 
 | Command | Does |

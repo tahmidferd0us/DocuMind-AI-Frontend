@@ -5,7 +5,7 @@ import { Badge, Button, Modal } from '@components/ui';
 import { PATHS } from '@routes/paths';
 import { useToast } from '@features/toast/useToast';
 import { closeUpgradeModal, selectUpgradeModal } from '../subscriptionsSlice';
-import { useCreateCheckoutMutation } from '../subscriptionsApi';
+import { useCreateCheckoutMutation, useGetSubscriptionQuery } from '../subscriptionsApi';
 
 const PRO_PERKS = [
   'Store up to 100 documents (20x more storage)',
@@ -22,6 +22,7 @@ export const UpgradeModal = () => {
   const toast = useToast();
   const modal = useSelector(selectUpgradeModal);
   const [createCheckout, { isLoading }] = useCreateCheckoutMutation();
+  const { data: subscription } = useGetSubscriptionQuery();
 
   const handleClose = () => dispatch(closeUpgradeModal());
 
@@ -33,6 +34,7 @@ export const UpgradeModal = () => {
         cancelUrl: `${window.location.origin}/profile/billing?canceled=true`,
       }).unwrap();
 
+      if (result?.mode === 'development_simulation') { toast.warning('Development checkout simulation only. No payment was taken and your plan was not changed. Configure Stripe to accept real subscriptions.'); return; }
       if (result?.url) {
         window.location.href = result.url;
       }
@@ -82,13 +84,14 @@ export const UpgradeModal = () => {
               isLoading={isLoading}
               leftIcon={<Sparkles className="size-4" />}
             >
-              Upgrade to Pro — $29/mo
+              {subscription?.billingMode === 'development_simulation' ? 'Demo only — no purchase' : 'Upgrade to Pro — $29/mo'}
             </Button>
           </div>
         </div>
       }
     >
       <div className="flex flex-col gap-4">
+        {subscription?.billingMode === 'development_simulation' && <p role="status" className="rounded-lg border border-amber-300 bg-amber-50 p-3 text-xs text-amber-950 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-100"><strong>Development simulation only:</strong> no payment will be taken and your plan will not change.</p>}
         {/* Banner */}
         <div className="relative overflow-hidden rounded-xl border border-brand-200 bg-gradient-to-br from-brand-50 to-indigo-50/60 p-4 dark:border-brand-900/60 dark:from-brand-950/40 dark:to-indigo-950/30">
           <div className="flex items-center justify-between">

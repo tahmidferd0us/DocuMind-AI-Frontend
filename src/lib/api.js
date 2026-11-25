@@ -8,3 +8,6 @@ export const api = createApi({
   refetchOnReconnect: true,
   endpoints: () => ({}),
 });
+
+export const serviceStatusApi = api.injectEndpoints({ endpoints: (builder) => ({ getServiceStatus: builder.query({ query: () => ({ url: '/health/ready' }), transformResponse: (response) => response.data, keepUnusedDataFor: 30 }) }) });
+export const { useGetServiceStatusQuery } = serviceStatusApi;

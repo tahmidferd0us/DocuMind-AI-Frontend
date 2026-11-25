@@ -3,13 +3,16 @@ import { api } from '@lib/api';
 export const documentsApi = api.injectEndpoints({
   endpoints: (builder) => ({
     listDocuments: builder.query({
-      query: ({ page = 1, limit = 10, search, status } = {}) => ({
+      query: ({ page = 1, limit = 10, search, status, tag, folder, sort } = {}) => ({
         url: '/documents',
         params: {
           page,
           limit,
           ...(search ? { search } : {}),
           ...(status ? { status } : {}),
+          ...(tag ? { tag } : {}),
+          ...(folder ? { folder } : {}),
+          ...(sort ? { sort } : {}),
         },
       }),
       transformResponse: (response) => ({ items: response.data, meta: response.meta }),
@@ -37,6 +40,8 @@ export const documentsApi = api.injectEndpoints({
       query: (id) => ({ url: `/documents/${id}`, method: 'DELETE' }),
       invalidatesTags: ['Document'],
     }),
+    updateDocument: builder.mutation({ query: ({ id, ...data }) => ({ url: `/documents/${id}`, method: 'PATCH', data }), invalidatesTags: (result, error, { id }) => [{ type: 'Document', id }, 'Document'] }),
+    bulkDocuments: builder.mutation({ query: (data) => ({ url: '/documents/bulk', method: 'PATCH', data }), invalidatesTags: ['Document'] }),
     retryDocument: builder.mutation({
       query: (id) => ({ url: `/documents/${id}/retry`, method: 'POST' }),
       transformResponse: (response) => response.data,
@@ -51,5 +56,7 @@ export const {
   useGetDocumentTextQuery,
   useUploadDocumentMutation,
   useDeleteDocumentMutation,
+  useUpdateDocumentMutation,
+  useBulkDocumentsMutation,
   useRetryDocumentMutation,
 } = documentsApi;

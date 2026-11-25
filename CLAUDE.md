@@ -279,6 +279,10 @@ Rules that are already holding and must keep holding:
 
 A `prefers-reduced-motion` block in `index.css` neutralises transitions globally.
 
+Keep keyboard focus visible and use labels for every form control and icon-only action. Citation
+links should include a page fragment in the document overview so users can inspect the cited source.
+Scanned PDFs without a text layer are not OCR processed; make this limitation visible before upload.
+
 ---
 
 ## 8. Build and env

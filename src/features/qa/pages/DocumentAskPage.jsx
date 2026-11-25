@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useOutletContext } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import { SendHorizonal, Trash2 } from 'lucide-react';
 import { Button, Card, CardBody, CardHeader, Input, Spinner } from '@components/ui';
 import { formatDate } from '@lib/format';
 import { useToast } from '@features/toast/useToast';
 import { openUpgradeModal } from '@features/subscriptions/subscriptionsSlice';
 import { useAskQuestionMutation, useClearConversationMutation, useGetConversationQuery } from '../qaApi';
+import { documentPath } from '@routes/paths';
 
-const SourceList = ({ sources }) => {
+const SourceList = ({ sources, documentId }) => {
   if (!sources?.length) return null;
   const pages = [...new Set(sources.map((source) => source.page))];
 
@@ -20,9 +21,8 @@ const SourceList = ({ sources }) => {
       <ul className="mt-2 flex flex-col gap-2">
         {sources.slice(0, 2).map((source, index) => (
           <li key={source.chunk_id ?? index} className="rounded-md bg-surface-muted px-3 py-2">
-            <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
-              <span className="font-medium text-slate-700 dark:text-slate-100">Page {source.page}:</span> {source.snippet}
-            </p>
+            <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-300"><span className="font-medium text-slate-700 dark:text-slate-100">Page {source.page}:</span> “{source.snippet}”</p>
+            <Link className="mt-1 inline-flex min-h-11 items-center text-xs font-medium text-brand-700 underline dark:text-brand-300" to={`${documentPath(documentId)}#page-${source.page}`}>Open cited page {source.page}</Link>
           </li>
         ))}
       </ul>
@@ -35,7 +35,7 @@ const Exchange = ({ message }) => (
     <div className="max-w-[85%] self-end rounded-xl rounded-br-sm bg-brand-600 px-4 py-2.5 text-sm text-white">{message.question}</div>
     <div className="max-w-[92%] rounded-xl rounded-bl-sm border border-line bg-white dark:bg-slate-900 dark:border-slate-800 px-4 py-3">
       <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700 dark:text-slate-200">{message.answer}</p>
-      <SourceList sources={message.sources} />
+      <SourceList sources={message.sources} documentId={message.documentId} />
       <p className="mt-2 text-[11px] text-slate-400 dark:text-slate-400">
         {message.model} · {formatDate(message.createdAt)}
       </p>
@@ -55,7 +55,8 @@ const DocumentAskPage = () => {
   const [clearConversation, { isLoading: isClearing }] = useClearConversationMutation();
 
   useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    endRef.current?.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth', block: 'end' });
   }, [messages.length, isAsking]);
 
   const handleSubmit = async (event) => {

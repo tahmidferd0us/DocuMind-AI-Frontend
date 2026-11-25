@@ -1,6 +1,7 @@
 import { Check, CheckCircle2, CreditCard, ExternalLink, HardDrive, HelpCircle, Layers, ShieldCheck, Sparkles, Zap } from 'lucide-react';
 import { Badge, Button, Card, CardBody, CardHeader, Spinner } from '@components/ui';
 import { formatBytes, formatDate } from '@lib/format';
+import { useSearchParams } from 'react-router-dom';
 import { useToast } from '@features/toast/useToast';
 import {
   useCreateCheckoutMutation,
@@ -117,7 +118,8 @@ const MeterCard = ({ icon: Icon, title, current, max, unit = '', detail, isBytes
 
 const ProfileBillingPage = () => {
   const toast = useToast();
-  const { data: subStatus, isLoading, isFetching } = useGetSubscriptionQuery();
+  const [searchParams] = useSearchParams();
+  const { data: subStatus, isLoading, isFetching } = useGetSubscriptionQuery(undefined, { pollingInterval: searchParams.get('success') === 'true' ? 5000 : 0 });
   const [createCheckout, { isLoading: isCheckingOut }] = useCreateCheckoutMutation();
   const [createPortal, { isLoading: isOpeningPortal }] = useCreatePortalMutation();
 
@@ -134,6 +136,7 @@ const ProfileBillingPage = () => {
         cancelUrl: `${window.location.origin}/profile/billing?canceled=true`,
       }).unwrap();
 
+      if (res?.mode === 'development_simulation') { toast.warning('Development checkout simulation only. No payment was taken and your plan was not changed. Configure Stripe to accept real subscriptions.'); return; }
       if (res?.url) {
         window.location.href = res.url;
       }
@@ -166,6 +169,9 @@ const ProfileBillingPage = () => {
 
   return (
     <div className="flex flex-col gap-8">
+      {searchParams.get('success') === 'true' && <div role="status" aria-live="polite" className={`rounded-xl border p-4 text-sm ${isPaid ? 'border-emerald-300 bg-emerald-50 text-emerald-950 dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-100' : 'border-amber-300 bg-amber-50 text-amber-950 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-100'}`}>{isPaid ? 'Stripe confirmed your subscription.' : 'Checkout returned successfully. We are waiting for Stripe to confirm the subscription; your plan will update automatically. Do not retry payment while this is pending.'}</div>}
+      {searchParams.get('canceled') === 'true' && <div role="status" className="rounded-xl border border-line bg-surface-muted p-4 text-sm text-slate-700 dark:text-slate-200">Checkout was canceled. No subscription change was made.</div>}
+      {subStatus?.billingMode === 'development_simulation' && <div role="status" className="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-100"><strong>Development billing only.</strong> Stripe is not configured. Plan buttons run a simulation; no payment will be taken and no plan will change.</div>}
       {/* Current Subscription Status Banner */}
       <Card className="overflow-hidden border border-line">
         <div className="flex flex-col gap-6 p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between">
@@ -213,7 +219,7 @@ const ProfileBillingPage = () => {
                 isLoading={isCheckingOut}
                 leftIcon={<Sparkles className="size-4" />}
               >
-                Upgrade to Pro
+                {subStatus?.billingMode === 'development_simulation' ? 'Demo checkout only' : 'Upgrade to Pro'}
               </Button>
             )}
           </div>
@@ -250,11 +256,11 @@ const ProfileBillingPage = () => {
           />
           <MeterCard
             icon={HardDrive}
-            title="Storage Used"
+            title="Stored Source Files"
             current={usage?.storageBytesUsed || 0}
-            max={limits?.maxUploadSizeBytes}
+            max={null}
             isBytes
-            detail={`Max ${formatBytes(limits?.maxUploadSizeBytes || 10485760)} per file`}
+            detail={`Maximum upload size: ${formatBytes(limits?.maxUploadSizeBytes || 10485760)} per file`}
           />
         </div>
       </div>
@@ -343,7 +349,7 @@ const ProfileBillingPage = () => {
                       isLoading={isCheckingOut}
                       leftIcon={plan.highlight ? <Sparkles className="size-4" /> : undefined}
                     >
-                      Upgrade to {plan.name}
+                      {subStatus?.billingMode === 'development_simulation' ? 'Demo only' : `Upgrade to ${plan.name}`}
                     </Button>
                   )}
                 </div>

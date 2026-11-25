@@ -63,9 +63,9 @@ const DocumentOverviewPage = () => {
               <Spinner size="lg" className="text-brand-600" />
             </div>
           ) : (
-            <pre className="max-h-96 overflow-auto whitespace-pre-wrap break-words rounded-lg bg-surface-muted p-4 text-xs leading-relaxed text-slate-700 dark:text-slate-200">
-              {data?.text ?? 'No text available.'}
-            </pre>
+            <div className="max-h-[36rem] overflow-auto rounded-lg bg-surface-muted p-4 text-xs leading-relaxed text-slate-700 dark:text-slate-200">
+              {data?.pages?.length ? data.pages.map((page) => <section key={page.page_number} id={`page-${page.page_number}`} tabIndex={-1} className="mb-5 scroll-mt-8 rounded-md focus:outline-2 focus:outline-brand-500"><h3 className="mb-2 text-sm font-semibold text-ink">Page {page.page_number}</h3><p className="whitespace-pre-wrap break-words">{page.cleaned_text}</p></section>) : <pre className="whitespace-pre-wrap break-words">{data?.text ?? 'No text available.'}</pre>}
+            </div>
           )}
         </CardBody>
       </Card>
